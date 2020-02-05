@@ -1,11 +1,10 @@
 <?php
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     require_once("inc/init.php");
 
     
-class Reservation extends ServiceEntityRepository {
+class Reservation extends AbstractController {
     
 
     public $start;
