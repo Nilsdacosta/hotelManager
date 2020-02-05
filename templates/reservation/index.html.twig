@@ -2,7 +2,38 @@
 
 {% block title %}Hello ReservationController!{% endblock %}
 
+
 {% block body %}
+
+
+  <div class="row p-5">
+    <div class="col-5">
+      {{ form_start(formResa) }}
+
+        {{ form_row(formResa.dateEntree) }}
+
+
+        {{ form_row(formResa.dateSortie) }}
+
+
+        {{ form_row(formResa.carteBancaire) }}
+
+
+        {{ form_row(formResa.client) }}
+
+
+        {{ form_row(formResa.chambre) }}
+
+        {{ form_row(formResa.optionService) }}
+
+        {{ form_row(formResa.enregistrer) }}
+
+      
+      {{ form_end(formResa) }}
+
+     
+    </div>
+  </div>
 
 
 form ReservationController
@@ -31,7 +62,7 @@ calendrier
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'resourceTimeline', 'dayGrid', 'timeGrid' ],
-      now: '2020-01-01',
+      now: '2020-02-01',
       selectable: true,
       selectHelper: true,
       editable: true,
@@ -70,7 +101,7 @@ calendrier
       ],
       events: function(info, successCallback, failureCallback) {
         //ajax
-        $.get("events_timeline.php", function(data){
+        $.get("{{path('reservationTimeline')}}", function(data){
           var json=data;
           var obj=JSON.parse(json);
           //console.log(obj[0].rendering);
@@ -83,7 +114,7 @@ calendrier
             newTab.push(
                 {
 
-                  resourceId:obj[i].idarticle,
+                  resourceId:obj[i].idChambre,
                   start:obj[i].start, 
                   end:obj[i].end,  
                   rendering:obj[i].rendering,

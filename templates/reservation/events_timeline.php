@@ -4,18 +4,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     require_once("inc/init.php");
 
     
-class Reservation extends AbstractController {
-    
 
-    public $start;
-    public $end;
-    public $rendering;
-    public $backgroundColor;
-    public $idarticle;
-    public $idbooked;
-
-
-}
 
 
       ################################################################

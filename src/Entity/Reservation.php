@@ -65,6 +65,11 @@ class Reservation
         return $this->id;
     }
 
+    public function getDateEntreepourCalendrier(): ?\DateTime
+    {
+        return $this->dateEntree;
+    }
+
     public function getDateEntree(): ?\DateTimeInterface
     {
         return $this->dateEntree;
@@ -75,6 +80,12 @@ class Reservation
         $this->dateEntree = $dateEntree;
 
         return $this;
+    }
+
+
+    public function getDateSortiePourCalendrier(): ?\DateTime
+    {
+        return $this->dateSortie;
     }
 
     public function getDateSortie(): ?\DateTimeInterface
