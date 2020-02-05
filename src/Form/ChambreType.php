@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Tva;
 use App\Entity\Chambre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -27,12 +29,10 @@ class ChambreType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('nom')
-            ->add('tva', ChoiceType::class, [
-                'choices'  => [
-                    '10%' => 1,
-                    '20%' => 2,  
-                ],
-                'expanded' => true
+            ->add('tva', EntityType::class, [
+               'class'=> Tva::class ,
+               'choice_label' => ' nom',
+                 'expanded' => true,
             ])
            // ->add('reservations')
            // ->add('assignationMenage')

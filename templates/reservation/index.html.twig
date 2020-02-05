@@ -5,11 +5,21 @@
 
 {% block body %}
 
+<script>
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+
+</script>
+
 
   <div class="row p-5">
     <div class="col-5">
       {{ form_start(formResa) }}
-
+       
         {{ form_row(formResa.dateEntree) }}
 
 
@@ -32,6 +42,36 @@
       {{ form_end(formResa) }}
 
      
+    </div>
+    <div class="col-5">
+      {{ form_start(formClient) }}
+
+        {{ form_row(formClient.nom) }}
+
+
+        {{ form_row(formClient.prenom) }}
+
+
+        {{ form_row(formClient.adresse) }}
+
+
+        {{ form_row(formClient.codePostal) }}
+
+
+        {{ form_row(formClient.ville) }}
+
+        {{ form_row(formClient.telephone) }}
+
+        {{ form_row(formClient.mail) }}
+
+        {{ form_row(formClient.dateDeNaissance) }}
+
+        {{ form_row(formClient.commentaire) }}
+
+        {{ form_row(formClient.enregistrer) }}
+
+      
+      {{ form_end(formClient) }}
     </div>
   </div>
 

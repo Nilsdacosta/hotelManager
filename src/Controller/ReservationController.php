@@ -21,7 +21,7 @@ class ReservationController extends AbstractController
      * @Route("/reservation", name="reservation")
      * @Route("/reservation/edit/{id}", name="editReservation")
      */
-    public function index(ReservationRepository $reservationRepository,Request $request, EntityManagerInterface $entityManager, $id=null)
+    public function index(ReservationRepository $reservationRepository,Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository)
     {
       ################################################################
       ##################### FORMULAIRE RESA  #########################
@@ -67,24 +67,8 @@ class ReservationController extends AbstractController
             
         }
 
-        return $this->render('reservation/index.html.twig', [
-            'formResa' => $form->createView()
-        ]);
 
-
-    }
-
-
-
-
-    /**
-     * @Route("/reservation/{id}/client/new", name="newClient")
-     * @Route("/reservation/edit/{id}", name="editClient")
-     */
-    
-    public function newClient(ClientRepository $clientRepository,Request $request, EntityManagerInterface $entityManager, $id=null)
-    {
-
+        
         
 
         ################################################################
@@ -99,13 +83,13 @@ class ReservationController extends AbstractController
 
 
         // je genere le formulaire Annonce
-        $form = $this->createForm(ClientType::class, $Client);
+        $formClient = $this->createForm(ClientType::class, $Client);
 
         // je recupere les données du form
-        $form->handleRequest($request);
+        $formClient->handleRequest($request);
 
         // si les données sont valides
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formClient->isSubmitted() && $formClient->isValid()) {
         
 
             // je procede a l'enregistrement de mes données
@@ -125,9 +109,25 @@ class ReservationController extends AbstractController
         
         }
 
-        return $this->render('reservation/newClient.html.twig', [
-            'formClient' => $form->createView()
+        return $this->render('reservation/index.html.twig', [
+            'formClient' => $formClient->createView(),
+            'formResa' => $form->createView()
         ]);
+
+
+    }
+
+
+
+
+    /**
+     * @Route("/reservation/{id}/client/new", name="newClient")
+     * @Route("/reservation/edit/{id}", name="editClient")
+     */
+    
+    public function newClient(ClientRepository $clientRepository,Request $request, EntityManagerInterface $entityManager, $id=null)
+    {
+
     }
 
 
