@@ -16,80 +16,70 @@
 </script>
 
 
-  <div class="row p-5">
-    <div class="col-5">
-      {{ form_start(formResa) }}
-       
-        {{ form_row(formResa.dateEntree) }}
+  <div class="row p-5 justify-content-around">
+      <div class="col-6 border-right p-5 d-flex justify-content-center">
+          <div>
+              <h1 class="mb-5">Ajouter une réservation</h1>
+              {{ form_start(formResa) }}
+            
+              {{ form_row(formResa.dateEntree) }}
 
 
-        {{ form_row(formResa.dateSortie) }}
+              {{ form_row(formResa.dateSortie) }}
 
 
-        {{ form_row(formResa.carteBancaire) }}
+              {{ form_row(formResa.carteBancaire) }}
 
 
-        {{ form_row(formResa.client) }}
+              {{ form_row(formResa.client) }}
 
 
-        {{ form_row(formResa.chambre) }}
+              {{ form_row(formResa.chambre) }}
 
-        {{ form_row(formResa.optionService) }}
+              {{ form_row(formResa.optionService) }}
 
-        {{ form_row(formResa.enregistrer) }}
+              {{ form_row(formResa.enregistrer) }}
 
-      
-      {{ form_end(formResa) }}
+            
+              {{ form_end(formResa) }}
 
-     
+          </div>
+      </div>
+      <div class="col-6 p-5 d-flex justify-content-center">
+          <div>
+              <h1  class="mb-5">Ajouter un nouveau client</h1>
+              {{ form_start(formClient) }}
+
+                {{ form_row(formClient.nom) }}
+
+
+                {{ form_row(formClient.prenom) }}
+
+
+                {{ form_row(formClient.adresse) }}
+
+
+                {{ form_row(formClient.codePostal) }}
+
+
+                {{ form_row(formClient.ville) }}
+
+                {{ form_row(formClient.telephone) }}
+
+                {{ form_row(formClient.mail) }}
+
+                {{ form_row(formClient.dateDeNaissance) }}
+
+                {{ form_row(formClient.commentaire) }}
+
+                {{ form_row(formClient.enregistrer) }}
+
+              
+                {{ form_end(formClient) }}
+            </div>
+        </div>
     </div>
-    <div class="col-5">
-      {{ form_start(formClient) }}
 
-        {{ form_row(formClient.nom) }}
-
-
-        {{ form_row(formClient.prenom) }}
-
-
-        {{ form_row(formClient.adresse) }}
-
-
-        {{ form_row(formClient.codePostal) }}
-
-
-        {{ form_row(formClient.ville) }}
-
-        {{ form_row(formClient.telephone) }}
-
-        {{ form_row(formClient.mail) }}
-
-        {{ form_row(formClient.dateDeNaissance) }}
-
-        {{ form_row(formClient.commentaire) }}
-
-        {{ form_row(formClient.enregistrer) }}
-
-      
-      {{ form_end(formClient) }}
-    </div>
-  </div>
-
-
-form ReservationController
-    -> chambre
-    -> date de début
-    -> date de fin
-
-
-form client
-
-    -> soit client existe on selectionne
-    -> soit on crée tous les champs
-
-
-
-calendrier
 
 
   <div class="container-fluid" id='calendar'></div>
@@ -109,9 +99,9 @@ calendrier
       aspectRatio: 1.8,
       scrollTime: '00:00',
       header: {
-        left: 'today prev,next',
+        left: ' prev',
         center: 'title',
-        right: 'resourceTimelineMonth'
+        right: ',next'
       },
       defaultView: 'resourceTimelineMonth',
       views: {
