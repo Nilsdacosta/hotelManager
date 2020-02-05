@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Employe;
 use App\Form\EmployeType;
 use App\Repository\EmployeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/employe")
@@ -28,15 +29,28 @@ class EmployeController extends AbstractController
     /**
      * @Route("/new", name="employe_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // encode the plain password
+            $employe->setPassword(
+                $passwordEncoder->encodePassword(
+                    $employe,
+                    $form->get('password')->getData()
+                )
+            );
+
+
             $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($employe);
+           
             $entityManager->flush();
 
             return $this->redirectToRoute('employe_index');
