@@ -83,6 +83,8 @@ class Chambre
 
     public function getEtat(): ?int
     {
+        $etat = $this->etat;
+        $etat=1;
         return $this->etat;
     }
 

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OptionService index{% endblock %}
+
+{% block body %}
+    <h1>OptionService index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomOption</th>
+                <th>DateCreation</th>
+                <th>PrixOption</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for option_service in option_services %}
+            <tr>
+                <td>{{ option_service.id }}</td>
+                <td>{{ option_service.nomOption }}</td>
+                <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ option_service.prixOption }}</td>
+                <td>
+                    <a href="{{ path('option_service_show', {'id': option_service.id}) }}">show</a>
+                    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('option_service_new') }}">Create new</a>
+{% endblock %}

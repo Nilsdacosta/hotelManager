@@ -41,7 +41,7 @@ class OptionService
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tva", inversedBy="optionServices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $tva;
 
