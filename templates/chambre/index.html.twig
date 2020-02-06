@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chambre index{% endblock %}
+{% block title %}Liste des Chambres{% endblock %}
 
 {% block body %}
-    <h1>Chambre index</h1>
+    <h1>Liste des Chambres</h1>
 
     <table class="table">
         <thead>
@@ -27,17 +27,17 @@
                 <td>{{ chambre.prix }}</td>
                 <td>{{ chambre.nom }}</td>
                 <td>
-                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}">show</a>
-                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">edit</a>
+                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}">Voir</a>
+                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas de résultats</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('chambre_new') }}">Create new</a>
+    <a href="{{ path('chambre_new') }}">Ajouter</a>
 {% endblock %}

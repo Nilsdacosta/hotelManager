@@ -19,6 +19,23 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
+
+
+    public function findReservation($valeurExclue)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.status <> :val')
+            ->setParameter('val', $valeurExclue)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
+
+
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
     //  */
@@ -35,6 +52,13 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+
+
+
+
+
 
     /*
     public function findOneBySomeField($value): ?Reservation

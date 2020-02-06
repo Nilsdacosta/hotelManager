@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OptionService index{% endblock %}
+{% block title %}Option Service{% endblock %}
 
 {% block body %}
-    <h1>OptionService index</h1>
+    <h1>Option Service</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>NomOption</th>
-                <th>DateCreation</th>
-                <th>PrixOption</th>
+                <th>Nom Option</th>
+                <th>Date Creation</th>
+                <th>Prix Option</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,17 +23,17 @@
                 <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ option_service.prixOption }}</td>
                 <td>
-                    <a href="{{ path('option_service_show', {'id': option_service.id}) }}">show</a>
-                    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">edit</a>
+                    <a href="{{ path('option_service_show', {'id': option_service.id}) }}">Voir</a>
+                    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Pas de données</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('option_service_new') }}">Create new</a>
+    <a href="{{ path('option_service_new') }}">Ajout </a>
 {% endblock %}

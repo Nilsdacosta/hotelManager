@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+
+{% block body %}
+
+
+  <div class="row p-5">
+    <div class="col-5">
+      {{ form_start(formClient) }}
+
+        {{ form_row(formClient.nom) }}
+
+
+        {{ form_row(formClient.prenom) }}
+
+
+        {{ form_row(formClient.adresse) }}
+
+
+        {{ form_row(formClient.codePostal) }}
+
+
+        {{ form_row(formClient.ville) }}
+
+        {{ form_row(formClient.telephone) }}
+
+        {{ form_row(formClient.mail) }}
+
+        {{ form_row(formClient.telephone) }}
+
+        {{ form_row(formClient.dateDeNaissance) }}
+
+        {{ form_row(formClient.commentaire) }}
+
+        {{ form_row(formClient.enregistrer) }}
+
+      
+      {{ form_end(formClient) }}
+    </div>
+  </div>
+
+{% endblock %}

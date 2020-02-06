@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OptionService{% endblock %}
+{% block title %}Option Service{% endblock %}
 
 {% block body %}
-    <h1>OptionService</h1>
+    <h1>Option Service</h1>
 
     <table class="table">
         <tbody>
@@ -12,23 +12,23 @@
                 <td>{{ option_service.id }}</td>
             </tr>
             <tr>
-                <th>NomOption</th>
+                <th>Nom Option</th>
                 <td>{{ option_service.nomOption }}</td>
             </tr>
             <tr>
-                <th>DateCreation</th>
+                <th>Date Creation</th>
                 <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>PrixOption</th>
+                <th>Prix Option</th>
                 <td>{{ option_service.prixOption }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('option_service_index') }}">back to list</a>
+    <a href="{{ path('option_service_index') }}">Retour</a>
 
-    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">edit</a>
+    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">Modifier</a>
 
     {{ include('option_service/_delete_form.html.twig') }}
 {% endblock %}
