@@ -34,7 +34,7 @@ class Reservation
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $carteBancaire;
 
@@ -53,6 +53,11 @@ class Reservation
      * @ORM\ManyToMany(targetEntity="App\Entity\OptionService", inversedBy="reservations")
      */
     private $optionService;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $dateCreation;
 
     public function __construct()
     {
@@ -184,6 +189,18 @@ class Reservation
         if ($this->optionService->contains($optionService)) {
             $this->optionService->removeElement($optionService);
         }
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

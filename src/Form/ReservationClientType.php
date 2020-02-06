@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class ReservationClientType extends AbstractType
 {
@@ -25,27 +26,32 @@ class ReservationClientType extends AbstractType
                 'attr' => ['class' => 'js-datepicker'
                 ]
             ])
+
             ->add('dateSortie',DateType::class, [
                 'widget' => 'single_text',
                 'label'=> 'Date de départ',
                 'attr' => ['class' => 'js-datepicker'
                 ]
             ])
-            ->add('carteBancaire',)
+
+            ->add('carteBancaire',IntegerType::class,[
+                'required'=> false
+            ])
+
             ->add('client', EntityType::class,
 
                 ['class' => Client::class,
                 'label'=> 'Client',
                 'choice_label' => 'nom',
-
-
             ])
+
             ->add('chambre', EntityType::class,[
                 'class' => Chambre::class,
                 'label'=> 'Chambre',
                 'choice_label' => 'nom',
                 'multiple'=> true
             ])
+
             ->add('optionService', EntityType::class,[
                 'class' => OptionService::class,
                 'choice_label' => ' nomOption',

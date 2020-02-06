@@ -15,6 +15,22 @@
 
 </script>
 
+    <div class=" d-flex justify-content-center">
+        {% for message in app.flashes('ajoutResa') %}
+            <div class="flash-notice alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class=" d-flex justify-content-center">
+        {% for message in app.flashes('ajoutClient') %}
+            <div class="flash-notice alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
 
   <div class="row p-5 justify-content-around">
       <div class="col-6 border-right p-5 d-flex justify-content-center">
