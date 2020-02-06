@@ -34,14 +34,12 @@ class ReservationClientType extends AbstractType
             ->add('carteBancaire',)
             ->add('client', EntityType::class,
 
-            ['class' => Client::class,
-            'label'=> 'Client',
-            'choice_label' => 'nom',
-
                 ['class' => Client::class,
-                'choice_label' => ' nom',
+                'label'=> 'Client',
+                'choice_label' => 'nom',
 
-            ]])
+
+            ])
             ->add('chambre', EntityType::class,[
                 'class' => Chambre::class,
                 'label'=> 'Chambre',
