@@ -44,6 +44,7 @@ class ReservationClientType extends AbstractType
                 'class' => Chambre::class,
                 'label'=> 'Chambre',
                 'choice_label' => 'nom',
+                'multiple'=> true
             ])
             ->add('optionService', EntityType::class,[
                 'class' => OptionService::class,
