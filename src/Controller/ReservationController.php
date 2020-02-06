@@ -17,11 +17,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReservationController extends AbstractController
 {
-    /**
-     * @Route("/reservation", name="reservation")
-     * @Route("/reservation/edit/{id}", name="editReservation")
-     */
-    public function index(ReservationRepository $reservationRepository,Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository)
+        /**
+         * @Route("/reservation", name="reservation")
+         * @Route("/reservation/edit/{id}", name="editReservation")
+         * @Route("/reservation/edit/{idResa}/client/{id}", name="editClient")
+         */
+    public function index(ReservationRepository $reservationRepository,Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository, $idResa=null)
     {
       ################################################################
       ##################### FORMULAIRE RESA  #########################
@@ -34,7 +35,7 @@ class ReservationController extends AbstractController
         }
 
 
-        // je genere le formulaire Rservation
+        // je genere le formulaire Réservation
         $form = $this->createForm(ReservationClientType::class, $reservation);
 
         // je recupere les données du form
@@ -43,9 +44,9 @@ class ReservationController extends AbstractController
         // si les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
             $reservation->setStatus(1);
+            $reservation->setDateCreation(new \DateTime);
 
             // je procede a l'enregistrement de mes données
-            //$reservation->setCreatedAt( new \DateTime);
 
             $entityManager->persist($reservation);
 
@@ -54,14 +55,16 @@ class ReservationController extends AbstractController
 
             // j'ajoute un message flash pour alerter le user
             $this->addFlash(
-                'ajout',
-                'Votre réservation a bien été ajoutée'
+                'ajoutResa',
+                'La réservation a bien été ajoutée'
             );
 
             // // je redirige vers la page de l'annonce
             
-            return $this->redirectToRoute('reservation', [
-                'idResa' => $reservation->getId()
+
+            
+            return $this->redirectToRoute('reservationRecapitulatif', [
+                'id' => $reservation->getId()
             ]);
                 
             
@@ -103,9 +106,16 @@ class ReservationController extends AbstractController
 
             // j'ajoute un message flash pour alerter le user
             $this->addFlash(
-                'ajout',
+                'ajoutClient',
                 'Le client a bien été ajoutée'
             );
+
+            if($id !=null){
+                return $this->redirectToRoute('reservationRecapitulatif', [
+                    'id' => $idResa
+                ]);
+
+            }
 
         
         }
@@ -117,6 +127,27 @@ class ReservationController extends AbstractController
 
 
     }
+
+
+    /**
+     * @Route("/reservation/{id}/recapitulatif", name="reservationRecapitulatif")
+     * 
+     */
+
+     public function showRecapitulatif($id, ReservationRepository $reservationRepository)
+     {
+        $reservation = $reservationRepository->find($id);
+     
+        $nombreJours = $reservation->getDateEntree()->diff($reservation->getDateSortie());
+
+        
+        return $this->render('reservation/recapitulatif.html.twig', [
+            'reservation'=> $reservation,
+            'nombreJours'=> $nombreJours
+        ]);
+     }
+
+    
 
 
 
