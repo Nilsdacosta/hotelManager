@@ -9,6 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Nom utilisateur</th>
+            
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Telephone</th>
@@ -20,6 +22,8 @@
         {% for employe in employes %}
             <tr>
                 <td>{{ employe.id }}</td>
+               <td>{{ employe.username }}</td>
+              
                 <td>{{ employe.nom }}</td>
                 <td>{{ employe.prenom }}</td>
                 <td>{{ employe.telephone }}</td>
