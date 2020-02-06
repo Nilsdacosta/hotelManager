@@ -34,7 +34,7 @@ class ReservationController extends AbstractController
         }
 
 
-        // je genere le formulaire Annonce
+        // je genere le formulaire Rservation
         $form = $this->createForm(ReservationClientType::class, $reservation);
 
         // je recupere les données du form
@@ -83,7 +83,7 @@ class ReservationController extends AbstractController
         }
 
 
-        // je genere le formulaire Annonce
+        // je genere le formulaire ajout client
         $formClient = $this->createForm(ClientType::class, $Client);
 
         // je recupere les données du form
