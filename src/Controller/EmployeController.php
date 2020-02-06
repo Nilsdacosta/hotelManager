@@ -37,16 +37,19 @@ class EmployeController extends AbstractController
         
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $random = random_int(1, 999);
+            $username =$form->get('nom')->getData() .$form->get('prenom')->getData() . $random ;
+            $employe->setUsername(strtolower($username));
+          
             // encode the plain password
             $employe->setPassword(
                 $passwordEncoder->encodePassword(
                     $employe,
-                    $form->get('password')->getData()
+                   strtolower($username)
                 )
             );
 
-
+            dump($employe);
             $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->persist($employe);
