@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+
+{% block body %}
+
+    <div class="container p-5 border ">
+        <div class="row bg-info rounded mb-5">
+            <div class="col-6">
+                <h3>Nom hôtel</h3>
+                <p>Adresse 1</p>
+                <p>Adresse 2</p>
+                <p>CP VILLE</p>
+                <p>Tel</p>
+                <p>mail</p>
+            
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-8 col-4">
+                <h3>{{reservation.client.nom}} {{reservation.client.prenom}}</h3>
+                <p>{{reservation.client.adresse}}</p>
+                <p>{{reservation.client.codePostal}}</p>
+                <p>{{reservation.client.ville}}</p>
+            </div>
+        </div>
+
+
+
+        <div class="row mb-5">
+            <div class="col-6">
+                <p> <b> Récapitulatif N° {{reservation.id}} </b></p>
+                <p>Date : {{reservation.dateCreation|date('d/m/Y')}}</p>
+              
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chambre</th>
+                    <th>Nombre de chambre</th>
+                    <th>Date d'arrivée</th>
+                    <th>Date de départ</th>
+                    <th>Nombre de jours</th>
+                    <th>Prix unitaire</th>
+                    <th>Prix total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chambre in reservation.chambre %}
+                    <tr>
+                        <td>{{chambre.nom}}</td>
+                        <td>{{ chambre|length }}</td>
+                        <td>{{reservation.dateEntree|date('d/m/Y')}}</td>
+                        <td>{{reservation.dateSortie|date('d/m/Y')}}</td>
+                        <td> {{nombreJours.days}}</td>
+                        <td>{{ chambre.prix }}</td>
+                        <td> {{ nombreJours.days*chambre.prix }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <div class="row">
+            <div class="col-3">
+                <p>Paiement comptant</p>
+            </div>
+            <div class="offset-6 col-3">
+                <table class='table'>
+                    <tr>
+                        <td>TOTAL</td>
+                        <td> X €</td>
+                    </tr>
+
+                    <tr>
+                        <td><small>Dont TVA</small> </td>
+                        <td> <small>X €</small> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row bg-info rounded mt-5">
+        Mentions obligatoires : Siret 
+        </div>
+
+
+
+
+        
+    </div>
+
+    <div class="container p-5"> 
+        <div class="row justify-content-end">
+            <a href="{{path('editReservation',{'id': reservation.id})}}" class="btn btn-warning mr-5" >Modifier la réservation</a>
+            <a href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}" class="btn btn-warning" >Modifier le client</a>
+        </div>
+    </div>
+
+   
+
+
+
+{% endblock %}
