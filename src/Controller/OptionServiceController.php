@@ -33,9 +33,13 @@ class OptionServiceController extends AbstractController
         $optionService = new OptionService();
         $form = $this->createForm(OptionServiceType::class, $optionService);
         $form->handleRequest($request);
+        $user = $this->getUser();
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $optionService->setDateCreation(new \DateTime());
+            $optionService->setEmploye($user);
             $entityManager->persist($optionService);
             $entityManager->flush();
 
