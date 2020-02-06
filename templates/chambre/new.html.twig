@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Chambre{% endblock %}
+{% block title %}Création d'une Chambre{% endblock %}
 
 {% block body %}
-    <h1>Create new Chambre</h1>
+    <h1>Création d'une Chambre</h1>
 
     {{ include('chambre/_form.html.twig') }}
 
-    <a href="{{ path('chambre_index') }}">back to list</a>
+    <a href="{{ path('chambre_index') }}">Retour</a>
 {% endblock %}
