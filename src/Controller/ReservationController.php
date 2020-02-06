@@ -42,7 +42,7 @@ class ReservationController extends AbstractController
 
         // si les données sont valides
         if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setStatus('reserve');
+            $reservation->setStatus(1);
 
             // je procede a l'enregistrement de mes données
             //$reservation->setCreatedAt( new \DateTime);
@@ -59,11 +59,12 @@ class ReservationController extends AbstractController
             );
 
             // // je redirige vers la page de l'annonce
-            if($reservation->getClient == "CLIENT A CREER"){
-                return $this->redirectToRoute('newClient', [
-                    'idResa' => $reservation->getId()
-                ]);
-            }
+            
+            return $this->redirectToRoute('reservation', [
+                'idResa' => $reservation->getId()
+            ]);
+                
+            
             
         }
 
@@ -120,15 +121,7 @@ class ReservationController extends AbstractController
 
 
 
-    /**
-     * @Route("/reservation/{id}/client/new", name="newClient")
-     * @Route("/reservation/edit/{id}", name="editClient")
-     */
     
-    public function newClient(ClientRepository $clientRepository,Request $request, EntityManagerInterface $entityManager, $id=null)
-    {
-
-    }
 
 
 
