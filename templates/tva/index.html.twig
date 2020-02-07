@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Taux</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ tva.id }}</td>
                 <td>{{ tva.nom }}</td>
-                <td>{{ tva.taux }}</td>
+                <td>{{ tva.taux }} %</td>
                 <td>
                     <a href="{{ path('tva_show', {'id': tva.id}) }}">Voir</a>
                     <a href="{{ path('tva_edit', {'id': tva.id}) }}">Modifier</a>

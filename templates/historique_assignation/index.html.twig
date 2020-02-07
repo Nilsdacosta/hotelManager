@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique assignations chambres {% endblock %}
+
+{% block body %}
+    <h1>Historique assignations chambres</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>N° assignation</th>
+                <th>Id employé</th>
+                <th>Nom employé</th> 
+                <th>Nom Chambre à nettoyer</th>
+                <th>Option</th>
+                <th>Date d'assignation</th>
+                  
+
+            </tr>
+        </thead>
+        <tbody>
+         {% for assignation in assignations %} 
+            
+            <tr>
+             
+                <td>{{ assignation.id }}</td> 
+                <td>{{ assignation.employe.id }}   </td>
+                <td>{{ assignation.employe.nom }}  {{ assignation.employe.prenom }}   </td>
+                <td>{{ assignation.chambre.nom }}    </td>
+                <td> {{assignation.optionService.nomOption}}
+                    
+                </td>
+                <td>{{ assignation.date|date("d/m/Y") }}</td>
+               
+        
+    
+            </tr>
+         {% else %}
+            <tr>
+                <td colspan="6">Pas de résultat</td>
+            </tr>
+        
+         {% endfor %} 
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('employe_new') }}">Ajouter nouveau client</a> #}
+{% endblock %}

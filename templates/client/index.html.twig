@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique clients {% endblock %}
+
+{% block body %}
+    <h1>Historique clients</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
+                <th>Téléphone</th>
+                <th>Mail</th>
+                <th>Date de naissance</th> 
+                <th>Commentaire</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+            <tr>
+            
+               <td>{{ client.nom }}</td>
+                <td>{{ client.prenom }}</td>
+                <td>{{ client.adresse }}</td>
+                <td>{{ client.codePostal }}</td>
+                <td>{{ client.ville }}</td>
+                <td>{{ client.telephone }}</td>
+                <td>{{ client.mail}}</td>
+                <td>{{ client.dateDeNaissance|date("d/m/Y") }}</td> 
+                <td>{{ client.commentaire }}</td>
+          
+                 <td>
+                    {# <a href="{{ path('client_show', {'id': client.id}) }}">Voir profil</a> #}
+                    <a href="{{ path('client_edit', {'id': client.id}) }}">Modifier</a>
+                </td> 
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de résultat</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('employe_new') }}">Ajouter nouveau client</a> #}
+{% endblock %}

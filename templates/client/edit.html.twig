@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer profil client{% endblock %}
+
+{% block body %}
+    <h1>Editer profil client</h1>
+
+    {{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('client') }}">Retour à la liste</a>
+
+
+{% endblock %}
