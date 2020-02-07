@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\ClientType;
+use App\Form\CheckInType;
 use App\Entity\Reservation;
 use App\Form\ReservationClientType;
 use App\Repository\ClientRepository;
@@ -55,11 +56,7 @@ class ReservationController extends AbstractController
             // j'enregistre les données en BDD
             $entityManager->flush();
 
-            // j'ajoute un message flash pour alerter le user
-            $this->addFlash(
-                'ajoutResa',
-                'La réservation a bien été ajoutée'
-            );
+            
 
             // // je redirige vers la page de l'annonce
             
@@ -142,10 +139,15 @@ class ReservationController extends AbstractController
      
         $nombreJours = $reservation->getDateEntree()->diff($reservation->getDateSortie());
 
-        
+        $total = 0;
+        $tva = 0;
+        $ttc = 0;
         return $this->render('reservation/recapitulatif.html.twig', [
             'reservation'=> $reservation,
-            'nombreJours'=> $nombreJours
+            'nombreJours'=> $nombreJours,
+            'total'=> $total,
+            'tva'=> $tva,
+            'ttc'=>$ttc
         ]);
      }
 
@@ -172,9 +174,9 @@ class ReservationController extends AbstractController
 
       # je crée la requete pour récupérer les info de la table reservation
         // j'ai crée une requete spéciale dans Rservation repository. la valeur sélectionnée est celle exclue de la requete
-        $findReservations = $reservationRepository->findReservation('annulée');
+        $findReservations = $reservationRepository->findAll()/*findReservation(3)*/;
         $tabEvents = array();
-        sleep(1);
+        // sleep(1);
         
         foreach ($findReservations as $findReservation) {
             //debug($findReservations);
@@ -187,7 +189,7 @@ class ReservationController extends AbstractController
                 $event->end='2020-02-10';
                 $event->rendering='background';
                 $event->backgroundColor='#FE1919';
-                $event->idchambre = $chambre->getId();
+                $event->idChambre = $chambre->getId();
                 $event->idReservation=$findReservation->getId();
             }
             
@@ -224,8 +226,95 @@ class ReservationController extends AbstractController
         ]);
     }
 
+    /** 
+     * @Route("/reservation/check", name="reservationCheck")
+     */
+    public function checkInOut( ReservationRepository $reservationRepository, Request $request, EntityManagerInterface $entityManager)
+    {
+        
+        $date = new \DateTime;
+        $reservationDuJour = $reservationRepository->findCheckin();
+        
+            return $this->render('reservation/check.html.twig', [
+                'reservationDuJour'=> $reservationDuJour,
+                'date'=> $date,
+              
+            ]);
+    }
 
 
+    /** 
+     * @Route("/reservation/{id}/check/form", name="reservationCheckInForm")
+     */
+    public function formCheckIn(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
+    {
+        if($id!=null){
 
+       
+            $reservation = $ReservationRepository->find($id);
+
+            // je genere le formulaire Réservation checkIn
+            $formCheckIn = $this->createForm(CheckInType::class, $reservation);
+
+            // je recupere les données du form
+            $formCheckIn->handleRequest($request);
+
+            // si les données sont valides
+            if ($formCheckIn->isSubmitted() && $formCheckIn->isValid()) {
+
+                // je procede a l'enregistrement de mes données
+
+                $entityManager->persist($reservation);
+
+                // j'enregistre les données en BDD
+                $entityManager->flush();
+
+                // j'ajoute un message flash pour alerter le user
+                $this->addFlash(
+                    'checkInResa',
+                    'La réservation a bien été validée'
+                );
+
+                // // je redirige vers la page de l'annonce
+                
+
+                
+                return $this->redirectToRoute('reservationCheck');
+
+
+                ################################################################
+                ################## UPDATE ETAT CHAMBRE #########################
+                ################################################################
+
+                
+                // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
+                if($reservation->getStatus()==2){
+                    $etat = 4;
+                    
+                // si le statu de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
+                }elseif($reservation->getStatus()==4){
+                    $etat = 1;
+                }
+                $chambres= $reservation->getChambre();
+                foreach($chambres as $chambre){
+                    $idChambre= $chambre->getId();
+                    $findChambre = $chambreRepository->findBy(["id"=>$idChambre],[]);
+                    $findChambre->setEtat($etat);
+            
+                    // je procede a l'enregistrement de mes données
+                    $entityManager->persist($findChambre);
+
+                    // j'enregistre les données en BDD
+                    $entityManager->flush();
+                }
+                   
+            }
+
+            return $this->render('reservation/formCheckIn.html.twig', [
+                'reservation' => $formCheckIn->createView(),
+                
+            ]);
+        }
+    }
     
 }
