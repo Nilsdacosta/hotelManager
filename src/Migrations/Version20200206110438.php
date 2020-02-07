@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200205162819 extends AbstractMigration
+final class Version20200206110438 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,9 +24,9 @@ final class Version20200205162819 extends AbstractMigration
 
         $this->addSql('ALTER TABLE assignation_menage CHANGE option_service_id option_service_id INT DEFAULT NULL, CHANGE chambre_id chambre_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE client CHANGE mail mail VARCHAR(255) DEFAULT NULL, CHANGE date_de_naissance date_de_naissance DATETIME DEFAULT NULL');
-        $this->addSql('ALTER TABLE employe ADD username VARCHAR(255) NOT NULL, ADD roles JSON NOT NULL, ADD password VARCHAR(255) NOT NULL, CHANGE telephone telephone VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE employe CHANGE telephone telephone VARCHAR(255) DEFAULT NULL, CHANGE roles roles JSON NOT NULL');
         $this->addSql('ALTER TABLE option_service CHANGE tva_id tva_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE reservation CHANGE carte_bancaire carte_bancaire VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE reservation ADD date_creation DATETIME NOT NULL, CHANGE carte_bancaire carte_bancaire INT DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -36,8 +36,8 @@ final class Version20200205162819 extends AbstractMigration
 
         $this->addSql('ALTER TABLE assignation_menage CHANGE option_service_id option_service_id INT DEFAULT NULL, CHANGE chambre_id chambre_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE client CHANGE mail mail VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE date_de_naissance date_de_naissance DATETIME DEFAULT \'NULL\'');
-        $this->addSql('ALTER TABLE employe DROP username, DROP roles, DROP password, CHANGE telephone telephone VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE option_service CHANGE tva_id tva_id INT NOT NULL');
-        $this->addSql('ALTER TABLE reservation CHANGE carte_bancaire carte_bancaire VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
+        $this->addSql('ALTER TABLE employe CHANGE telephone telephone VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE roles roles LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_bin`');
+        $this->addSql('ALTER TABLE option_service CHANGE tva_id tva_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE reservation DROP date_creation, CHANGE carte_bancaire carte_bancaire VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
     }
 }
