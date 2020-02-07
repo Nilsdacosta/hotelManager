@@ -48,7 +48,7 @@ class ReservationController extends AbstractController
 
 
         // je génère le formulaire Réservation
-        if($reservation->getStatus != 4)
+        if($reservation->getStatus() != 4)
         {
             $form = $this->createForm(ReservationClientType::class, $reservation);
 
