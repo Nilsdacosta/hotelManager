@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+
+{% block body %}
+
+
+  
+    <div class="container-fluid my-5">
+    <div class="row">
+        <div class="col-6">
+            <table class ="table table-striped">
+          <thead class="thead-dark">
+              <tr>
+                  <th>N° ID</th>
+                  <th>Nom du client</th>
+                  <th>Prénom du client</th>
+                  <th>N°/Nom de chambre</th>
+                  <th>État de la réservation</th>
+                  <th>Modifier  statut </th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for reservation in reservationDuJour %}
+              <tr>
+                  <td>{{reservation.id}}</td>
+                  <td> {{reservation.client.nom}}</td>
+                  <td> {% for chambre in reservation.chambre %} {{chambre.nom}} {% endfor %}</td>
+                  <td>{{reservation.client.prenom}}</td>
+                  <td>{{reservation.renderStatus}}</td>
+                  <td class="d-flex justify-content-center"><a class="btn btn-secondary" href="{{path('reservationCheckInForm',{'id':reservation.id} ) }}">Valider</a></td>
+
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+        </div>
+    </div>
+      
+  </div>
+        
+       
+        
+        
+
+        
+        {# {{ render(controller('App\\Controller\\ReservationController::formCheckIn', {id:reservation.id})) }}  #}
+        
+        
+      
+        <br>
+        
+       
+      
+  
+
+{% endblock %}

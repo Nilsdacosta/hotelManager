@@ -4,10 +4,33 @@
 
 
 {% block body %}
+    <script type="text/javascript">
+        function imprimer_page(){
+            window.print();
+        }
+    </script>
 
+
+
+
+    {# Bouton d'impression #}
+    <div class="container p-5">
+        <div class="row justify-content-end">
+            <form >
+                <input id="impression" class="impression btn btn-warning" name="impression" type="button" onclick="imprimer_page()" value="imprimer">
+            </form>
+        </div>
+    </div>
+
+
+
+
+    
     <div class="container p-5 border ">
+
+        {# EN TETE DE RECAP / info hotel #}
         <div class="row bg-info rounded mb-5">
-            <div class="col-6">
+            <div class="col-6 p-3">
                 <h3>Nom hôtel</h3>
                 <p>Adresse 1</p>
                 <p>Adresse 2</p>
@@ -18,6 +41,7 @@
             </div>
         </div>
 
+        {# info client #}
         <div class="row">
             <div class="offset-8 col-4">
                 <h3>{{reservation.client.nom}} {{reservation.client.prenom}}</h3>
@@ -28,7 +52,7 @@
         </div>
 
 
-
+        {# info recap N° et date #}
         <div class="row mb-5">
             <div class="col-6">
                 <p> <b> Récapitulatif N° {{reservation.id}} </b></p>
@@ -37,7 +61,8 @@
             </div>
         </div>
 
-        <table class="table table-striped">
+        {# détail du recap #}
+        <table class="table table-striped border">
             <thead class="thead-dark">
                 <tr>
                     <th>Chambre</th>
@@ -58,6 +83,7 @@
                         <td>{{reservation.dateSortie|date('d/m/Y')}}</td>
                         <td> {{nombreJours.days}}</td>
                         <td>{{ chambre.prix }}</td>
+                        {# prix  HT = nombre de jour * prix de la chambre #}
                         <td> {{ nombreJours.days*chambre.prix }}</td>
                     </tr>
 
@@ -66,20 +92,49 @@
         </table>
 
 
-        <div class="row">
+        {# total HT TVA et TTC #}
+        <div class="row align-items-end">
             <div class="col-3">
                 <p>Paiement comptant</p>
             </div>
             <div class="offset-6 col-3">
+                
                 <table class='table'>
                     <tr>
-                        <td>TOTAL</td>
-                        <td> X €</td>
+                        {# calcul et affichage du total HT #}
+                        <td>TOTAL HT </td>
+                        <td> 
+                            {% for chambre in reservation.chambre %}
+                                {# total ht = total des prix HT de toutes les chambres réservées #}
+                                {% set total = total + nombreJours.days*chambre.prix %} 
+                            {% endfor %}
+                            {{total}} €
+                        </td>
                     </tr>
 
                     <tr>
+                        {# calcul et affichage de la TVA #}
                         <td><small>Dont TVA</small> </td>
-                        <td> <small>X €</small> </td>
+                        <td> <small>
+                            {% for chambre in reservation.chambre %}
+                                {#  calcul de la TVA = prix ht * le taux de tva pour  toutes les chambres réservées #}
+                                {% set tva = tva + (nombreJours.days*chambre.prix)*chambre.tva.taux %} 
+                            {% endfor %}
+                            {{tva}}€
+                        </small> </td>
+                    </tr>
+
+
+                     <tr>
+                        {# calcul et affichage du total TTC #}
+                        <td><small>TOTAL TTC</small> </td>
+                        <td> <small>
+                            {% for chambre in reservation.chambre %}
+                                {# ttc = prix total ht  +  tva #}
+                                {% set ttc = ttc + (nombreJours.days*chambre.prix)*(1+ chambre.tva.taux) %} 
+                            {% endfor %}
+                            {{ttc}}€
+                        </small> </td>
                     </tr>
                 </table>
             </div>
@@ -95,11 +150,11 @@
 
         
     </div>
-
+    {# bouton de modification, réservation et client #}
     <div class="container p-5"> 
         <div class="row justify-content-end">
-            <a href="{{path('editReservation',{'id': reservation.id})}}" class="btn btn-warning mr-5" >Modifier la réservation</a>
-            <a href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}" class="btn btn-warning" >Modifier le client</a>
+            <a class="impression btn btn-warning mr-5" href="{{path('editReservation',{'id': reservation.id})}}"  >Modifier la réservation</a>
+            <a class="impression btn btn-warning" href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}"  >Modifier le client</a>
         </div>
     </div>
 
