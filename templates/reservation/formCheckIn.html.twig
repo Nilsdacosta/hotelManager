@@ -1,15 +1,17 @@
-
+{% extends 'base.html.twig' %}
 
 {% block title %}Reservation{% endblock %}
 
 
 {% block body %}
 
-
-        {{ form_start(reservation) }}
+        <div class="container d-flex flex-column align-items-center p-5 border rounded my-5">
+                {{ form_start(reservation) }}
                 {{ form_row(reservation.status) }}
         
-        {{ form_end(reservation) }}
+                {{ form_end(reservation) }}
+        </div>
+
        
       
 

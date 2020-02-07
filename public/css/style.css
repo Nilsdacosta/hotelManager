@@ -1,41 +1,73 @@
-#calendar {
-    max-width: 90vw;
-    height:auto;
-    margin:  auto;
-}
 
-body {
-    font-family: 'Heebo', sans-serif;
-    
-}
 
-.img{
-    height:80px;
-    width: 80px;
-}
+/******************************* AFFICHAGE TABLETTE ET MOBILE ************************************/
 
-.nav-link{
-    font-size: 1.3em;
-}
+/*************************************
+|       Page Sécurité/Accueil        |
+*************************************/
 
-.navbar-brand{
-    font-size: 2em;
-}
-
-.bkg{
- 
-  background-image:url("https://lodginginteractive.com/wp-content/uploads/Hotel-Reputation-Management.jpeg") ;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-}
-.acc{
-    color: none;
-}
-.form-control{
-    margin-right: 300px;
-}
 .accueil{
-    margin-top: 20%;
-    margin-left: 500px;
+    width:40vw;
+}
+
+
+/************************************ AFFICHAGE DESKTOP ***************************************/
+@media screen and (min-width: 1000px) {
+
+    body {
+        font-family: 'Heebo', sans-serif;
+
+    }
+
+
+    /***********************************
+    |     Page réservation/ index      |
+    ************************************/
+
+    #calendar {
+        max-width: 90vw;
+        height:auto;
+        margin:  auto;
+    }
+
+
+    /*************************************
+    |       Page Sécurité/Accueil        |
+    *************************************/
+    .img{
+        height:80px;
+        width: 80px;
+    }
+
+    .nav-link{
+        font-size: 1.3em;
+    }
+
+    .navbar-brand{
+        font-size: 2em;
+    }
+
+    .accueilBkg{
+
+        background-image:url("https://lodginginteractive.com/wp-content/uploads/Hotel-Reputation-Management.jpeg") ;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height:100vh;
+        width: 100%;
+
+    }
+
+    .acc{
+        color: none;
+    }
+
+    .accueil{
+        width:20vw;
+    }
+
+    .hauteurBoxConnexion{
+        position:relative;
+        top:20vh;
+
+    }
 }
