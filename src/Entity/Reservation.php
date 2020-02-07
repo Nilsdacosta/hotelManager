@@ -19,12 +19,12 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateEntree;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateSortie;
 
@@ -55,7 +55,7 @@ class Reservation
     private $optionService;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateCreation;
 
@@ -105,6 +105,19 @@ class Reservation
         return $this;
     }
 
+      public function getRenderStatus(): ?string
+    {
+        if ($this->status == 1){
+            return "Réservée";
+        }elseif($this->status == 2){
+            return "Validée";
+        }elseif($this->status == 3){
+            return "Annulée";
+        }else{
+            return "Facturée";
+        }
+    }
+
     public function getStatus(): ?int
     {
         return $this->status;
@@ -116,6 +129,8 @@ class Reservation
 
         return $this;
     }
+
+
 
     public function getCarteBancaire(): ?string
     {

@@ -81,6 +81,22 @@ class Chambre
         return $this;
     }
 
+    public function getRenderEtat(): ?string
+    {
+        if ($this->etat == 1){
+            return "A blanc";
+        }elseif($this->etat == 2){
+            return "Recouche";
+        }elseif($this->etat == 3){
+            return "HS";
+        }elseif($this->etat == 4){
+            return "Sale";
+        }else{
+            return "Prête";
+        }
+    }
+
+
     public function getEtat(): ?int
     {
         $etat = $this->etat;

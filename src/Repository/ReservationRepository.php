@@ -31,6 +31,15 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findCheckin()
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('CURRENT_DATE() >= r.dateEntree')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 
 
