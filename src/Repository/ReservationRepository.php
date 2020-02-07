@@ -31,14 +31,26 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
 
+    #Requete pour trouver les résa dont la date d'entrée est la date du jour
     public function findCheckin()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('CURRENT_DATE() >= r.dateEntree')
+            ->andWhere('CURRENT_DATE() = r.dateEntree')
             ->getQuery()
             ->getResult()
         ;
     }
+
+
+        #Requete pour trouver les résa dont la date de sortie est la date du jour
+        public function findCheckOut()
+        {
+            return $this->createQueryBuilder('r')
+                ->andWhere('CURRENT_DATE() = r.dateSortie')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
 
 
 

@@ -55,8 +55,8 @@
         {# info recap N° et date #}
         <div class="row mb-5">
             <div class="col-6">
-                <p> <b> Récapitulatif N° {{reservation.id}} </b></p>
-                <p>Date : {{reservation.dateCreation|date('d/m/Y')}}</p>
+                <p> <b> {{document}} N° {{reservation.id}} </b></p>
+                <p>Date : {{date|date('d/m/Y')}}</p>
               
             </div>
         </div>
@@ -65,26 +65,40 @@
         <table class="table table-striped border">
             <thead class="thead-dark">
                 <tr>
-                    <th>Chambre</th>
-                    <th>Nombre de chambre</th>
-                    <th>Date d'arrivée</th>
-                    <th>Date de départ</th>
-                    <th>Nombre de jours</th>
-                    <th>Prix unitaire</th>
-                    <th>Prix total</th>
+                    <th class="text-center">Chambre</th>
+                    <th class="text-center">Nombre de chambre</th>
+                    <th class="text-center">Date d'arrivée</th>
+                    <th class="text-center">Date de départ</th>
+                    <th class="text-center">Nombre de jours</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Prix total</th>
                 </tr>
             </thead>
             <tbody>
                 {% for chambre in reservation.chambre %}
                     <tr>
-                        <td>{{chambre.nom}}</td>
-                        <td>{{ chambre|length }}</td>
-                        <td>{{reservation.dateEntree|date('d/m/Y')}}</td>
-                        <td>{{reservation.dateSortie|date('d/m/Y')}}</td>
-                        <td> {{nombreJours.days}}</td>
-                        <td>{{ chambre.prix }}</td>
+                        <td class="text-center">{{chambre.nom}}</td>
+                        <td class="text-center">{{ chambre|length }}</td>
+                        <td class="text-center">{{reservation.dateEntree|date('d/m/Y')}}</td>
+                        <td class="text-center">{{reservation.dateSortie|date('d/m/Y')}}</td>
+                        <td class="text-center"> {{nombreJours.days}}</td>
+                        <td class="text-center">{{ chambre.prix }}</td>
                         {# prix  HT = nombre de jour * prix de la chambre #}
-                        <td> {{ nombreJours.days*chambre.prix }}</td>
+                        <td class="text-center"> {{ nombreJours.days*chambre.prix }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                {% for option in reservation.optionService %}
+                    <tr>
+                        <td class="text-center">{{option.nomOption}}</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"> </td>
+                        <td class="text-center">{{ option.prixOption }}</td>
+                        {# prix  HT = nombre de jour * prix de la chambre #}
+                        <td class="text-center"> {{option.prixOption }}</td>
                     </tr>
 
                 {% endfor %}
@@ -104,10 +118,15 @@
                         {# calcul et affichage du total HT #}
                         <td>TOTAL HT </td>
                         <td> 
+
+                            {% for option in reservation.optionService %}
+                               {% set totalOption = totalOption + option.prixOption %} 
+                            {% endfor %}
                             {% for chambre in reservation.chambre %}
                                 {# total ht = total des prix HT de toutes les chambres réservées #}
                                 {% set total = total + nombreJours.days*chambre.prix %} 
                             {% endfor %}
+                            {% set total = totalOption + total %}
                             {{total}} €
                         </td>
                     </tr>
@@ -116,10 +135,14 @@
                         {# calcul et affichage de la TVA #}
                         <td><small>Dont TVA</small> </td>
                         <td> <small>
+                            {% for option in reservation.optionService %}
+                               {% set tvaOption = tvaOption + option.prixOption* option.tva.taux %} 
+                            {% endfor %}
                             {% for chambre in reservation.chambre %}
                                 {#  calcul de la TVA = prix ht * le taux de tva pour  toutes les chambres réservées #}
                                 {% set tva = tva + (nombreJours.days*chambre.prix)*chambre.tva.taux %} 
                             {% endfor %}
+                            {% set tva = tvaOption + tva %}
                             {{tva}}€
                         </small> </td>
                     </tr>
@@ -131,7 +154,7 @@
                         <td> <small>
                             {% for chambre in reservation.chambre %}
                                 {# ttc = prix total ht  +  tva #}
-                                {% set ttc = ttc + (nombreJours.days*chambre.prix)*(1+ chambre.tva.taux) %} 
+                                {% set ttc = tva + total %} 
                             {% endfor %}
                             {{ttc}}€
                         </small> </td>
@@ -150,6 +173,9 @@
 
         
     </div>
+
+
+    {% if document == 'Récapitulatif' %}
     {# bouton de modification, réservation et client #}
     <div class="container p-5"> 
         <div class="row justify-content-end">
@@ -157,6 +183,14 @@
             <a class="impression btn btn-warning" href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}"  >Modifier le client</a>
         </div>
     </div>
+
+    {% elseif document == 'Facture' %}
+        <div class="container p-5"> 
+        <div class="row justify-content-end">
+            <a class="impression btn btn-warning mr-5" href="{{path('reservationCheck')}}"  >Retour aux CheckIn/CheckOut</a>
+        </div>
+    </div>
+    {% endif %}
 
    
 
