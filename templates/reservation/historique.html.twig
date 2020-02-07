@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique Reservations {% endblock %}
+
+{% block body %}
+    <h1>Historique des réservations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Num Résa</th>
+                <th>Type chambre</th> 
+                <th>Date de création</th> 
+                <th>N° de chambre</th>
+                <th>Nom client</th>
+                <th>Status</th>
+                <th>Date d'arrivée</th>
+                <th>Date de fin</th> 
+                <th>Tarif</th>
+                {# <th>Action</th> #}
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            
+            <tr>
+             
+                <td><a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}">{{ reservation.id }}</td></a>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }}  {% endfor %}   </td>
+                <td>{{ reservation.dateCreation|date("d/m/Y") }}</td>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.nom }}  {% endfor %}   </td>
+                <td>{{ reservation.client.nom }}</td> 
+                <td>{{ reservation.status }}</td> 
+                <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
+                <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.prix }}  {% endfor %} €  </td>
+                
+          
+                 <td>
+                     
+                    {# <a href="{{ path('editReservation', {'id': reservation.id}) }}">Modifier</a>  #}
+                </td> 
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de résultat</td>
+            </tr>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('employe_new') }}">Ajouter nouveau client</a> #}
+{% endblock %}

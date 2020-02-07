@@ -85,7 +85,7 @@ class Client
 
     public function setNom(string $nom): self
     {
-        $this->nom = $nom;
+        $this->nom = ucfirst($nom);
 
         return $this;
     }

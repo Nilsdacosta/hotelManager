@@ -10,19 +10,18 @@
             <tr>
                 <th>Id</th>
                 <th>Nom utilisateur</th>
-            
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Telephone</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
                 <th>Poste</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for employe in employes %}
             <tr>
                 <td>{{ employe.id }}</td>
-               <td>{{ employe.username }}</td>
+                <td>{{ employe.username }}</td>
               
                 <td>{{ employe.nom }}</td>
                 <td>{{ employe.prenom }}</td>
@@ -41,5 +40,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('employe_new') }}">Ajouter nouvel employé</a>
+    <a href="{{ path('employe_new') }}">Ajouter un nouvel employé</a>
 {% endblock %}

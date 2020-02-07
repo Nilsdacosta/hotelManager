@@ -9,9 +9,11 @@ use App\Entity\Reservation;
 use App\Form\ReservationClientType;
 use App\Repository\ClientRepository;
 use App\Repository\ChambreRepository;
+use App\Repository\OptionServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -206,13 +208,27 @@ class ReservationController extends AbstractController
 
 
     }
+      ################################################################
+      ################## AFFICHAGE HISTORIQUE ######################
+      ################################################################
 
 
     /**
-     * @Route("/reservation/check", name="reservationCheck")
-     * 
+     * @Route("/historique", name="historique_resa", methods={"GET"})
      */
+    public function historique(ReservationRepository $reservationRepository, ClientRepository $clientRepository, ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository): Response
+    {
+        return $this->render('reservation/historique.html.twig', [
+            'reservations' => $reservationRepository->findAll(),
+            'clients' => $clientRepository->findAll(),
+            'chambre' => $chambreRepository->findAll(),
+            'optionResa' => $optionServiceRepository->findAll()
+        ]);
+    }
 
+    /** 
+     * @Route("/reservation/check", name="reservationCheck")
+     */
     public function checkInOut( ReservationRepository $reservationRepository, Request $request, EntityManagerInterface $entityManager)
     {
         
