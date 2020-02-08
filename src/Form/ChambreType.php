@@ -22,7 +22,6 @@ class ChambreType extends AbstractType
                     'Recouche' => 2,
                     'Prête' => 3,
                     'Hors Service' =>4
-                    
                 ],
                 'expanded' => true
             ])
@@ -30,15 +29,14 @@ class ChambreType extends AbstractType
             ->add('prix')
             ->add('nom')
             ->add('tva', EntityType::class, [
-               'class'=> Tva::class ,
-               'choice_label' => ' nom',
-                 'expanded' => true,
+                'class'=> Tva::class ,
+                'choice_label' => ' nom',
+                'expanded' => true,
             ])
            // ->add('reservations')
            // ->add('assignationMenage')
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
