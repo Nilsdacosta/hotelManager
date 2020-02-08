@@ -135,9 +135,9 @@
           resourceAreaWidth: '14%',
           resourceLabelText: 'Rooms',
           resources: [
-            { id: "1", title: 'test' },
-            { id: "2", title: 'manoir wayne'},
-            { id: "59", title: 'test'},
+            { id: 1, title: 'test' },
+            { id: 2, title: 'manoir wayne'},
+            { id: "3", title: 'test'},
       
             // { id: "59", title: 'test', eventColor: 'orange' },
             // { id: "16", title: 'Auditorium D', children: [
@@ -148,13 +148,14 @@
           events: function(info, successCallback, failureCallback) {
             //ajax
             $.get("{{path('reservationTimeline')}}", function(data){
-              //console.log(data)
+              console.log(data)
               var obj=JSON.parse(data);
               //console.log(data)
               //console.log(obj.length);
 
               var length = obj.length;
               var newTab= new Array();
+
               for(var i=0; i<length; i++){
                 //console.log(i);
                 newTab.push(
@@ -172,13 +173,13 @@
                       
               }
               //console.log(newTab)
-              /*$('.lds-circle').hide(5000);
+              /*$('.lds-circle').hide(5000);*/
               successCallback(
               
             
               newTab
             
-              );*/
+              );
 
           });
 
