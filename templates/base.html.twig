@@ -8,20 +8,20 @@
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/print.css') }}" text="text/css" media="print">
         <link href='{{ asset('fullcalendar_timeline/packages/core/main.css') }}' rel='stylesheet' />
-        <link href='{{ asset('fullcalendar_timeline/packages/daygrid/main.css') }}' rel='stylesheet' />
-        <link href='{{ asset('fullcalendar_timeline/packages/timegrid/main.css') }}' rel='stylesheet' />
+        {# <link href='{{ asset('fullcalendar_timeline/packages/daygrid/main.css') }}' rel='stylesheet' /> #}
+        {# <link href='{{ asset('fullcalendar_timeline/packages/timegrid/main.css') }}' rel='stylesheet' /> #}
         <link href='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.css') }}' rel='stylesheet' />
         <link href='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.css') }}' rel='stylesheet' />
         <script src='{{ asset('fullcalendar_timeline/packages/core/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages/daygrid/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages/timegrid/main.js') }}'></script>
+        {# <script src='{{ asset('fullcalendar_timeline/packages/daygrid/main.js') }}'></script>
+        <script src='{{ asset('fullcalendar_timeline/packages/timegrid/main.js') }}'></script> #}
         <script src='{{ asset('fullcalendar_timeline/packages/interaction/main.js') }}'></script>
         <script src='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.js') }}'></script>
         <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-common/main.js') }}'></script>
         <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.js') }}'></script>
         {% endblock %}
     </head>
-    <body> 
+    <body>
         {% block navBar %}
         <nav class="navbar navbar-expand-lg navbar-light bg-info ">
             <img class="img" src="https://image.flaticon.com/icons/png/512/120/120159.png" alt="">
@@ -46,8 +46,8 @@
                             <a class="dropdown-item" href="{{ path('historique_resa') }}">Réservations</a>
                         </div>
                     </li>
-                    
-                    
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">| Gouvernance </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -69,17 +69,17 @@
                     <li class="nav-item ">
                         <a class="nav-link btn btn-lg btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
                     </li>
-            
+
                 </ul>
-            
+
             </div>
         </nav>
-        
+
         {% endblock %}
 
     <div class="container-fluid p-0">
         {% block body %}
-        
+
         {% endblock %}
         {% block javascripts %}
 

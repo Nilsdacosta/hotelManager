@@ -117,7 +117,7 @@
           header: {
             left: ' prev',
             center: 'title',
-            right: ',next'
+            right: 'next'
           },
           defaultView: 'resourceTimelineMonth',
           views: {
@@ -137,7 +137,7 @@
           resources: [
             { id: 1, title: 'test' },
             { id: 2, title: 'manoir wayne'},
-            { id: "3", title: 'test'},
+            { id: 3, title: 'test'},
       
             // { id: "59", title: 'test', eventColor: 'orange' },
             // { id: "16", title: 'Auditorium D', children: [
@@ -149,7 +149,8 @@
             //ajax
             $.get("{{path('reservationTimeline')}}", function(data){
               console.log(data)
-              var obj=JSON.parse(data);
+              var objData = JSON.stringify(data)
+              var obj=JSON.parse(objData);
               //console.log(data)
               //console.log(obj.length);
 
