@@ -2,72 +2,75 @@
 
 /******************************* AFFICHAGE TABLETTE ET MOBILE ************************************/
 
+
+body {
+    font-family: 'Heebo', sans-serif;
+
+}
+
+
+/***********************************
+|     Page réservation/ index      |
+************************************/
+
+#calendar {
+    max-width: 90vw;
+    height:auto;
+    margin:  auto;
+}
+
+
 /*************************************
 |       Page Sécurité/Accueil        |
 *************************************/
+.img{
+    height:80px;
+    width: 80px;
+}
+
+.nav-link{
+    font-size: 1.3em;
+}
+
+.navbar-brand{
+    font-size: 2em;
+}
+
+.accueilBkg{
+
+    background-image:url("https://lodginginteractive.com/wp-content/uploads/Hotel-Reputation-Management.jpeg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:100vh;
+    width: 100%;
+
+}
+
+.acc{
+    color: none;
+}
+
 
 .accueil{
     width:40vw;
 }
 
+.hauteurBoxConnexion{
+    position:relative;
+    top:20vh;
+
+}
 
 /************************************ AFFICHAGE DESKTOP ***************************************/
 @media screen and (min-width: 1000px) {
 
-    body {
-        font-family: 'Heebo', sans-serif;
-
-    }
-
-
-    /***********************************
-    |     Page réservation/ index      |
-    ************************************/
-
-    #calendar {
-        max-width: 90vw;
-        height:auto;
-        margin:  auto;
-    }
-
-
-    /*************************************
-    |       Page Sécurité/Accueil        |
-    *************************************/
-    .img{
-        height:80px;
-        width: 80px;
-    }
-
-    .nav-link{
-        font-size: 1.3em;
-    }
-
-    .navbar-brand{
-        font-size: 2em;
-    }
-
-    .accueilBkg{
-
-        background-image:url("https://lodginginteractive.com/wp-content/uploads/Hotel-Reputation-Management.jpeg") ;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height:100vh;
-        width: 100%;
-
-    }
-
-    .acc{
-        color: none;
-    }
-
+    
+/*************************************
+|       Page Sécurité/Accueil        |
+*************************************/
     .accueil{
         width:20vw;
     }
 
-    .hauteurBoxConnexion{
-        position:relative;
-        top:20vh;
-
-    }
+  
 }

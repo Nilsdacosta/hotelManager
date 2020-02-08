@@ -201,10 +201,8 @@ class ReservationController extends AbstractController
             $chambres=$findReservation->getChambre();
             foreach($chambres as $chambre){
                 $event = new Reservation();
-                //$event->start=$findReservation->getDateEntreepourCalendrier();
-                //$event->end=$findReservation->getDateSortiePourCalendrier();
-                $event->start='2020-02-01';
-                $event->end='2020-02-10';
+                $event->start=$findReservation->getDateEntreepourCalendrier()->format('Y-m-d');
+                $event->end=$findReservation->getDateSortiePourCalendrier()->format('Y-m-d');
                 $event->rendering='background';
                 $event->backgroundColor='#FE1919';
                 $event->idChambre = $chambre->getId();
