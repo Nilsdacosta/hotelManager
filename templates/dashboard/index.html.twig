@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<h1 class="d-flex justify-content-center">{{date|date('d-M-Y')}}</h1>
+<div class="container-fluid ">
+<div class="row d-flex justify-content-center">
+    <div class="col-5">
+    <div class="card">
+  <div class="card-header">
+    CHECK IN ({% for checkin in nbResaJour %}{{checkin}}{% endfor %})
+  </div>
+  <div class="card-body">
+    <table class ="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>N° ID</th>
+                        <th>Nom du client</th>
+                        <th>N°/Nom de chambre</th>
+                        <th>État de la réservation</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in reservationDuJour %}
+                    <tr>
+                        <td>{{reservation.id}}</td>
+                        <td> {{reservation.client.nom}}</td>
+                        <td> {% for chambre in reservation.chambre %} {{chambre.nom}} {% endfor %}</td>
+                    
+                        <td>{{reservation.renderStatus}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    <a href="{{ path('reservationCheck') }}" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+    </div>
+
+
+
+
+    <div class="col-5">
+    <div class="card">
+  <div class="card-header">
+    CHECK OUT ({% for checkout in nbDepartJour %}{{checkout}}{% endfor %})
+  </div>
+  <div class="card-body">
+    <table class ="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>N° ID</th>
+                        <th>Nom du client</th>
+                        <th>N°/Nom de chambre</th>
+                        <th>État de la réservation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for depart in departDuJour %}
+                    <tr>
+                        <td>{{depart.id}}</td>
+                        <td> {{depart.client.nom}}</td>
+                        <td> {% for chambre in depart.chambre %} {{chambre.nom}} {% endfor %}</td>
+                        <td>{{depart.renderStatus}}</td>
+                       
+                       
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+            <a href="{{ path('reservationCheck') }}" class="btn btn-primary">Go somewhere</a>
+</div>
+    </div>
+</div>
+</div>
+<br>
+<div class="d-flex justify-content-center">
+
+
+<iframe seamless width="888" height="336" frameborder="0" src="https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll=48.85341,2.3488&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=AxlWQQ5wBCZecwcwAXcAKQNrBDFbLVVyUCwKaQxpAH1TOFc2VjYDZQBuA34OIQs9VXgDYA02ATEGbVYuAXNRMANpVjoOZQRjXjEHYgEuACsDLQRlW3tVclAyCmoMZwB9UzFXNlY9A38AbgNhDjkLIVVnA2ANLQEmBmRWNAFkUTMDYlY3DmQEYF45B2EBLgArAzUEMVtgVW1QMgo%2FDDAAZ1MxV2FWYAM0ADsDYg4gCzdVYANhDTABOgZiVjkBblEtA39WSw4eBHtecQcnAWQAcgMtBDFbOlU5&_c=63d5c23b48fbec9e4fa3b528592473ee"></iframe></div>
+{% endblock %}

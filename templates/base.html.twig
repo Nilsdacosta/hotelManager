@@ -19,6 +19,7 @@
         <script src='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.js') }}'></script>
         <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-common/main.js') }}'></script>
         <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.js') }}'></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         {% endblock %}
     </head>
     <body>
@@ -33,7 +34,7 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto ">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Tableau de bord |</a>
+                        <a class="nav-link" href="{{ path('dashboard') }}">Tableau de bord |</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ path('reservation') }}">Réservation chambre |</a>
@@ -67,7 +68,8 @@
                     </li>
 
                     <li class="nav-item ">
-                        <a class="nav-link btn btn-lg btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+                        <a class="nav-link btn btn-lg btn-danger" href="{{ path('app_logout') }}">
+                        <i class="fas fa-sign-out-alt"></i>Déconnexion</a>
                     </li>
 
                 </ul>

@@ -28,6 +28,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('val', $valeurExclue)
             ->getQuery()
             ->getResult()
+            
         ;
     }
 
@@ -38,9 +39,44 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere('CURRENT_DATE() = r.dateEntree')
             ->getQuery()
             ->getResult()
+            
         ;
     }
 
+
+
+        #Requete pour trouver les résa dont la date de sortie est la date du jour
+ 
+        //public function findCheckOut()
+        //{
+        //    return $this->createQueryBuilder('r')
+        //        ->andWhere('CURRENT_DATE() = r.dateSortie')
+        //        ->getQuery()
+        //        ->getResult()
+        //    ;
+        //}
+
+        public function countin()
+        {
+            return $this->createQueryBuilder('r')
+                ->select('COUNT (r.id)')
+                ->andWhere('CURRENT_DATE() = r.dateEntree')
+                ->groupBy('r.dateEntree')
+                ->getQuery()
+                ->getSingleResult()
+            ;
+        }
+
+
+        public function countout()
+        {
+            return $this->createQueryBuilder('r')
+                ->select('COUNT (r.id)')
+                ->andWhere('CURRENT_DATE() = r.dateSortie')
+                ->getQuery()
+                ->getSingleResult()
+            ;
+        }
 
     #Requete pour trouver les résa dont la date de sortie est la date du jour
     public function findCheckOut()
