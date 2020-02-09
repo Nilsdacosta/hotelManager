@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AssignationMenage;
 use App\Form\GouvernanceType;
+use App\Repository\AssignationMenageRepository;
 use App\Repository\ChambreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,11 @@ class GouvernanceController extends AbstractController
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
             $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
+            
         }
         return $this->render('gouvernance/index.html.twig', [
-            'formList' => $formView
+            'formList' => $formView,
+            'chambres' => $chambres
         ]);
     }
 
@@ -43,12 +46,25 @@ class GouvernanceController extends AbstractController
 
             // enregistrement des datas dans la table assignation en fonction de l'id 
             if ($form->isSubmitted() && $form->isValid()) {
-
+                $assignation->setChambre($chambre);
+                $assignation->setdate(new \DateTime);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($assignation);
                 $entityManager->flush();
     
                 return $this->redirectToRoute('gouvernance');
             }
+    }
+
+    /**
+     * @Route("gouvernance/historique", name="gouvernance_historique")
+     */
+    public function show(AssignationMenageRepository $assignationMenageRepository): Response
+    {
+        $assignationMenages = $assignationMenageRepository->findAll();
+
+        return $this->render('gouvernance/assignationHistorique.html.twig', [
+            'assignationMenages' => $assignationMenages,
+        ]);
     }
 }
