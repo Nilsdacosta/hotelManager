@@ -41,6 +41,9 @@
                         <td class="d-flex justify-content-center"><a class="btn btn-secondary" href="{{path('reservationCheckInForm',{'id':reservation.id} ) }}">Valider</a></td>
 
                     </tr>
+
+                    {% else %}
+                        Pas de check in prévu ce jour
                     {% endfor %}
                 </tbody>
             </table>
@@ -75,6 +78,8 @@
                         <td class="d-flex justify-content-center"><a class="btn btn-secondary" href="{{path('reservationCheckOutForm',{'id':depart.id} ) }}">Valider</a></td>
 
                     </tr>
+                    {% else %}
+                        Pas de check out prévu ce jour
                     {% endfor %}
                 </tbody>
             </table>
