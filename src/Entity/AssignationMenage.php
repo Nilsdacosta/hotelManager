@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,15 +29,23 @@ class AssignationMenage
      */
     private $employe;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\OptionService", inversedBy="assignationMenages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Chambre", inversedBy="assignationMenages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $chambre;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\OptionService", inversedBy="assignationMenages")
      */
     private $optionService;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Chambre", inversedBy="assignationMenage", cascade={"persist", "remove"})
-     */
-    private $chambre;
+    public function __construct()
+    {
+        $this->optionService = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -66,18 +76,6 @@ class AssignationMenage
         return $this;
     }
 
-    public function getOptionService(): ?OptionService
-    {
-        return $this->optionService;
-    }
-
-    public function setOptionService(?OptionService $optionService): self
-    {
-        $this->optionService = $optionService;
-
-        return $this;
-    }
-
     public function getChambre(): ?Chambre
     {
         return $this->chambre;
@@ -86,6 +84,32 @@ class AssignationMenage
     public function setChambre(?Chambre $chambre): self
     {
         $this->chambre = $chambre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OptionService[]
+     */
+    public function getOptionService(): Collection
+    {
+        return $this->optionService;
+    }
+
+    public function addOptionService(OptionService $optionService): self
+    {
+        if (!$this->optionService->contains($optionService)) {
+            $this->optionService[] = $optionService;
+        }
+
+        return $this;
+    }
+
+    public function removeOptionService(OptionService $optionService): self
+    {
+        if ($this->optionService->contains($optionService)) {
+            $this->optionService->removeElement($optionService);
+        }
 
         return $this;
     }

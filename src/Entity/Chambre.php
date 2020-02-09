@@ -59,9 +59,15 @@ class Chambre
      */
     private $assignationMenage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre")
+     */
+    private $assignationMenages;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->assignationMenages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,19 +193,32 @@ class Chambre
         return $this;
     }
 
-    public function getAssignationMenage(): ?AssignationMenage
+    /**
+     * @return Collection|AssignationMenage[]
+     */
+    public function getAssignationMenages(): Collection
     {
-        return $this->assignationMenage;
+        return $this->assignationMenages;
     }
 
-    public function setAssignationMenage(?AssignationMenage $assignationMenage): self
+    public function addAssignationMenage(AssignationMenage $assignationMenage): self
     {
-        $this->assignationMenage = $assignationMenage;
+        if (!$this->assignationMenages->contains($assignationMenage)) {
+            $this->assignationMenages[] = $assignationMenage;
+            $assignationMenage->setChambre($this);
+        }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newChambre = null === $assignationMenage ? null : $this;
-        if ($assignationMenage->getChambre() !== $newChambre) {
-            $assignationMenage->setChambre($newChambre);
+        return $this;
+    }
+
+    public function removeAssignationMenage(AssignationMenage $assignationMenage): self
+    {
+        if ($this->assignationMenages->contains($assignationMenage)) {
+            $this->assignationMenages->removeElement($assignationMenage);
+            // set the owning side to null (unless already changed)
+            if ($assignationMenage->getChambre() === $this) {
+                $assignationMenage->setChambre(null);
+            }
         }
 
         return $this;

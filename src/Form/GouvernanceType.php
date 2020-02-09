@@ -17,22 +17,22 @@ class GouvernanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
+            // ->add('date')
             ->add('employe', EntityType::class, [
                 'class' => Employe::class,
-                'choice_label' => 'username',
-                'expanded' =>true
+                'choice_label' => 'username'
             ])
             ->add('optionService', EntityType::class, [
                 'class' => OptionService::class,
                 'choice_label' => 'nomOption',
+                'multiple' => true,
                 'expanded' => true
             ])
-            ->add('chambre', EntityType::class, [
-                'class' => Chambre::class,
-                'choice_label' => 'nom',
-                'expanded' =>true
-            ])
+            // ->add('chambre', EntityType::class, [
+            //     'class' => Chambre::class,
+            //     'choice_label' => 'nom',
+            //     'expanded' =>true
+            // ])
             ->add('Valider', SubmitType::class)
         ;
     }
