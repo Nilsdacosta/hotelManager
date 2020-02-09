@@ -207,6 +207,8 @@ class ReservationController extends AbstractController
                 $event->backgroundColor='#FE1919';
                 $event->idChambre = $chambre->getId();
                 $event->idReservation=$findReservation->getId();
+                $event->building="Catégorie : ".$chambre->getCapacite();
+                $event->title= ($chambre->getNom().' - '.$chambre->getCapacite().' - '. ($chambre->getPrix()*(1+ ($chambre->getTva()->getTaux())/100).'euros TTC' ));
             }
             
                    
@@ -259,7 +261,7 @@ class ReservationController extends AbstractController
      */
     public function checkInOut( ReservationRepository $reservationRepository, Request $request, EntityManagerInterface $entityManager, ChambreRepository $chambreRepository)
     {
-        
+
         $date = new \DateTime;
         $reservationDuJour = $reservationRepository->findCheckin();
         $departDuJour = $reservationRepository->findCheckOut();
@@ -268,83 +270,99 @@ class ReservationController extends AbstractController
         ################## UPDATE ETAT CHAMBRE #########################
         ################################################################
 
-        foreach($reservationDuJour as $reservation){
+        foreach ($reservationDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
-            if($reservation->getStatus()==2){
+            if ($reservation->getStatus() == 2) {
                 $etat = 4;
-                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
-                $chambres= $reservation->getChambre();
-                foreach($chambres as $chambre){
-                    $idChambre= $chambre->getId();
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $chambres = $reservation->getChambre();
+                foreach ($chambres as $chambre) {
+                    $idChambre = $chambre->getId();
                     $findChambre = $chambreRepository->find($idChambre);
                     $findChambre->setEtat($etat);
-            
+
                     // je procede a l'enregistrement de mes données
                     $entityManager->persist($findChambre);
 
                     // j'enregistre les données en BDD
                     $entityManager->flush();
                 }
-                
-                
-            // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
-            }elseif($reservation->getStatus()==4){
+
+
+                // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
+            } elseif ($reservation->getStatus() == 4) {
                 $etat = 1;
-                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
-                $chambres= $reservation->getChambre();
-                foreach($chambres as $chambre){
-                    $idChambre= $chambre->getId();
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $chambres = $reservation->getChambre();
+                foreach ($chambres as $chambre) {
+                    $idChambre = $chambre->getId();
                     $findChambre = $chambreRepository->find($idChambre);
                     $findChambre->setEtat($etat);
-            
+
                     // je procede a l'enregistrement de mes données
                     $entityManager->persist($findChambre);
 
                     // j'enregistre les données en BDD
                     $entityManager->flush();
                 }
-                
+
             }
 
-           
+
         }
-            
-        foreach($departDuJour as $reservation){
+
+        foreach ($departDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
-            if($reservation->getStatus()==2){
+            if ($reservation->getStatus() == 2) {
                 $etat = 4;
-                
-                
-            // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
-            }elseif($reservation->getStatus()==4){
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $chambres = $reservation->getChambre();
+                foreach ($chambres as $chambre) {
+                    $idChambre = $chambre->getId();
+                    $findChambre = $chambreRepository->find($idChambre);
+                    $findChambre->setEtat($etat);
+
+                    // je procede a l'enregistrement de mes données
+                    $entityManager->persist($findChambre);
+
+                    // j'enregistre les données en BDD
+                    $entityManager->flush();
+                }
+
+
+                // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
+            } elseif ($reservation->getStatus() == 4) {
                 $etat = 1;
-                
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $chambres = $reservation->getChambre();
+                foreach ($chambres as $chambre) {
+                    $idChambre = $chambre->getId();
+                    $findChambre = $chambreRepository->find($idChambre);
+                    $findChambre->setEtat($etat);
+
+                    // je procede a l'enregistrement de mes données
+                    $entityManager->persist($findChambre);
+
+                    // j'enregistre les données en BDD
+                    $entityManager->flush();
+                }
+
             }
 
-            # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
-            $chambres= $reservation->getChambre();
-            foreach($chambres as $chambre){
-                $idChambre= $chambre->getId();
-                $findChambre = $chambreRepository->find($idChambre);
-                $findChambre->setEtat($etat);
-        
-                // je procede a l'enregistrement de mes données
-                $entityManager->persist($findChambre);
 
-                // j'enregistre les données en BDD
-                $entityManager->flush();
-            }
         }
 
-        $chambres= $reservation->getChambre();
         return $this->render('reservation/check.html.twig', [
-            'reservationDuJour'=> $reservationDuJour,
-            'date'=> $date,
-            'chambres'=> $chambres,
-            'departDuJour'=> $departDuJour
-            
+            'reservationDuJour' => $reservationDuJour,
+            'date' => $date,
+
+            'departDuJour' => $departDuJour
+
         ]);
     }
+
+
+
 
 
 
