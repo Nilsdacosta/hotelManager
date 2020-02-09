@@ -51,7 +51,7 @@ class OptionService
     private $reservations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="optionService")
+     * @ORM\ManyToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="optionService")
      */
     private $assignationMenages;
 
@@ -166,7 +166,7 @@ class OptionService
     {
         if (!$this->assignationMenages->contains($assignationMenage)) {
             $this->assignationMenages[] = $assignationMenage;
-            $assignationMenage->setOptionService($this);
+            $assignationMenage->addOptionService($this);
         }
 
         return $this;
@@ -176,12 +176,11 @@ class OptionService
     {
         if ($this->assignationMenages->contains($assignationMenage)) {
             $this->assignationMenages->removeElement($assignationMenage);
-            // set the owning side to null (unless already changed)
-            if ($assignationMenage->getOptionService() === $this) {
-                $assignationMenage->setOptionService(null);
-            }
+            $assignationMenage->removeOptionService($this);
         }
 
         return $this;
     }
+
+    
 }

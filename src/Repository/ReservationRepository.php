@@ -20,7 +20,7 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-
+    # Requete pour récupérer les réservation qui ne sont pas annulées
     public function findReservation($valeurExclue)
     {
         return $this->createQueryBuilder('r')
@@ -44,15 +44,17 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
+
         #Requete pour trouver les résa dont la date de sortie est la date du jour
-        public function findCheckOut()
-        {
-            return $this->createQueryBuilder('r')
-                ->andWhere('CURRENT_DATE() = r.dateSortie')
-                ->getQuery()
-                ->getResult()
-            ;
-        }
+ 
+        //public function findCheckOut()
+        //{
+        //    return $this->createQueryBuilder('r')
+        //        ->andWhere('CURRENT_DATE() = r.dateSortie')
+        //        ->getQuery()
+        //        ->getResult()
+        //    ;
+        //}
 
         public function countin()
         {
@@ -75,6 +77,30 @@ class ReservationRepository extends ServiceEntityRepository
                 ->getSingleResult()
             ;
         }
+
+    #Requete pour trouver les résa dont la date de sortie est la date du jour
+    public function findCheckOut()
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('CURRENT_DATE() = r.dateSortie')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function filtreHistoriqueResa($capacite)
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r','c')
+            ->join('r.chambre', 'c')
+            ->where('c.capacite LIKE :capacite')
+            ->setParameter('capacite', $capacite)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 
     // /**

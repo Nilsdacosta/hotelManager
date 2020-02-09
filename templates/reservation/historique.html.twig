@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Historique des réservations</h1>
 
+
+
     <table class="table">
         <thead>
             <tr>
@@ -17,6 +19,7 @@
                 <th>Status</th>
                 <th>Date d'arrivée</th>
                 <th>Date de fin</th> 
+                <th>Options Service</th>
                 <th>Tarif</th>
                 {# <th>Action</th> #}
 
@@ -28,14 +31,17 @@
             <tr>
              
                 <td><a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}">{{ reservation.id }}</td></a>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }}  {% endfor %}   </td>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }} <br>  {% endfor %}   </td>
                 <td>{{ reservation.dateCreation|date("d/m/Y") }}</td>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.nom }}  {% endfor %}   </td>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.nom }} <br>  {% endfor %}   </td>
                 <td>{{ reservation.client.nom }}</td> 
-                <td>{{ reservation.status }}</td> 
+                <td>{{ reservation.renderStatus }}</td>
                 <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
                 <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.prix }}  {% endfor %} €  </td>
+                <td>
+                    {% for option in reservation.optionService %} {{ option.nomOption }} - {% endfor %}
+                </td>
+                <td>{% for chambres in reservation.chambre %}{{ chambres.prix }}€  <br> {% endfor %}   </td>
                 
           
                  <td>
