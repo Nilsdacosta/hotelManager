@@ -7,6 +7,7 @@ use App\Form\ClientType;
 use App\Form\CheckInType;
 use App\Form\CheckOutType;
 use App\Entity\Reservation;
+use App\Form\HistoriqueResaType;
 use App\Form\ReservationClientType;
 use App\Repository\ClientRepository;
 use App\Repository\ChambreRepository;
@@ -52,26 +53,26 @@ class ReservationController extends AbstractController
         {
             $form = $this->createForm(ReservationClientType::class, $reservation);
 
-        // je recupère les données du formulaire
-        $form->handleRequest($request);
+            // je recupère les données du formulaire
+            $form->handleRequest($request);
 
-        // si les données sont valides
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservation->setStatus(1);
-            $reservation->setDateCreation(new \DateTime);
+            // si les données sont valides
+            if ($form->isSubmitted() && $form->isValid()) {
+                $reservation->setStatus(1);
+                $reservation->setDateCreation(new \DateTime);
 
-            // je procède a l'enregistrement de mes données
-            $entityManager->persist($reservation);
+                // je procède a l'enregistrement de mes données
+                $entityManager->persist($reservation);
 
-            // j'enregistre les données en BDD
-            $entityManager->flush();
+                // j'enregistre les données en BDD
+                $entityManager->flush();
 
-            // // je redirige vers la page de l'annonce
-            return $this->redirectToRoute('reservationRecapitulatif', [
-                'id' => $reservation->getId()
-            ]);
-            
-        }
+                // // je redirige vers la page de l'annonce
+                return $this->redirectToRoute('reservationRecapitulatif', [
+                    'id' => $reservation->getId()
+                ]);
+
+            }
 
         }
         
@@ -237,15 +238,23 @@ class ReservationController extends AbstractController
 
 
     /**
-     * @Route("/historique", name="historique_resa", methods={"GET"})
+     * @Route("/historique/", name="historique_resa", methods={"GET"})
+     * @Route("/historique/capacite/{id}", name="historique_resa_capacite", methods={"GET"})
      */
-    public function historique(ReservationRepository $reservationRepository, ClientRepository $clientRepository, ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository): Response
+    public function historique(ReservationRepository $reservationRepository,Request $request, ClientRepository $clientRepository, ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository, $id=null): Response
     {
+        $reservations=$reservationRepository->findAll();
+        $clients = $clientRepository->findAll();
+        $chambre = $chambreRepository->findAll();
+        $optionResa = $optionServiceRepository->findAll();
+
+
         return $this->render('reservation/historique.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
-            'clients' => $clientRepository->findAll(),
-            'chambre' => $chambreRepository->findAll(),
-            'optionResa' => $optionServiceRepository->findAll()
+            'reservations' => $reservations,
+            'clients' => $clients,
+            'chambre' => $chambre,
+            'optionResa' => $optionResa,
+
         ]);
     }
 
@@ -355,7 +364,6 @@ class ReservationController extends AbstractController
         return $this->render('reservation/check.html.twig', [
             'reservationDuJour' => $reservationDuJour,
             'date' => $date,
-
             'departDuJour' => $departDuJour
 
         ]);
