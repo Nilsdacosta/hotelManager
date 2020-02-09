@@ -28,6 +28,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('val', $valeurExclue)
             ->getQuery()
             ->getResult()
+            
         ;
     }
 
@@ -38,6 +39,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere('CURRENT_DATE() = r.dateEntree')
             ->getQuery()
             ->getResult()
+            
         ;
     }
 
@@ -52,9 +54,27 @@ class ReservationRepository extends ServiceEntityRepository
             ;
         }
 
+        public function countin()
+        {
+            return $this->createQueryBuilder('r')
+                ->select('COUNT (r.id)')
+                ->andWhere('CURRENT_DATE() = r.dateEntree')
+                ->groupBy('r.dateEntree')
+                ->getQuery()
+                ->getSingleResult()
+            ;
+        }
 
 
-
+        public function countout()
+        {
+            return $this->createQueryBuilder('r')
+                ->select('COUNT (r.id)')
+                ->andWhere('CURRENT_DATE() = r.dateSortie')
+                ->getQuery()
+                ->getSingleResult()
+            ;
+        }
 
 
     // /**
