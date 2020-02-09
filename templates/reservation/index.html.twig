@@ -15,6 +15,7 @@
 
 </script>
 
+    {# Message ajout reservation #}
     <div class=" d-flex justify-content-center">
         {% for message in app.flashes('ajoutResa') %}
             <div class="flash-notice alert alert-success">
@@ -23,6 +24,7 @@
         {% endfor %}
     </div>
 
+    {# Message ajout client #}
     <div class=" d-flex justify-content-center">
         {% for message in app.flashes('ajoutClient') %}
             <div class="flash-notice alert alert-success">
@@ -38,10 +40,10 @@
               <h1 class="mb-5">Ajouter une réservation</h1>
               {{ form_start(formResa) }}
             
-              {{ form_row(formResa.dateEntree) }}
+              {{ form_row(formResa.dateEntree, {"id": "dateEntree"}) }}
 
 
-              {{ form_row(formResa.dateSortie) }}
+              {{ form_row(formResa.dateSortie , {"id": "dateSortie"}) }}
 
 
               {{ form_row(formResa.carteBancaire) }}
@@ -50,7 +52,7 @@
               {{ form_row(formResa.client) }}
 
 
-              {{ form_row(formResa.chambre) }}
+              {{ form_row(formResa.chambre, {"id": "idChambre"})  }}
 
               {{ form_row(formResa.optionService) }}
 
@@ -107,7 +109,7 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'interaction', 'resourceTimeline', 'dayGrid', 'timeGrid' ],
+          plugins: [ 'interaction', 'resourceTimeline'],
           now: '2020-02-01',
           selectable: true,
           selectHelper: true,
@@ -134,71 +136,101 @@
           navLinks: true,
           resourceAreaWidth: '14%',
           resourceLabelText: 'Rooms',
-          resources: [
-            { id: 1, title: 'test' },
-            { id: 2, title: 'manoir wayne'},
-            { id: 3, title: 'test'},
-      
-            // { id: "59", title: 'test', eventColor: 'orange' },
-            // { id: "16", title: 'Auditorium D', children: [
-            //   { id: 'd1', title: 'Room D1' },
-            //   { id: 'd2', title: 'Room D2' }
 
-          ],
+           /* Je récupère les chambres enregistrées en BDD*/
+          resourceGroupField: 'building',
+          resources: function(info, successCallback, failureCallback) {
+              //ajax
+              $.get("{{path('reservationTimeline')}}", function(data){
+                  //console.log(data)
+
+
+                  var length = data.length;
+                  var NomRooms= new Array();
+
+                  for(var i=0; i<length; i++){
+                      //console.log(i);
+                      NomRooms.push(
+                          {
+
+                              id:data[i].idChambre,
+                              building:data[i].building,
+                              title:data[i].title,
+
+                          },
+                      ) ;
+                  }
+                  //console.log(newTab)
+                  /*$('.lds-circle').hide(5000);*/
+                  successCallback(
+                      NomRooms
+                  );
+
+              });
+
+
+          },
+
+          /* Je récupère les réservations enregistrées en BDD*/
           events: function(info, successCallback, failureCallback) {
             //ajax
             $.get("{{path('reservationTimeline')}}", function(data){
-              console.log(data)
-              var objData = JSON.stringify(data)
-              var obj=JSON.parse(objData);
               //console.log(data)
-              //console.log(obj.length);
-
-              var length = obj.length;
+              var length = data.length;
               var newTab= new Array();
 
               for(var i=0; i<length; i++){
                 //console.log(i);
                 newTab.push(
                     {
-
-                      resourceId:obj[i].idChambre,
-                      start:obj[i].start, 
-                      end:obj[i].end,  
-                      rendering:obj[i].rendering,
-                      backgroundColor:obj[i].backgroundColor,
+                      resourceId:data[i].idChambre,
+                      start:data[i].start,
+                      end:data[i].end,
+                      rendering:data[i].rendering,
+                      backgroundColor:data[i].backgroundColor,
                     },
                 ) ;
-                  
-                
-                      
               }
-              //console.log(newTab)
-              /*$('.lds-circle').hide(5000);*/
               successCallback(
-              
-            
               newTab
-            
               );
-
           });
 
 
         },
+        /*select: function(arg) {
+
+          console.log(start.startStr)
+
+            'select callback',
+          arg.startStr,
+          arg.endStr,
+          arg.resource ? arg.resource.id : '(no resource)'
+          var dateEntree = document.getElementById("dateEntree");
+          var dateSortie = document.getElementById("dateSortie");
+
+          dateEntree.value = arg.startStr;
+          dateSortie.value = arg.endStr;
+          },
+
+
+
+        });*/
         select: function(arg) {
-          console.log(
+
             'select callback',
             arg.startStr,
             arg.endStr,
-            arg.resource ? arg.resource.id : '(no resource)'
-          );
+            arg.resource ? arg.resource.id : '(no resource)';
+            var dateEntree = document.getElementById("dateEntree");
+            var dateSortie = document.getElementById("dateSortie");
+            var idChmabre = document.getElementById("idChambre");
+            dateEntree.value = arg.startStr;
+            dateSortie.value = arg.endStr;
+            idChambre.value = arg.resource.id
+
         },
-
-
-
         });
-
         calendar.render();
       });
 

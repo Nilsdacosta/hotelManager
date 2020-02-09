@@ -136,11 +136,11 @@
                         <td><small>Dont TVA</small> </td>
                         <td> <small>
                             {% for option in reservation.optionService %}
-                               {% set tvaOption = tvaOption + option.prixOption* option.tva.taux %} 
+                               {% set tvaOption = tvaOption + option.prixOption* (option.tva.taux/100) %}
                             {% endfor %}
                             {% for chambre in reservation.chambre %}
                                 {#  calcul de la TVA = prix ht * le taux de tva pour  toutes les chambres réservées #}
-                                {% set tva = tva + (nombreJours.days*chambre.prix)*chambre.tva.taux %} 
+                                {% set tva = tva + (nombreJours.days*chambre.prix)*(chambre.tva.taux/100) %}
                             {% endfor %}
                             {% set tva = tvaOption + tva %}
                             {{tva}}€

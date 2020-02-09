@@ -23,14 +23,16 @@ class ReservationClientType extends AbstractType
             ->add('dateEntree',DateType::class, [
                 'widget' => 'single_text',
                 'label'=> 'Date d\'arrivée',
-                'attr' => ['class' => 'js-datepicker'
+                'attr' => ['class' => 'js-datepicker',
+
                 ]
             ])
 
             ->add('dateSortie',DateType::class, [
                 'widget' => 'single_text',
                 'label'=> 'Date de départ',
-                'attr' => ['class' => 'js-datepicker'
+                'attr' => ['class' => 'js-datepicker',
+
                 ]
             ])
 
