@@ -36,31 +36,37 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto ">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt fa-3x"></i></a>
+                        <a class="nav-link " href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt fa-3x"></i></a>
+                        <p class="onglet">Tableau de bord</p>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ path('reservation') }}"><i class="fas fa-bed fa-3x"></i></a>
+                          <p class="onglet ">Réservations</p>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-history fa-3x"></i> </a>
+                          <p class="onglet">Historique</p>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('client') }}">Clients</a>
                             <a class="dropdown-item" href="{{ path('historique_resa') }}">Réservations</a>
                         </div>
                     </li>
 
-
+ {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="hk" src="https://cdn2.iconfinder.com/data/icons/hotel-98/64/maid-hotel-staff-housekeeping-services-512.png" alt=""> </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="hk" src="https://cdn4.iconfinder.com/data/icons/cleaning-5/500/Cleaning_3-512.png" alt=""> </a>
+                          <p class="onglet">Gouvernance</p>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('gouvernance') }}">Assignation chambres</a>
                             <a class="dropdown-item" href="{{ path('gouvernance_historique') }}">Historique assignations</a>
                         </div>
                     </li>
-
+  {% endif %}
+  {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog fa-3x"></i></a>
+                          <p class="onglet">Administration</p>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('chambre_index') }}">Chambre</a>
                             <a class="dropdown-item" href="{{ path('option_service_index') }}">Option</a>
@@ -68,10 +74,11 @@
                             <a class="dropdown-item" href="{{ path('tva_index') }}">Taux tva</a>
                         </div>
                     </li>
-
+  {% endif %}
                     <li class="nav-item  ">
                         <a class="nav-link  " href="{{ path('app_logout') }}">
                         <i class="fas fa-power-off fa-3x"></i></a>
+                          <p class="onglet">Déconnexion</p>
                     </li>
 
                 </ul>

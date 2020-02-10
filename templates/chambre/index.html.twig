@@ -27,9 +27,9 @@
                 <td>{{ chambre.prix }}</td>
                 <td>{{ chambre.nom }}</td>
                 <td>
-                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}">Voir</a>
+                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}"><i class="far fa-eye"></i></a>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
+                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}"><i class="far fa-edit"></i></a>
                     {% endif %}
                 </td>
             </tr>
@@ -41,6 +41,6 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
-        <a href="{{ path('chambre_new') }}">Ajouter</a>
+        <a href="{{ path('chambre_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
     {% endif %}
 {% endblock %}
