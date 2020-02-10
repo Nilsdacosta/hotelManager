@@ -35,13 +35,13 @@ security:
     access_control:
        
          - { path: ^/gouvernance, roles: ROLE_ADMIN }
-         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
          - { path: ^/reservation, roles: ROLE_USER }
          - { path: ^/dashboard, roles: ROLE_USER }
          - { path: ^/client, roles: ROLE_USER }
          - { path: ^/historique, roles: ROLE_USER }
-   
+         - { path: ^/admin, roles: ROLE_SUPER_ADMIN }
+
     role_hierarchy:
 
-        
+            ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
             ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
