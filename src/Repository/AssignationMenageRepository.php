@@ -47,4 +47,14 @@ class AssignationMenageRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findLastAssignation($chambre) {
+        return $this->createQueryBuilder('a')
+        ->andWhere('a.chambre = :chambre' )
+        ->setMaxResults(1)
+        ->setParameter('chambre', $chambre)
+        ->orderBy('a.id', 'DESC')
+        ->getQuery()
+        ->getOneOrNullResult()
+        ;
+        }
 }

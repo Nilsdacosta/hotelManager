@@ -2,34 +2,68 @@
 
 namespace App\Controller;
 
-use App\Entity\AssignationMenage;
+use App\Entity\Employe;
+use App\Entity\OptionService;
 use App\Form\GouvernanceType;
-use App\Repository\AssignationMenageRepository;
+use App\Entity\AssignationMenage;
 use App\Repository\ChambreRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\EmployeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\AssignationMenageRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GouvernanceController extends AbstractController
 {
+    // /**
+    //  * @Route("/gouvernance", name="gouvernance")
+    //  */
+    // public function index(Request $request, ChambreRepository $chambreRepository): Response
+    // {
+    //     $assignation = new AssignationMenage;
+    //     $chambres = $chambreRepository->findAll();
+    //     foreach($chambres as $chambre)
+    //     {
+    //         $form = $this->createForm(GouvernanceType::class, $assignation);
+
+    //         $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
+            
+    //     }
+    //     return $this->render('gouvernance/index.html.twig', [
+    //         'formList' => $formView,
+    //         'chambres' => $chambres
+    //     ]);
+    // }
+
     /**
      * @Route("/gouvernance", name="gouvernance")
      */
-    public function index(Request $request, ChambreRepository $chambreRepository): Response
+    public function index(ChambreRepository $chambreRepository, AssignationMenageRepository $assignationRepository, EmployeRepository $employeRepository): Response
     {
-        $assignation = new AssignationMenage;
+        $employes = $employeRepository->findBy(['poste' => 3]);
+        // dump($employes);
         $chambres = $chambreRepository->findAll();
+        
         foreach($chambres as $chambre)
         {
+            // Je récupère la dernière assignation après validation ou j'instancie un nouvel objet assignation
+            $assignation = $assignationRepository->findLastAssignation($chambre->getId());  
+
+            if ($assignation === null) {
+                $assignation = new AssignationMenage;
+            }
+
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
             $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
-            
         }
         return $this->render('gouvernance/index.html.twig', [
             'formList' => $formView,
-            'chambres' => $chambres
+            'chambres' => $chambres,
+            'employes' => $employes
         ]);
     }
 
