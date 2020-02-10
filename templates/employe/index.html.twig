@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Liste des Employés</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Id</th>
@@ -28,7 +28,7 @@
                 <td>{{ employe.telephone }}</td>
                 <td>{{ employe.poste }}</td>
                 <td>
-                    <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil</a>
+                    <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil |</a>
                     <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
                 </td>
             </tr>

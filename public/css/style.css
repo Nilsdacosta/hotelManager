@@ -5,6 +5,7 @@
 
 body {
     font-family: 'Heebo', sans-serif;
+    background-color: #fbeec1;
 
 }
 
@@ -59,6 +60,45 @@ body {
     position:relative;
     top:20vh;
 
+}
+
+.navbar{
+    background-color:#659DBD;
+}
+
+.deconect{
+    background-color:#daad86;
+    margin-left: 300px;
+}
+
+.deconect:hover
+{
+    background-color:#fb2020;
+}
+
+
+.dashcard{
+    background-color: none;
+}
+
+.bandeau{
+    padding-bottom: 60px;
+}
+
+.affchin{
+    background-color:#daad86;
+
+}
+.affchin:hover{
+    background-color:#98bf64;
+}
+
+.affchout{
+    background-color:#daad86;
+
+}
+.affchout:hover{
+    background-color:#ff6961;
 }
 
 /************************************ AFFICHAGE DESKTOP ***************************************/
