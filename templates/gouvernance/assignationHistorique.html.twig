@@ -3,17 +3,34 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <table class="table">
-        {% for assignationMenage in assignationMenages %}
-            {% dump(assignationMenage.employe) %}
+<div class="container">
+
+    <div class="d-flex justify-content-center my-5">
+        <h1>Historique des assignations</h1>
+    </div>
+    <table class="table ">
+        <thead>
             <tr>
-                <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
-                <td>{{(assignationMenage.employe.username)}}</td>
-                <td>{{(assignationMenage.chambre.nom)}}</td>
-                {% for option in assignationMenage.optionService %}
-                <td>{{option.nomOption}}</td>
-                {% endfor %}
+                <th>Date assignation</th>
+                <th>Employé assigné</th>
+                <th>Chambre concernée</th>
+                <th>Option Service</th>
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for assignationMenage in assignationMenages %}
+                {% dump(assignationMenage.employe) %}
+                <tr>
+                    <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
+                    <td>{{(assignationMenage.employe.username)}}</td>
+                    <td>{{(assignationMenage.chambre.nom)}}</td>
+                    {% for option in assignationMenage.optionService %}
+                    <td>{{option.nomOption}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
+    
 {% endblock %}

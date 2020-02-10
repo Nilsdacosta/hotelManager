@@ -19,6 +19,17 @@ class OptionServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, OptionService::class);
     }
 
+
+    # Requete findAll + groupeBy
+    public function findAllGroupeBy($value)
+    {
+        return $this->createQueryBuilder('o')
+            ->groupBy('o.'.$value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return OptionService[] Returns an array of OptionService objects
     //  */

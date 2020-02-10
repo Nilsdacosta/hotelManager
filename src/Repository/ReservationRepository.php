@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Client;
+use App\Entity\Chambre;
 use App\Entity\Reservation;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
@@ -98,6 +100,98 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+
+
+    # Requete findAll + groupeBy
+    public function findAllGroupeBy($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->groupBy('r.'.$value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    /**
+     * @return Reservation[] id, capacite,dateCreation, nomChambre, nomClient, prenomClient,dateEntree, dateSortie, OptionService
+     */
+    # Requete pour afficher l'historique des réservations après les filtres
+    public function historiqueResaFiltre($id,$capacite,$dateCreation,$nomChambre,$nomClient,$prenomClient, $etatChambre,$dateEntree, $dateSortie, $optionService)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->innerJoin('r.chambre', 'c') 
+            ->innerJoin('r.client', 'cl') 
+            ->innerJoin('r.optionService', 'o');
+
+            if(!empty( $id)) {
+                $query = $query
+                ->andWhere('r.id = :val')
+                ->setParameter('val', $id);
+            }
+
+            if(!empty($capacite)) {
+                    $query = $query
+                ->andWhere('c.capacite = :val2')
+                ->setParameter('val2', $capacite);
+            }
+
+            if(!empty($dateCreation)) {
+                $query = $query
+                ->andWhere('r.dateCreation = :val3')
+                ->setParameter('val3', $dateCreation);
+            }
+
+            if(!empty($nomChambre)) {
+                $query = $query
+                ->andWhere('c.nom = :val4')
+                ->setParameter('val4', $nomChambre);
+            }
+
+            
+            if(!empty($nomClient)) {
+                $query = $query
+                ->andWhere('cl.nom = :val5')
+                ->setParameter('val5', $nomClient);
+            }
+
+            if(!empty($prenomClient)) {
+                $query = $query
+                ->andWhere('cl.prenom = :val6')
+                ->setParameter('val6', $prenomClient);
+            }
+
+            if(!empty($etatChambre)) {
+                $query = $query
+                ->andWhere('c.etat= :val7')
+                ->setParameter('val7', $etatChambre);
+            }
+
+            if(!empty($dateEntree)) {
+                $query = $query
+                ->andWhere('r.dateEntree= :val8')
+                ->setParameter('val8', $dateEntree);
+            }
+
+            if(!empty($dateSortie)) {
+                $query = $query
+                ->andWhere('r.dateSortie= :val9')
+                ->setParameter('val9', $dateSortie);
+            }
+
+            if(!empty($optionService)) {
+                $query = $query
+                ->andWhere('o.nomOption= :val10')
+                ->setParameter('val10', $optionService);
+            };
+            
+            $query = $query
+            ->getQuery()
+            ->getResult();
+
+            return $query;
     }
 
 

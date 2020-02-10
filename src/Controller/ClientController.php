@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Address;
 
 class ClientController extends AbstractController
 {
@@ -17,9 +18,27 @@ class ClientController extends AbstractController
      */
     public function index(ClientRepository $clientRepository)
     {
-        
+        # je récupère les données envoyées via le get
+        $request = Request::createFromGlobals();
+        $nomClient= $request->query->get('nom');
+        $prenomClient= $request->query->get('prenom');
+        $adresse= $request->query->get('adresse');
+        $codePostal= $request->query->get('codePostal');
+        $ville= $request->query->get('ville');
+        $telephone= $request->query->get('Telephone');
+        $mail= $request->query->get('mail');
+        $dateNaissance= $request->query->get('dateNaissance');
+
+         # Affichage des données, je teste si le filtre a été envoyé ou non
+        if(!empty($request)){
+            $clients=$clientRepository->historiqueClientFiltre($nomClient,$prenomClient, $adresse,$codePostal,$ville,$telephone,$mail,$dateNaissance);
+        }else{
+            $clients=$clientRepository->findAll();
+        }
+
+       
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'clients' => $clients,
 
         ]);
         

@@ -3,10 +3,48 @@
 {% block title %}Historique clients {% endblock %}
 
 {% block body %}
-    <h1>Historique clients</h1>
+    <div class='d-flex justify-content-center'>
+        <h1 class="my-5">Historique clients</h1>
+    </div>
 
-    <table class="table">
+    <table class="table table-sm" style="max-width:100vw">
         <thead>
+
+        <form  method="get">
+                <tr  >
+                    <td>
+                        <input type="text"  name="nom" id="nom">
+                    </td>
+                    <td>
+                        <input type="text" name="prenom" id="prenom">
+                    </td>
+                    <td>
+                        <input type="text" name="adresse" id="adresse">
+                    </td>
+                    <td>
+                        <input type="text" name="codePostal" id="codePostal">
+                    </td>
+
+                    <td>
+                        <input type="text" name="ville" id="ville">
+                    </td>
+                    <td>
+                        <input type="text" name="telephone" id="telephone">
+                    </td>
+                    <td>
+                        <input type="text" name="mail" id="mail">
+                    </td>
+                    <td>
+                        <input type="date" name="dateNaissance" id="dateNaissance">
+                    </td>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Filtrer">
+                    </td>
+                    
+                
+                </tr>
+            </form>
             <tr>
 
                 <th>Nom</th>
