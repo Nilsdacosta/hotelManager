@@ -14,6 +14,9 @@
     });
 
 </script>
+
+
+
     {# Message ajout reservation #}
     <div class=" d-flex justify-content-center">
         {% for message in app.flashes('ajoutResa') %}
@@ -98,9 +101,10 @@
     </div>
 
 
+{% if is_granted('ROLE_USER') %}
 
   <div class="container-fluid" id='calendar'></div>
-
+{% endif %}
 
     <script>
 

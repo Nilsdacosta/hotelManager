@@ -35,8 +35,9 @@
     </table>
 
     <a href="{{ path('chambre_index') }}">Retour</a>
-
+{% if is_granted('ROLE_SUPER_ADMIN') %}
     <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
 
     {{ include('chambre/_delete_form.html.twig') }}
+{% endif  %}
 {% endblock %}

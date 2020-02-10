@@ -28,7 +28,9 @@
                 <td>{{ chambre.nom }}</td>
                 <td>
                     <a href="{{ path('chambre_show', {'id': chambre.id}) }}">Voir</a>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -38,6 +40,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('chambre_new') }}">Ajouter</a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('chambre_new') }}">Ajouter</a>
+    {% endif %}
 {% endblock %}
