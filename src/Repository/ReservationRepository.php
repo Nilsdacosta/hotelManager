@@ -61,9 +61,8 @@ class ReservationRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('r')
                 ->select('COUNT (r.id)')
                 ->andWhere('CURRENT_DATE() = r.dateEntree')
-                ->groupBy('r.dateEntree')
                 ->getQuery()
-                ->getSingleResult()
+                ->getOneOrNullresult()
             ;
         }
 
@@ -74,7 +73,7 @@ class ReservationRepository extends ServiceEntityRepository
                 ->select('COUNT (r.id)')
                 ->andWhere('CURRENT_DATE() = r.dateSortie')
                 ->getQuery()
-                ->getSingleResult()
+                ->getOneOrNullresult()
             ;
         }
 

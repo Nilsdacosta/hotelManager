@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Chambre;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/chambre")
@@ -90,5 +91,27 @@ class ChambreController extends AbstractController
         }
 
         return $this->redirectToRoute('chambre_index');
+    }
+
+
+    
+    /**
+     * @Route("/reservation/chambre", name="reservationChambre")
+     */
+    public function findChambreForCalendar(ChambreRepository $chambreRepository)
+    {
+        $findChambres=$chambreRepository->findAll();
+        $tabChambre = array();
+
+        foreach($findChambres as $chambres){
+            $chambre= new Chambre();
+            $chambre->idChambre = $chambres->getId();
+            $chambre->building="Catégorie : ".$chambres->getCapacite();
+            $chambre->title= ($chambres->getNom().' - '.$chambres->getCapacite().' - '. ($chambres->getPrix()*(1+ ($chambres->getTva()->getTaux())/100).'euros TTC' ));
+            array_push($tabChambre, $chambre);
+        }
+      
+        return  new JsonResponse($tabChambre);
+
     }
 }
