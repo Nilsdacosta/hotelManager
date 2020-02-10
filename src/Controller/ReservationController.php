@@ -243,17 +243,59 @@ class ReservationController extends AbstractController
      */
     public function historique(ReservationRepository $reservationRepository,Request $request, ClientRepository $clientRepository, ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository, $id=null): Response
     {
-        $reservations=$reservationRepository->findAll();
-        $clients = $clientRepository->findAll();
-        $chambre = $chambreRepository->findAll();
-        $optionResa = $optionServiceRepository->findAll();
+        
+
+
+        # je défini les requetes pour l'affichage du formulaire de filtre
+
+        $idReservations = $reservationRepository->findAllGroupeBy('id');
+        $statusResa=$reservationRepository->findAllGroupeBy('status');
+
+        $capaciteChambre = $chambreRepository->findAllGroupeBy('capacite');
+        $nomChambre=$chambreRepository->findAllGroupeBy('nom');
+      
+
+
+        $nomClient = $clientRepository->findAllGroupeBy('nom');
+        $prenomClient = $clientRepository->findAllGroupeBy('prenom');
+
+
+        $optionResa = $optionServiceRepository->findAllGroupeBy('nomOption');
+
+        # je récupère les données envoyées via le get
+        $request = Request::createFromGlobals();
+        $idResaRequest= $request->query->get('idResa');
+        $capaciteRequest = $request->query->get('capacite');
+        $dateCreationRequest = $request->query->get('dateCreation');
+        $nomChambreRequest = $request->query->get('nomChambre');
+        $nomClientRequest = $request->query->get('nomClient');
+        $prenomClientRequest = $request->query->get('PrenomClient');
+        $statusResaRequest = $request->query->get('statusResa');
+        $dateEntreeRequest = $request->query->get('dateEntree');
+        $dateSortieRequest = $request->query->get('dateSortie');
+        $optionServiceRequest = $request->query->get('optionService');
+
+
+        # Affichage des données, je teste si le filtre a été envoyé ou non
+        if(!empty($request)){
+            $reservations=$reservationRepository->historiqueResaFiltre($idResaRequest,$capaciteRequest, $dateCreationRequest,$nomChambreRequest,$nomClientRequest,$prenomClientRequest,$statusResaRequest,$dateEntreeRequest, $dateSortieRequest,$optionServiceRequest);
+
+        }else{
+            $reservations=$reservationRepository->findAll();
+
+        }
 
 
         return $this->render('reservation/historique.html.twig', [
             'reservations' => $reservations,
-            'clients' => $clients,
-            'chambre' => $chambre,
             'optionResa' => $optionResa,
+            'idReservations' =>$idReservations,
+            'capaciteChambre'=>$capaciteChambre,
+            'nomChambre'=> $nomChambre,
+            'nomClient'=> $nomClient,
+            'prenomClient'=>$prenomClient,
+            'statusResa'=> $statusResa,
+
 
         ]);
     }
