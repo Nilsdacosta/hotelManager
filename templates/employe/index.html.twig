@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Liste des Employés</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Id</th>
@@ -14,6 +14,7 @@
                 <th>Prénom</th>
                 <th>Téléphone</th>
                 <th>Poste</th>
+                 <th>Rôle</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,8 +28,9 @@
                 <td>{{ employe.prenom }}</td>
                 <td>{{ employe.telephone }}</td>
                 <td>{{ employe.poste }}</td>
+                <td>{% for role in employe.roles %}{{ role }}{% endfor %}</td>
                 <td>
-                    <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil</a>
+                    <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil |</a>
                     <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
                 </td>
             </tr>

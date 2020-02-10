@@ -19,6 +19,19 @@ class ChambreRepository extends ServiceEntityRepository
         parent::__construct($registry, Chambre::class);
     }
 
+
+     # Requete findAll + groupeBy
+     public function findAllGroupeBy($value)
+     {
+         return $this->createQueryBuilder('c')
+             ->groupBy('c.'.$value)
+             ->getQuery()
+             ->getResult()
+         ;
+     }
+
+     
+
     // /**
     //  * @return Chambre[] Returns an array of Chambre objects
     //  */

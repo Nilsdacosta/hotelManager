@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
+
+        <script src="https://kit.fontawesome.com/7cb52107fe.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/print.css') }}" text="text/css" media="print">
@@ -24,9 +26,9 @@
     </head>
     <body>
         {% block navBar %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-info ">
-            <img class="img" src="https://image.flaticon.com/icons/png/512/120/120159.png" alt="">
-            <a class="navbar-brand mr-5" href="{{path('app_login')}}">HotelManager</a>
+        <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between ">
+            <img class="img imgFront" src="https://image.flaticon.com/icons/png/512/120/120159.png" alt="">
+            <a class="navbar-brand mr-5 titre" href="{{path('app_login')}}">HotelManager</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,14 +36,14 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto ">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('dashboard') }}">Tableau de bord |</a>
+                        <a class="nav-link" href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt fa-3x"></i></a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('reservation') }}">Réservation chambre |</a>
+                        <a class="nav-link" href="{{ path('reservation') }}"><i class="fas fa-bed fa-3x"></i></a>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Historiques </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-history fa-3x"></i> </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('client') }}">Clients</a>
                             <a class="dropdown-item" href="{{ path('historique_resa') }}">Réservations</a>
@@ -50,7 +52,7 @@
 
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">| Gouvernance </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="hk" src="https://cdn2.iconfinder.com/data/icons/hotel-98/64/maid-hotel-staff-housekeeping-services-512.png" alt=""> </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('gouvernance') }}">Assignation chambres</a>
                             <a class="dropdown-item" href="{{ path('gouvernance_historique') }}">Historique assignations</a>
@@ -58,7 +60,7 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">| Administration</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog fa-3x"></i></a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('chambre_index') }}">Chambre</a>
                             <a class="dropdown-item" href="{{ path('option_service_index') }}">Option</a>
@@ -67,19 +69,20 @@
                         </div>
                     </li>
 
-                    <li class="nav-item ">
-                        <a class="nav-link btn btn-lg btn-danger" href="{{ path('app_logout') }}">
-                        <i class="fas fa-sign-out-alt"></i>Déconnexion</a>
+                    <li class="nav-item  ">
+                        <a class="nav-link  " href="{{ path('app_logout') }}">
+                        <i class="fas fa-power-off fa-3x"></i></a>
                     </li>
 
                 </ul>
 
             </div>
+            
         </nav>
 
         {% endblock %}
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-5">
         {% block body %}
 
         {% endblock %}

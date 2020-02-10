@@ -3,20 +3,103 @@
 {% block title %}Historique Reservations {% endblock %}
 
 {% block body %}
-    <h1>Historique des réservations</h1>
+    <div class='d-flex justify-content-center'>
+        <h1 class="my-5">Historique des réservations</h1>
+    </div>
+    
 
-
-
-    <table class="table">
+    <table class="table table-hover">
         <thead>
-            <tr>
+
+            <form  method="get">
+                <tr >
+                    <td>
+                        <select name="idResa" id="idResa">
+                            <option value="" disabled selected> ID Resa</option>
+                            {% for reservation in reservations %}
+                            <option value="{{reservation.id}}"> {{reservation.id}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="capacite" id="capacite">
+                            <option value="" disabled selected> Capacité</option>
+                            {% for capacite in capaciteChambre %}
+                            <option value="{{capacite.capacite}}"> {{capacite.capacite}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" name="dateCreation" id="dateCreation">
+                    </td>
+                    <td>
+                        <select name="nomChambre" id="nomChambre">
+                            <option value="" disabled selected> Nom Chambre</option>
+                            {% for chambre in nomChambre %}
+                            
+                            <option value="{{chambre.nom}}"> {{chambre.nom}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="nomClient" id="nomClient">
+                            <option value="" disabled selected> Nom Client</option>
+                            {% for client in nomClient %}
+                            <option value="{{client.nom}} "> {{client.nom}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="prenomClient" id="prenomClient">
+                            <option value="" disabled selected> Prenom Client</option>
+                            {% for client in prenomClient %}
+                            <option value="{{client.prenom}} "> {{client.prenom}} 
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="statusChambre" id="statusChambre">
+                            <option value="" disabled selected> Statut reservation</option>
+                            {% for reservation in statusResa %}
+                            <option value="{{reservation.renderStatus}}"> {{reservation.renderStatus}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" name="dateEntree" id="dateEntree">
+                    </td>
+                    <td>
+                    <input type="date" name="dateSortie" id="dateSortie">
+                    </td>
+                    <td>
+                        <select name="optionService" id="optionService">
+                            <option value="" disabled selected> Option</option>
+                            {% for option in optionResa %}
+                            <option value="{{option.nomOption}}"> {{option.nomOption}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td> <input type="submit" value="Filtrer"></td>
+                
+                </tr>
+            </form>
+           
 
                 <th>Num Résa</th>
                 <th>Type chambre</th> 
                 <th>Date de création</th> 
                 <th>N° de chambre</th>
                 <th>Nom client</th>
-                <th>Status</th>
+                <th>Prénom client</th>
+                <th>Statut</th>
                 <th>Date d'arrivée</th>
                 <th>Date de fin</th> 
                 <th>Options Service</th>
@@ -34,7 +117,8 @@
                 <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }} <br>  {% endfor %}   </td>
                 <td>{{ reservation.dateCreation|date("d/m/Y") }}</td>
                 <td>{% for chambres in reservation.chambre %}{{ chambres.nom }} <br>  {% endfor %}   </td>
-                <td>{{ reservation.client.nom }}</td> 
+                <td>{{ reservation.client.nom }} </td> 
+                <td>{{ reservation.client.prenom }} </td> 
                 <td>{{ reservation.renderStatus }}</td>
                 <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
                 <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>

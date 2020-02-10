@@ -1,26 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Metier{% endblock %}
+{% block title %}Nouvelle assignation{% endblock %}
 
 {% block body %}
-    <h1>Create new Metier</h1>
+    <h1>Nouvelle assignation</h1>
 
 
-<table class="table">
-    <thead>
-        <th>Chambre</th>
-        <th>Employé</th>
-        <th>Option</th>
-        <th>Validation</th>
-    </thead>
-    <tbody>
-
-
-        {% for chambre in chambres %}
-                <tr> 
-                    {% for data in formList %}
-                        {% if data.chambre.id == chambre.id %}
-                        <td> {{chambre.nom}} </td>
+<table class="table table-hover">
+<thead>
+<th>Chambre</th>
+<th>Employé</th>
+<th>Option</th>
+<th>Validation</th>
+</thead>
+<tbody>
+    {% for chambre in chambres %}
+            <tr> 
+                {% for data in formList %}
+                    {% if data.chambre.id == chambre.id %}
+                    <td> {{chambre.nom}} </td>
                         {{ form_start(data.form, {'action': path('gouvernance_form_receive', { 'id' :  data.chambre.id })} ) }}
                             <td>{{form_widget(data.form.employe)}}</td>
                             <td>{{form_widget(data.form.optionService)}}</td>
