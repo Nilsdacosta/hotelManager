@@ -24,7 +24,7 @@ class OptionService
     private $nomOption;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateCreation;
 

@@ -54,7 +54,7 @@ class Client
     private $mail;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $dateDeNaissance;
 

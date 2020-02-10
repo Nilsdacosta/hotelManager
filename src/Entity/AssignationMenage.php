@@ -19,7 +19,7 @@ class AssignationMenage
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $date;
 

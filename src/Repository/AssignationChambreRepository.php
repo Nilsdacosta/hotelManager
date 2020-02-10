@@ -19,6 +19,16 @@ class AssignationChambreRepository extends ServiceEntityRepository
         parent::__construct($registry, AssignationChambre::class);
     }
 
+    # Requete findAll + groupeBy
+    public function findAllGroupeBy($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->groupBy('r.'.$value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return AssignationChambre[] Returns an array of AssignationChambre objects
     //  */

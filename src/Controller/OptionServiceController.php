@@ -20,8 +20,31 @@ class OptionServiceController extends AbstractController
      */
     public function index(OptionServiceRepository $optionServiceRepository): Response
     {
+        $idOption = $optionServiceRepository->findAllGroupeBy('id');
+        $nomOption = $optionServiceRepository->findAllGroupeBy('nomOption');
+        $prixOption = $optionServiceRepository->findAllGroupeBy('prixOption');
+
+        # je récupère les données envoyées via le get
+        $request = Request::createFromGlobals();
+        $idOptionRequest= $request->query->get('id');
+        $nomOptionRequest= $request->query->get('nom');
+        $dateCreationOptionRequest= $request->query->get('date');
+        $prixOptionRequest= $request->query->get('prix');
+        
+
+
+        # Affichage des données, je teste si le filtre a été envoyé ou non
+        if(!empty($request)){
+            $optionService =$optionServiceRepository->optionFiltre($idOptionRequest,$nomOptionRequest,$dateCreationOptionRequest,$prixOptionRequest);    
+        }else{
+             $optionService =$optionServiceRepository->findAll();    
+        }
+       
         return $this->render('option_service/index.html.twig', [
-            'option_services' => $optionServiceRepository->findAll(),
+            'option_services' => $optionService,
+            'idOption'=>$idOption,
+            'nomOption'=>$nomOption,
+            'prixOption'=>$prixOption
         ]);
     }
 

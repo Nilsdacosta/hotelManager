@@ -21,8 +21,35 @@ class EmployeController extends AbstractController
      */
     public function index(EmployeRepository $employeRepository): Response
     {
+        # je défini les requetes pour l'affichage du formulaire de filtre
+
+        $idEmploye = $employeRepository->findAllGroupeBy('id');
+        $posteEmploye = $employeRepository->findAllGroupeBy('poste');
+        $roleEmploye = $employeRepository->findRoleGroupeBy('roles');
+
+         # je récupère les données envoyées via le get
+         $request = Request::createFromGlobals();
+         $idEmployeRequest= $request->query->get('id');
+         $usernameEmployeRequest= $request->query->get('username');
+         $nomEmployeRequest= $request->query->get('nom');
+         $prenomEmployeRequest= $request->query->get('prenom');
+         $telephoneEmployeRequest= $request->query->get('telephone');
+         $posteEmployeRequest= $request->query->get('poste');
+         $roleEmployeRequest= $request->query->get('role');
+
+         if(!empty($request)){
+            $employes = $employeRepository->employeFiltre($idEmployeRequest,$usernameEmployeRequest,$nomEmployeRequest,$prenomEmployeRequest ,$telephoneEmployeRequest,$posteEmployeRequest ,$roleEmployeRequest);
+        }else{
+            $employes = $employeRepository->findAll();
+
+        }
+
+
         return $this->render('employe/index.html.twig', [
-            'employes' => $employeRepository->findAll(),
+            'employes' => $employes,
+            'idEmploye'=>$idEmploye,
+            'posteEmploye'=>$posteEmploye,
+            'roleEmploye'=>$roleEmploye
         ]);
     }
 

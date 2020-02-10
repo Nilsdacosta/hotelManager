@@ -153,14 +153,14 @@ class ReservationRepository extends ServiceEntityRepository
             
             if(!empty($nomClient)) {
                 $query = $query
-                ->andWhere('cl.nom = :val5')
-                ->setParameter('val5', $nomClient);
+                ->andWhere('cl.nom LIKE :val5')
+                ->setParameter('val5', '%'.$nomClient.'%');
             }
 
             if(!empty($prenomClient)) {
                 $query = $query
                 ->andWhere('cl.prenom = :val6')
-                ->setParameter('val6', $prenomClient);
+                ->setParameter('val6', '%'.$prenomClient.'%');
             }
 
             if(!empty($etatChambre)) {
