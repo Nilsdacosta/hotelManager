@@ -3,13 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Employe;
+use PhpParser\Parser\Multiple;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class EmployeType extends AbstractType
 {
@@ -28,6 +31,15 @@ class EmployeType extends AbstractType
                     
                 ],
                 'expanded' => true
+            ])
+            ->add('roles', ChoiceType::class, [
+                 'choices'  => [
+                    'Receptioniste' => 1,
+                    'Gouvernante' => 2,
+                    'Directeur' => 3,
+                   
+                ],
+                'mapped' => false,
             ])
            // ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,

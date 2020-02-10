@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/employe")
+ * @Route("/admin/employe")
  */
 class EmployeController extends AbstractController
 {
@@ -38,9 +38,30 @@ class EmployeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $random = random_int(1, 999);
+           
             $username =$form->get('nom')->getData() .$form->get('prenom')->getData() . $random ;
+            $prenom = (str_replace("é","e",$form->get('prenom')->getData()));
+
+            $valachanger = array("é" => "e","è" => "e","ê" => "e","ë" => "e", " " =>"");
+              
+               
+
+            $employe->setPrenom($prenom);
+            dump($prenom);
+            $formRole=$form->get('roles')->getData();
+           
+            if ($formRole== 1) {
+
+                $employe->setRoles( [Employe::ROLE_1]);
+            }elseif($formRole== 2){
+                $employe->setRoles( [Employe::ROLE_2]);
+            }else{
+                $employe->setRoles( [Employe::ROLE_3]);
+            }
+
             
-            $employe->setUsername(str_replace ( " ", "",strtolower($username) ) );
+            
+            $employe->setUsername(strtr ( strtolower($username),$valachanger ) );
           
             // encode the plain password
             $employe->setPassword(
