@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/chambre")
+ * @Route("/admin/chambre")
  */
 class ChambreController extends AbstractController
 {

@@ -12,6 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Employe implements UserInterface
 {
+
+    const ROLE_1 = 'ROLE_USER';
+    const ROLE_2 = 'ROLE_ADMIN';
+    const ROLE_3 = 'ROLE_SUPER_ADMIN';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -137,7 +142,7 @@ class Employe implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER

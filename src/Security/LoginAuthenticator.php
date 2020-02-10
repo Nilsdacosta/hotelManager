@@ -88,7 +88,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('employe_index'));
+        return new RedirectResponse($this->urlGenerator->generate('dashboard'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
