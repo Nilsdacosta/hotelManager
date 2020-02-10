@@ -193,7 +193,9 @@ class ReservationController extends AbstractController
 
       # je crée la requête pour récupérer les infos de la table réservation
         // j'ai créée une requête spéciale dans Réservation repository. La valeur sélectionnée est celle exclue de la requete
-        $findReservations = $reservationRepository->findAll()/*findReservation(3)*/;
+        $findReservations = $reservationRepository->findReservation(3);
+
+           
         $tabEvents = array();
         // sleep(1);
         
@@ -208,11 +210,9 @@ class ReservationController extends AbstractController
                 $event->backgroundColor='#FE1919';
                 $event->idChambre = $chambre->getId();
                 $event->idReservation=$findReservation->getId();
-                $event->building="Catégorie : ".$chambre->getCapacite();
-                $event->title= ($chambre->getNom().' - '.$chambre->getCapacite().' - '. ($chambre->getPrix()*(1+ ($chambre->getTva()->getTaux())/100).'euros TTC' ));
+                
             }
-            
-                   
+    
       
             
             array_push($tabEvents, $event);
