@@ -21,8 +21,8 @@
                 <td>{{ tva.nom }}</td>
                 <td>{{ tva.taux }} %</td>
                 <td>
-                    <a href="{{ path('tva_show', {'id': tva.id}) }}">Voir</a>
-                    <a href="{{ path('tva_edit', {'id': tva.id}) }}">Modifier</a>
+                    <a href="{{ path('tva_show', {'id': tva.id}) }}"><i class="far fa-eye"></i></a>
+                    <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('tva_new') }}">Retour a la liste</a>
+    <a href="{{ path('tva_new') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
 {% endblock %}
