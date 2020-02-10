@@ -30,8 +30,8 @@
                 <td>{{ employe.poste }}</td>
                 <td>{% for role in employe.roles %}{{ role }}{% endfor %}</td>
                 <td>
-                    <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil |</a>
-                    <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
+                    <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
+                    <a href="{{ path('employe_edit', {'id': employe.id}) }}"><i class="far fa-edit "></i></a>
                 </td>
             </tr>
         {% else %}
@@ -42,5 +42,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('employe_new') }}">Ajouter un nouvel employé</a>
+    <a href="{{ path('employe_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
 {% endblock %}

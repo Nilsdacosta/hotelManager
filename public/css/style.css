@@ -93,6 +93,11 @@ body {
 
 .dashcard{
     background-color: none;
+   
+}
+
+.card{
+    border: none;
 }
 
 .hk{
