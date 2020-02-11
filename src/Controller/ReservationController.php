@@ -281,7 +281,7 @@ class ReservationController extends AbstractController
             $reservations=$reservationRepository->historiqueResaFiltre($idResaRequest,$capaciteRequest, $dateCreationRequest,$nomChambreRequest,$nomClientRequest,$prenomClientRequest,$statusResaRequest,$dateEntreeRequest, $dateSortieRequest,$optionServiceRequest);
 
         }else{
-            $reservations=$reservationRepository->findAll();
+            $reservations=$reservationRepository->findBy([],['dateCreation'=>'DESC']);
 
         }
 
@@ -326,7 +326,7 @@ class ReservationController extends AbstractController
         foreach ($reservationDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
             if ($reservation->getStatus() == 2) {
-                $etat = 3;
+                $etat = 2;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
                 foreach ($chambres as $chambre) {
@@ -367,7 +367,7 @@ class ReservationController extends AbstractController
         foreach ($departDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
             if ($reservation->getStatus() == 2) {
-                $etat = 3;
+                $etat = 2;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
                 foreach ($chambres as $chambre) {
@@ -451,13 +451,8 @@ class ReservationController extends AbstractController
                 // j'enregistre les données en BDD
                 $entityManager->flush();
 
-                // j'ajoute un message flash pour alerter le user
-                $this->addFlash(
-                    'checkInResa',
-                    'La réservation a bien été validée'
-                );
 
-                // // je redirige vers la page de des checkin checkout
+                //je redirige vers la page de des checkin checkout
                 return $this->redirectToRoute('reservationCheck');
                    
             }

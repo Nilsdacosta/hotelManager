@@ -84,6 +84,7 @@ class ClientRepository extends ServiceEntityRepository
         }
 
         $query = $query
+            ->orderBy('c.nom', 'ASC')
             ->getQuery()
             ->getResult();
 

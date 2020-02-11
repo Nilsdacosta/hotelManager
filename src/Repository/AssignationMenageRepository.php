@@ -65,6 +65,7 @@ class AssignationMenageRepository extends ServiceEntityRepository
             }
 
             $query = $query
+            ->orderBy('a.date', 'DESC')
             ->getQuery()
             ->getResult();
 

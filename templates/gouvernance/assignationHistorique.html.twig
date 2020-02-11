@@ -51,6 +51,7 @@
                     <th>Date assignation</th>
                     <th>Employé assigné</th>
                     <th>Chambre concernée</th>
+                    <th>État chambre</th>
                     <th>Option Service</th>
                 </tr>
             </form>
@@ -62,6 +63,7 @@
                     <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
                     <td>{{(assignationMenage.employe.username)}}</td>
                     <td>{{(assignationMenage.chambre.nom)}}</td>
+                    <td>{{(assignationMenage.chambre.renderEtat)}}</td>
                     <td>
                         {% for option in assignationMenage.optionService %}
                             {{option.nomOption}},
