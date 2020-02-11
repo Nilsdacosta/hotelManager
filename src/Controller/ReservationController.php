@@ -326,7 +326,7 @@ class ReservationController extends AbstractController
         foreach ($reservationDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
             if ($reservation->getStatus() == 2) {
-                $etat = 4;
+                $etat = 3;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
                 foreach ($chambres as $chambre) {
@@ -367,7 +367,7 @@ class ReservationController extends AbstractController
         foreach ($departDuJour as $reservation) {
             // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
             if ($reservation->getStatus() == 2) {
-                $etat = 4;
+                $etat = 3;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
                 foreach ($chambres as $chambre) {

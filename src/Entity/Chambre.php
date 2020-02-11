@@ -94,9 +94,9 @@ class Chambre
         }elseif($this->etat == 2){
             return "Recouche";
         }elseif($this->etat == 3){
-            return "HS";
+            return "Prête";
         }elseif($this->etat == 4){
-            return "Sale";
+            return "HS";
         }else{
             return "Prête";
         }
