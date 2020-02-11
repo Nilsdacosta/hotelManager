@@ -3,14 +3,54 @@
 {% block title %}Option Services{% endblock %}
 
 {% block body %}
-    <h1>Option Services</h1>
 
-    <table class="table table-hover">
-        <thead>
+    <div class="d-flex justify-content-center my-5">
+        <h1>Option Services</h1>
+    </div>
+
+    <div class="container">
+        <table class="table table-hover table-striped">
+            
+        <thead class="thead-dark">
+            <tr>
+                <form action="" method="get">
+                    <td>
+                        <select class="form-control" name="id" id="id">
+                            <option value=""disabled selected>ID Option</option>
+                            {% for option in idOption %}
+                            <option value="{{option.id}}">{{option.id}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="nom" id="nom">
+                            <option value=""disabled selected>Nom</option>
+                            {% for option in nomOption %}
+                            <option value="{{option.nomOption}}">{{option.nomOption}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="date" name="date" id="date">
+                    </td>
+                    <td>
+                        <select class="form-control" name="prix" id="prix">
+                            <option value=""disabled selected>prix</option>
+                            {% for option in prixOption %}
+                            <option value="{{option.prixOption}}">{{option.prixOption}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="submit" value="Filtrer">
+                    </td>
+                </form>
+                
+            </tr>
             <tr>
                 <th>Id</th>
                 <th>Nom Option</th>
-                <th>Date Creation</th>
+                <th>Date Création</th>
                 <th>Prix Option</th>
                 <th>Actions</th>
             </tr>
@@ -20,7 +60,7 @@
             <tr>
                 <td>{{ option_service.id }}</td>
                 <td>{{ option_service.nomOption }}</td>
-                <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d') : '' }}</td>
                 <td>{{ option_service.prixOption }}</td>
                 <td>
                     <a href="{{ path('option_service_show', {'id': option_service.id}) }}">Voir</a>
@@ -34,6 +74,9 @@
         {% endfor %}
         </tbody>
     </table>
-
     <a href="{{ path('option_service_new') }}">Ajout </a>
+    </div>
+    
+
+    
 {% endblock %}

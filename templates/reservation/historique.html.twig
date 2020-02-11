@@ -14,7 +14,7 @@
             <form  method="get">
                 <tr >
                     <td>
-                        <select name="idResa" id="idResa">
+                        <select class="form-control" name="idResa" id="idResa">
                             <option value="" disabled selected> ID Resa</option>
                             {% for reservation in reservations %}
                             <option value="{{reservation.id}}"> {{reservation.id}}
@@ -23,7 +23,7 @@
                         </select>
                     </td>
                     <td>
-                        <select name="capacite" id="capacite">
+                        <select class="form-control" name="capacite" id="capacite">
                             <option value="" disabled selected> Capacité</option>
                             {% for capacite in capaciteChambre %}
                             <option value="{{capacite.capacite}}"> {{capacite.capacite}}
@@ -32,10 +32,10 @@
                         </select>
                     </td>
                     <td>
-                        <input type="date" name="dateCreation" id="dateCreation">
+                        <input class="form-control" type="date" name="dateCreation" id="dateCreation">
                     </td>
                     <td>
-                        <select name="nomChambre" id="nomChambre">
+                        <select class="form-control" name="nomChambre" id="nomChambre">
                             <option value="" disabled selected> Nom Chambre</option>
                             {% for chambre in nomChambre %}
                             
@@ -46,26 +46,14 @@
                     </td>
 
                     <td>
-                        <select name="nomClient" id="nomClient">
-                            <option value="" disabled selected> Nom Client</option>
-                            {% for client in nomClient %}
-                            <option value="{{client.nom}} "> {{client.nom}}
-                            </option>
-                            {% endfor %}
-                        </select>
+                        <input class="form-control" type="text" name="nomClient" id="nomClient" placeholder="Nom du client">
                     </td>
                     <td>
-                        <select name="prenomClient" id="prenomClient">
-                            <option value="" disabled selected> Prenom Client</option>
-                            {% for client in prenomClient %}
-                            <option value="{{client.prenom}} "> {{client.prenom}} 
-                            </option>
-                            {% endfor %}
-                        </select>
+                        <input class="form-control" type="text" name="prenomClient" id="prenomClient" placeholder="Prénom du client">
                     </td>
                     <td>
-                        <select name="statusChambre" id="statusChambre">
-                            <option value="" disabled selected> Statut reservation</option>
+                        <select class="form-control" name="statusChambre" id="statusChambre">
+                            <option value="" disabled selected> Statut réservation</option>
                             {% for reservation in statusResa %}
                             <option value="{{reservation.renderStatus}}"> {{reservation.renderStatus}}
                             </option>
@@ -73,13 +61,13 @@
                         </select>
                     </td>
                     <td>
-                        <input type="date" name="dateEntree" id="dateEntree">
+                        <input class="form-control" type="date" name="dateEntree" id="dateEntree">
                     </td>
                     <td>
-                    <input type="date" name="dateSortie" id="dateSortie">
+                        <input class="form-control" type="date" name="dateSortie" id="dateSortie">
                     </td>
                     <td>
-                        <select name="optionService" id="optionService">
+                        <select class="form-control" name="optionService" id="optionService">
                             <option value="" disabled selected> Option</option>
                             {% for option in optionResa %}
                             <option value="{{option.nomOption}}"> {{option.nomOption}}
@@ -87,7 +75,7 @@
                             {% endfor %}
                         </select>
                     </td>
-                    <td> <input type="submit" value="Filtrer"></td>
+                    <td> <input class="form-control" type="submit" value="Filtrer"></td>
                 
                 </tr>
             </form>

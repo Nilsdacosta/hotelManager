@@ -5,9 +5,14 @@
 
 
 body {
+<<<<<<< HEAD
+    font-family: 'Heebo', sans-serif;
+    background-color: #f5ebe3;
+=======
     font-family: 'Bitter', serif;
     background-color:#f5ebe3;
 
+>>>>>>> origin/develop
 
 }
 
@@ -36,8 +41,9 @@ body {
 
 #calendar {
     max-width: 90vw;
-    height:auto;
+    max-height:10vh;
     margin:  auto;
+
 }
 
 

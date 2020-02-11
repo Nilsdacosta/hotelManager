@@ -30,6 +30,42 @@ class OptionServiceRepository extends ServiceEntityRepository
         ;
     }
 
+    # Requete pour afficher l'historique des réservations après les filtres
+    public function optionFiltre($id,$nom,$dateCreation,$prix)
+    {
+        $query = $this->createQueryBuilder('o');
+
+            if(!empty( $id)) {
+                $query = $query
+                ->andWhere('o.id = :val')
+                ->setParameter('val', $id);
+            }
+
+            if(!empty( $nom)) {
+                $query = $query
+                ->andWhere('o.nomOption = :val2')
+                ->setParameter('val2', $nom);
+            }
+
+            if(!empty( $dateCreation)) {
+                $query = $query
+                ->andWhere('o.dateCreation = :val3')
+                ->setParameter('val3', $dateCreation);
+            }
+
+            if(!empty( $prix)) {
+                $query = $query
+                ->andWhere('o.prixOption = :val')
+                ->setParameter('val', $prix);
+            }
+
+            $query = $query
+            ->getQuery()
+            ->getResult();
+
+            return $query;
+        }
+
     // /**
     //  * @return OptionService[] Returns an array of OptionService objects
     //  */

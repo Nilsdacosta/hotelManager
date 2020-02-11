@@ -30,6 +30,55 @@ class ChambreRepository extends ServiceEntityRepository
          ;
      }
 
+
+    # Requete pour afficher l'historique des réservations après les filtres
+    public function chambreFiltre($id,$capacite, $etat,$description, $prix,$nom)
+    {
+        $query = $this->createQueryBuilder('c');
+ 
+            if(!empty( $id)) {
+                $query = $query
+                ->andWhere('c.id = :val')
+                ->setParameter('val', $id);
+            }
+
+            if(!empty( $capacite)) {
+                $query = $query
+                ->andWhere('c.capacite = :val2')
+                ->setParameter('val2', $capacite);
+            }
+
+            if(!empty( $etat)) {
+                $query = $query
+                ->andWhere('c.etat = :val3')
+                ->setParameter('val3', $etat);
+            }
+
+            if(!empty( $description)) {
+                $query = $query
+                ->andWhere('c.description LIKE :val4')
+                ->setParameter('val4', '%'.$description.'%');
+            }
+
+            if(!empty( $prix)) {
+                $query = $query
+                ->andWhere('c.prix = :val6')
+                ->setParameter('val6', $prix);
+            }
+
+            if(!empty( $nom)) {
+                $query = $query
+                ->andWhere('c.nom = :val7')
+                ->setParameter('val7', $nom);
+            }
+            $query = $query
+            ->getQuery()
+            ->getResult();
+
+            return $query;
+        }
+
+
      
 
     // /**

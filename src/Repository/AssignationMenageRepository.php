@@ -19,6 +19,59 @@ class AssignationMenageRepository extends ServiceEntityRepository
         parent::__construct($registry, AssignationMenage::class);
     }
 
+
+    # Requete findAll + groupeBy
+    public function findAllGroupeBy($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->groupBy('r.'.$value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    # Requete pour afficher l'historique des réservations après les filtres
+    public function historiqueAssignationFiltre($date, $employe, $chambre, $option)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->innerJoin('a.chambre', 'c') 
+            ->innerJoin('a.employe', 'e') 
+            ->innerJoin('a.optionService', 'o');
+
+            if(!empty( $date)) {
+                $query = $query
+                ->andWhere('a.date = :val')
+                ->setParameter('val', $date);
+            }
+
+            
+            if(!empty( $employe)) {
+                $query = $query
+                ->andWhere('e.username = :val2')
+                ->setParameter('val2', $employe);
+            }
+
+            if(!empty( $chambre)) {
+                $query = $query
+                ->andWhere('c.nom = :val3')
+                ->setParameter('val3', $chambre);
+            }
+
+            if(!empty( $option)) {
+                $query = $query
+                ->andWhere('o.nomOption = :val3')
+                ->setParameter('val3', $option);
+            }
+
+            $query = $query
+            ->getQuery()
+            ->getResult();
+
+            return $query;
+    }
+
+
     // /**
     //  * @return AssignationMenage[] Returns an array of AssignationMenage objects
     //  */

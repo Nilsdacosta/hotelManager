@@ -21,8 +21,41 @@ class ChambreController extends AbstractController
      */
     public function index(ChambreRepository $chambreRepository): Response
     {
+        # je défini les requetes pour l'affichage du formulaire de filtre
+        $idChambre = $chambreRepository->findAllGroupeBy('id');
+        $capaciteChambre = $chambreRepository->findAllGroupeBy('capacite');
+        $etatChambre = $chambreRepository->findAllGroupeBy('etat');
+        $descriptionChambre = $chambreRepository->findAllGroupeBy('description');
+        $prixChambre = $chambreRepository->findAllGroupeBy('prix');
+        $nomChambre = $chambreRepository->findAllGroupeBy('nom');
+
+
+         # je récupère les données envoyées via le get
+         $request = Request::createFromGlobals();
+         $idChambreRequest= $request->query->get('id');
+         $capaciteChambreRequest= $request->query->get('capacite');
+         $etatChambreRequest= $request->query->get('etat');
+         $descriptionChambreRequest= $request->query->get('description');
+         $prixChambreRequest= $request->query->get('prix');
+         $nomChambreRequest= $request->query->get('nom');
+
+         if(!empty($request)){
+            $chambres =$chambreRepository->chambreFiltre($idChambreRequest,$capaciteChambreRequest,$etatChambreRequest,$descriptionChambreRequest,$prixChambreRequest,$nomChambreRequest);
+         }else{
+            $chambres =$chambreRepository->findAll();
+         }
+
         return $this->render('chambre/index.html.twig', [
-            'chambres' => $chambreRepository->findAll(),
+            'chambres' => $chambres,
+            'idChambre'=>$idChambre,
+            'capaciteChambre'=> $capaciteChambre,
+            'etatChambre'=> $etatChambre,
+            'descriptionChambre'=> $descriptionChambre,
+            'prixChambre'=> $prixChambre,
+            'nomChambre'=> $nomChambre,
+            'nomChambreRequest'=>$nomChambreRequest
+
+
         ]);
     }
 

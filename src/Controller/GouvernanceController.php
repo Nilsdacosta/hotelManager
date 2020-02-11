@@ -8,6 +8,11 @@ use App\Form\GouvernanceType;
 use App\Entity\AssignationMenage;
 use App\Repository\ChambreRepository;
 use App\Repository\EmployeRepository;
+<<<<<<< HEAD
+use App\Repository\OptionServiceRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+=======
+>>>>>>> origin/develop
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\AssignationMenageRepository;
@@ -93,12 +98,31 @@ class GouvernanceController extends AbstractController
     /**
      * @Route("gouvernance/historique", name="gouvernance_historique")
      */
-    public function show(AssignationMenageRepository $assignationMenageRepository): Response
+    public function show(AssignationMenageRepository $assignationMenageRepository, EmployeRepository $employeRepository, ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository): Response
     {
-        $assignationMenages = $assignationMenageRepository->findAll();
+        # je récupère les informations à afficher pour les filtres et l'historique
+        $employes=$employeRepository->findAllGroupeBy('username');
+        $chambres = $chambreRepository->findAllGroupeBy('nom');
+        $optionResas = $optionServiceRepository->findAllGroupeBy('nomOption');
+
+        # je récupère les données envoyées via le get
+        $request = Request::createFromGlobals();
+        $dateRequest= $request->query->get('date');
+        $employeRequest= $request->query->get('employe');
+        $chambreRequest= $request->query->get('chambre');
+        $optionRequest= $request->query->get('option');
+
+        if(!empty($request)){
+            $assignationMenages = $assignationMenageRepository->historiqueAssignationFiltre($dateRequest, $employeRequest, $chambreRequest,$optionRequest );
+        }else{
+            $assignationMenages = $assignationMenageRepository->findAll();
+        }
 
         return $this->render('gouvernance/assignationHistorique.html.twig', [
             'assignationMenages' => $assignationMenages,
+            'employes'=> $employes,
+            'chambres'=> $chambres,
+            'optionResas'=>$optionResas
         ]);
     }
 }

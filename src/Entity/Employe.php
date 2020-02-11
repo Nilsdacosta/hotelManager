@@ -118,6 +118,18 @@ class Employe implements UserInterface
         return $this;
     }
 
+    public function getRenderPoste(): ?string
+    {
+        if ($this->poste == 1){
+            return "Réceptionniste";
+        }elseif($this->poste == 2){
+            return "Gourvernante";
+        }elseif($this->poste == 3){
+            return "Directeur";
+        }
+       
+    }
+
     public function getPoste(): ?int
     {
         return $this->poste;

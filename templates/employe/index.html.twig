@@ -3,8 +3,101 @@
 {% block title %}Liste des Employés {% endblock %}
 
 {% block body %}
-    <h1>Liste des Employés</h1>
+    <div class="d-flex justify-content-center my-5">
+        <h1>Liste des Employés</h1>
+    </div>
 
+<<<<<<< HEAD
+    <div class="container">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <form  method="get">
+                        <td>    
+                        
+                            <select class="form-control" name="id" id="id">
+                                <option value=""disabled selected>ID Employé</option>
+                                {% for employe in idEmploye %}
+                                <option value="{{employe.id}}">{{employe.id}}</option>   
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Nom utilisateur">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom ">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="telephone" id="telephone" placeholder="telephone">
+                        </td>
+                        <td>
+                            <select class="form-control" name="poste" id="poste">
+                                <option value=""disabled selected>Poste</option>
+                                {% for employe in posteEmploye %}
+                                    <option value="{{employe.renderPoste}}">{{employe.renderPoste}}</option>   
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="role" id="role">
+                                <option value=""disabled selected>Rôle</option>
+                                    {% for employe in roleEmploye %}
+                                        {% for role in employe.roles %}  
+                                            <option value="{{role}}">{{role}}</option> 
+                                            {% endfor %}  
+                                    {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input class="form-control" type="submit" value="Filtrer">
+                        </td>
+                    </form>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom utilisateur</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Téléphone</th>
+                    <th>Poste</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe.username }}</td>
+                
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.telephone }}</td>
+                    <td>{{ employe.renderPoste }}</td>
+                    <td>{% for role in employe.roles %}{% dump(role)%}{% endfor %}</td>
+                    <td>
+                        <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil </a>
+                        <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Pas de résultat</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('employe_new') }}">Ajouter un nouvel employé</a>
+    </div>
+    
+
+   
+=======
     <table class="table table-hover">
         <thead>
             <tr>
@@ -43,4 +136,5 @@
     </table>
 
     <a href="{{ path('employe_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
+>>>>>>> origin/develop
 {% endblock %}

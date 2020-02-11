@@ -10,12 +10,50 @@
     </div>
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th>Date assignation</th>
-                <th>Employé assigné</th>
-                <th>Chambre concernée</th>
-                <th>Option Service</th>
-            </tr>
+            <form action="" method="get">
+                <tr>
+                    <td>
+                        <input class="form-control" type="date" name="date" id="date">
+                    </td>
+                    <td>
+                    <select class="form-control" name="employe" id="employe"> 
+                            <option value="" disabled selected>Employé</option>
+                            {% for employe in employes %}
+                            <option value="{{employe.username}}">{{employe.username}}</option>
+                            {% endfor %}
+                    </select>
+                    </td>
+                    <td>
+                    <select class="form-control" name="chambre" id="chambre"> 
+                        <option value="" disabled selected>Chambre</option>
+                            {% for assignationMenage in assignationMenages %}
+                            <option value="{{assignationMenage.chambre.nom}}">{{assignationMenage.chambre.nom}}</option>
+                            {% endfor %}
+                    </select>
+                    </td>
+                    <td>
+                    <select class="form-control" name="optionService" id="optionService">
+                        <option value="" disabled selected>Options Service</option>
+
+                            {% for option in optionResas %}
+                                <option value="{{option.nomOption}}">{{option.nomOption}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </td>
+                    
+                    <td>
+                        <input class="form-control" type="submit" value="Filtrer">
+                    </td>
+                
+                
+                <tr>
+                    <th>Date assignation</th>
+                    <th>Employé assigné</th>
+                    <th>Chambre concernée</th>
+                    <th>Option Service</th>
+                </tr>
+            </form>
         </thead>
         <tbody>
             {% for assignationMenage in assignationMenages %}

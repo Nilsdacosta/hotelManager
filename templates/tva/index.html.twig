@@ -3,35 +3,43 @@
 {% block title %}Tva index{% endblock %}
 
 {% block body %}
-    <h1>Tva index</h1>
+    <div class="d-flex justify-content-center my-5">
+        <h1>Tva index</h1>
+   
+    </div>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Taux</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tva in tvas %}
-            <tr>
-                <td>{{ tva.id }}</td>
-                <td>{{ tva.nom }}</td>
-                <td>{{ tva.taux }} %</td>
-                <td>
-                    <a href="{{ path('tva_show', {'id': tva.id}) }}"><i class="far fa-eye"></i></a>
-                    <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Taux</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tva in tvas %}
+                <tr>
+                    <td>{{ tva.id }}</td>
+                    <td>{{ tva.nom }}</td>
+                    <td>{{ tva.taux }} %</td>
+                    <td>
+                        <a href="{{ path('tva_show', {'id': tva.id}) }}">Voir</a>
+                        <a href="{{ path('tva_edit', {'id': tva.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('tva_new') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
+        <a href="{{ path('tva_new') }}">Retour a la liste</a>
+
+    </div>
+    
+
 {% endblock %}
