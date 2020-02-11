@@ -316,6 +316,8 @@ class ReservationController extends AbstractController
         $date = new \DateTime;
         $reservationDuJour = $reservationRepository->findCheckin();
         $departDuJour = $reservationRepository->findCheckOut();
+        $nbResaJour = $reservationRepository->countin();
+        $nbDepartJour = $reservationRepository->countout();
 
         ################################################################
         ################## UPDATE ETAT CHAMBRE #########################
@@ -406,7 +408,9 @@ class ReservationController extends AbstractController
         return $this->render('reservation/check.html.twig', [
             'reservationDuJour' => $reservationDuJour,
             'date' => $date,
-            'departDuJour' => $departDuJour
+            'departDuJour' => $departDuJour,
+            'nbResaJour' => $nbResaJour,
+            'nbDepartJour'=>$nbDepartJour,
 
         ]);
     }

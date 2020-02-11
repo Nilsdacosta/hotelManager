@@ -6,12 +6,10 @@
 {% block body %}
 
 
-  
+  <marquee class="bandeau" direction="left" behavior="scroll" scrollamount="6" style=" margin-right: 200px; height:40px;width:80vw;background-color:#none;font-family:sans-serif;font-size:22pt;color:#000000; " >  Le {{date|date('d-M-Y')}} , {% for checkin in nbResaJour %}{{checkin}}{% endfor %} Check-in de prévu</marquee>
+
     <div class="container-fluid my-5">
 
-    <div class="d-flex justify-content-center m-5">
-        <h1>{{date|date('d-M-Y')}}</h1>
-    </div>
     <div class="row">
         <div class="col-6 border-right p-5">
 
@@ -19,8 +17,8 @@
                 <h2>CHECK IN</h2>
             </div>
 
-            <table class ="table table-striped">
-                <thead class="thead-dark">
+            <table class="table table-hover table-striped">
+                <thead class="theadBleu">
                     <tr>
                         <th>N° ID</th>
                         <th>Nom du client</th>
@@ -56,8 +54,8 @@
                 <h2>CHECK OUT</h2>
             </div>
             
-            <table class ="table table-striped">
-                <thead class="thead-dark">
+            <table class="table table-hover table-striped">
+                <thead class="theadBleu">
                     <tr>
                         <th>N° ID</th>
                         <th>Nom du client</th>

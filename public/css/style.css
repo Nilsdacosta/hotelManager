@@ -151,6 +151,13 @@ body {
     .accueil{
         width:20vw;
     }
-
   
+}
+
+/*************************************
+|       Modif couleur des thead        |
+*************************************/
+
+.theadBleu{
+    background-color: #659DBD;
 }
