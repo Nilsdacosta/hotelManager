@@ -1,18 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Liste des Employés {% endblock %}
-
 {% block body %}
     <div class="d-flex justify-content-center my-5">
         <h1>Liste des Employés</h1>
     </div>
-
-    <div class="container">
-        <table class="table table-hover table-striped">
-            <thead class="thead-dark">
+         <table class="table table-hover table-striped">
+            <thead class="theadBleu">
                 <tr>
                     <form  method="get">
-                        <td>
+
+                        <td>    
+
                             <select class="form-control" name="id" id="id">
                                 <option value=""disabled selected>ID Employé</option>
                                 {% for employe in idEmploye %}
@@ -77,8 +75,8 @@
                     <td>{{ employe.renderPoste }}</td>
                     <td>{% for role in employe.roles %}{% endfor %}</td>
                     <td>
-                        <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil </a>
-                        <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
+                        <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('employe_edit', {'id': employe.id}) }}"><i class="far fa-edit"></i></a>
                     </td>
                 </tr>
             {% else %}
@@ -88,10 +86,5 @@
             {% endfor %}
             </tbody>
         </table>
-
-        <a href="{{ path('employe_new') }}">Ajouter un nouvel employé</a>
-    </div>
-    
-
-   
+        <a href="{{ path('employe_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
 {% endblock %}

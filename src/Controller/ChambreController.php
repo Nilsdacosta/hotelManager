@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\Chambre;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
@@ -28,8 +26,6 @@ class ChambreController extends AbstractController
         $descriptionChambre = $chambreRepository->findAllGroupeBy('description');
         $prixChambre = $chambreRepository->findAllGroupeBy('prix');
         $nomChambre = $chambreRepository->findAllGroupeBy('nom');
-
-
          # je récupère les données envoyées via le get
          $request = Request::createFromGlobals();
          $idChambreRequest= $request->query->get('id');
@@ -38,13 +34,11 @@ class ChambreController extends AbstractController
          $descriptionChambreRequest= $request->query->get('description');
          $prixChambreRequest= $request->query->get('prix');
          $nomChambreRequest= $request->query->get('nom');
-
          if(!empty($request)){
             $chambres =$chambreRepository->chambreFiltre($idChambreRequest,$capaciteChambreRequest,$etatChambreRequest,$descriptionChambreRequest,$prixChambreRequest,$nomChambreRequest);
          }else{
             $chambres =$chambreRepository->findAll();
          }
-
         return $this->render('chambre/index.html.twig', [
             'chambres' => $chambres,
             'idChambre'=>$idChambre,
@@ -56,7 +50,6 @@ class ChambreController extends AbstractController
             'nomChambreRequest'=>$nomChambreRequest
         ]);
     }
-
     /**
      * @Route("/new", name="chambre_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
@@ -66,21 +59,17 @@ class ChambreController extends AbstractController
         $chambre = new Chambre();
         $form = $this->createForm(ChambreType::class, $chambre);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($chambre);
             $entityManager->flush();
-
             return $this->redirectToRoute('chambre_index');
         }
-
         return $this->render('chambre/new.html.twig', [
             'chambre' => $chambre,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="chambre_show", methods={"GET"})
      */
@@ -90,7 +79,6 @@ class ChambreController extends AbstractController
             'chambre' => $chambre,
         ]);
     }
-
     /**
      * @Route("/{id}/edit", name="chambre_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
@@ -99,19 +87,15 @@ class ChambreController extends AbstractController
     {
         $form = $this->createForm(ChambreType::class, $chambre);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('chambre_index');
         }
-
         return $this->render('chambre/edit.html.twig', [
             'chambre' => $chambre,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="chambre_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_ADMIN")
@@ -123,12 +107,8 @@ class ChambreController extends AbstractController
             $entityManager->remove($chambre);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('chambre_index');
     }
-
-
-    
     /**
      * @Route("/reservation/chambre", name="reservationChambre")
      * 
@@ -137,7 +117,6 @@ class ChambreController extends AbstractController
     {
         $findChambres=$chambreRepository->findAll();
         $tabChambre = array();
-
         foreach($findChambres as $chambres){
             $chambre= new Chambre();
             $chambre->idChambre = $chambres->getId();
@@ -145,8 +124,6 @@ class ChambreController extends AbstractController
             $chambre->title= ($chambres->getNom().' - '.$chambres->getCapacite().' - '. ($chambres->getPrix()*(1+ ($chambres->getTva()->getTaux())/100).'euros TTC' ));
             array_push($tabChambre, $chambre);
         }
-      
         return  new JsonResponse($tabChambre);
-
     }
 }
