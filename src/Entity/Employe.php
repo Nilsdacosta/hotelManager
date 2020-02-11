@@ -99,6 +99,8 @@ class Employe implements UserInterface
             return "Gourvernante";
         }elseif($this->poste == 1){
             return "Directeur";
+        }elseif($this->poste == 5){
+            return "Stagiaire";   
         }else{
             return "Femme de chambre";
         }

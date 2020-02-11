@@ -29,16 +29,17 @@ class EmployeType extends AbstractType
                     'Receptionniste' => 2,
                     'Gouvernante' => 3,
                     'Femme de chambre'=>4,
+                    'Stagiaire'=>5
                     
                 ],
                 'expanded' => true
             ])
             ->add('roles', ChoiceType::class, [
                  'choices'  => [
-                    'Receptioniste' => 3,
-                    'Femme de chambre'=>3,
-                    'Gouvernante' => 2,
-                    'Directeur' => 1,
+                    'ROLE_USER' => 3,
+                   
+                    'ROLE_ADMIN' => 2,
+                    'ROLE_SUPER_ADMIN' => 1,
                    
                 ],
                 'mapped' => false,
