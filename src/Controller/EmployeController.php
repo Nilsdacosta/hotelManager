@@ -70,8 +70,8 @@ class EmployeController extends AbstractController
             $usernameUnique =$form->get('nom')->getData() .$form->get('prenom')->getData() . $random ;
             
             // Je remplace les accents potentiels pour faciliter la connexion
-            $username = str_replace(array('é', 'ê', 'ë', 'è'), 'e', $usernameUnique);
-
+            $username = str_replace(" ", "", str_replace(array('é', 'ê', 'ë', 'è'), 'e', $usernameUnique));
+            
             $formRole=$form->get('roles')->getData();
             if ($formRole == 1) {
                 $employe->setRoles( [Employe::ROLE_1]);
