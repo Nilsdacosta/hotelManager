@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeRepository")
  */
@@ -20,18 +21,26 @@ class Employe implements UserInterface
     private $id;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $nom;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $username;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $prenom;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $telephone;
     /**
@@ -45,6 +54,7 @@ class Employe implements UserInterface
     private $password;
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Choice({1, 2, 3, 4}, message="Choississez un poste valide.")
      */
     private $poste;
     /**

@@ -7,8 +7,13 @@ use App\Entity\Chambre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ChambreType extends AbstractType
 {
@@ -18,16 +23,18 @@ class ChambreType extends AbstractType
             ->add('capacite')
             ->add('etat' , ChoiceType::class, [
                 'choices'  => [
-                    'A blanc' => 1,
+                    'Sale' => 1,
                     'Recouche' => 2,
                     'Prête' => 3,
                     'Hors Service' =>4
                 ],
                 'expanded' => true
             ])
-            ->add('description')
-            ->add('prix')
-            ->add('nom')
+            ->add('description', TextareaType::class,[
+                'required'=>false
+            ])
+            ->add('prix', MoneyType::class,)
+            ->add('nom', TextType::class)
             ->add('tva', EntityType::class, [
                 'class'=> Tva::class ,
                 'choice_label' => ' nom',

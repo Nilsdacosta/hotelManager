@@ -115,7 +115,7 @@ class GouvernanceController extends AbstractController
         if(!empty($request)){
             $assignationMenages = $assignationMenageRepository->historiqueAssignationFiltre($dateRequest, $employeRequest, $chambreRequest,$optionRequest );
         }else{
-            $assignationMenages = $assignationMenageRepository->findAll();
+            $assignationMenages = $assignationMenageRepository->findBy([],['date'=>"DESC"]);
         }
 
         return $this->render('gouvernance/assignationHistorique.html.twig', [

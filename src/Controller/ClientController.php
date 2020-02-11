@@ -33,7 +33,7 @@ class ClientController extends AbstractController
         if(!empty($request)){
             $clients=$clientRepository->historiqueClientFiltre($nomClient,$prenomClient, $adresse,$codePostal,$ville,$telephone,$mail,$dateNaissance);
         }else{
-            $clients=$clientRepository->findAll();
+            $clients=$clientRepository->findBy([],['nom'=>'ASC']);
         }
 
        

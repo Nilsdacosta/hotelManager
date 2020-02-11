@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,11 +21,13 @@ class Chambre
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice({"Double", "Triple", "Simple"}, message="Choississez une capacité valide.")
      */
     private $capacite;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Choice({1, 2, 3, 4}, message="Choississez un état valide.")
      */
     private $etat;
 
@@ -35,11 +38,17 @@ class Chambre
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="La valeur {{ value }} doit être de type {{ type }}"
+     * )
      */
     private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $nom;
 
@@ -54,10 +63,6 @@ class Chambre
      */
     private $reservations;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre", cascade={"persist", "remove"})
-     */
-    private $assignationMenage;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre")
@@ -90,7 +95,7 @@ class Chambre
     public function getRenderEtat(): ?string
     {
         if ($this->etat == 1){
-            return "A blanc";
+            return "Sale";
         }elseif($this->etat == 2){
             return "Recouche";
         }elseif($this->etat == 3){

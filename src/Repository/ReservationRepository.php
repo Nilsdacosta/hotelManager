@@ -188,6 +188,7 @@ class ReservationRepository extends ServiceEntityRepository
             };
             
             $query = $query
+            ->orderBy('r.dateCreation', 'DESC')
             ->getQuery()
             ->getResult();
 
