@@ -103,6 +103,7 @@ class GouvernanceController extends AbstractController
         $employes=$employeRepository->findAllGroupeBy('username');
         $chambres = $chambreRepository->findAllGroupeBy('nom');
         $optionResas = $optionServiceRepository->findAllGroupeBy('nomOption');
+        $dateDuJour = new \Datetime;
 
         # je récupère les données envoyées via le get
         $request = Request::createFromGlobals();
@@ -121,7 +122,8 @@ class GouvernanceController extends AbstractController
             'assignationMenages' => $assignationMenages,
             'employes'=> $employes,
             'chambres'=> $chambres,
-            'optionResas'=>$optionResas
+            'optionResas'=>$optionResas,
+            'dateDuJour'=> $dateDuJour
         ]);
     }
 }

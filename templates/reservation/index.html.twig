@@ -119,25 +119,12 @@
           selectHelper: true,
           editable: true,
           aspectRatio: 1.8,
-          scrollTime: '00:00',
           header: {
             left: ' prev',
             center: 'title',
             right: 'next'
           },
           defaultView: 'resourceTimelineMonth',
-          views: {
-            resourceTimelineDay: {
-              buttonText: ':15 slots',
-              slotDuration: '00:15'
-            },
-            resourceTimelineTenDay: {
-              type: 'resourceTimeline',
-              duration: { days: 10 },
-              buttonText: '10 days'
-            }
-          },
-          navLinks: true,
           resourceAreaWidth: '14%',
           resourceLabelText: 'Rooms',
 
@@ -202,24 +189,7 @@
 
 
         },
-        /*select: function(arg) {
-
-          console.log(start.startStr)
-
-            'select callback',
-          arg.startStr,
-          arg.endStr,
-          arg.resource ? arg.resource.id : '(no resource)'
-          var dateEntree = document.getElementById("dateEntree");
-          var dateSortie = document.getElementById("dateSortie");
-
-          dateEntree.value = arg.startStr;
-          dateSortie.value = arg.endStr;
-          },
-
-
-
-        });*/
+       
         select: function(arg) {
 
             'select callback',

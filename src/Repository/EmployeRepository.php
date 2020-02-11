@@ -84,8 +84,8 @@ class EmployeRepository extends ServiceEntityRepository
 
             if(!empty( $role)) {
                 $query = $query
-                ->andWhere('e.roles = :val7')
-                ->setParameter('val7', $role);
+                ->andWhere('e.roles LIKE :val7')
+                ->setParameter('val7', '%'.$role.'%');
             }
 
             $query = $query
