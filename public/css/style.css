@@ -83,9 +83,8 @@ body {
 
 }
 
-.navbar{
-    background-color:#659DBD;
-}
+.navbar, .theadBleu{
+    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);}
 
 .deconect{
     background-color:#daad86;
@@ -158,6 +157,3 @@ body {
 |       Modif couleur des thead        |
 *************************************/
 
-.theadBleu{
-    background-color: #659DBD;
-}

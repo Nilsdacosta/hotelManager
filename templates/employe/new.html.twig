@@ -3,9 +3,11 @@
 {% block title %}Nouvel Employé{% endblock %}
 
 {% block body %}
-    <h1>Créer nouvel Employé</h1>
-
+ <div class='d-flex justify-content-center'>
+         <h1>Créer un nouvel Employé </h1>
+    </div>
+    <br>
     {{ include('employe/_form.html.twig') }}
 
-    <a href="{{ path('employe_index') }}">Retour à la liste</a>
+    <a href="{{ path('employe_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 {% endblock %}
