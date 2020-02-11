@@ -36,7 +36,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('chambre_index') }}"><i class="fas fa-arrow-left"></i></a>
+    <a href="{{ path('chambre_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     <a href="{{ path('chambre_edit', {'id': chambre.id}) }}"><i class="far fa-edit fa-3x"></i></a>
 

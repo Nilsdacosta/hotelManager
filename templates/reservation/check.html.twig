@@ -36,7 +36,7 @@
                         <td> {% for chambre in reservation.chambre %} {{chambre.nom}} {% endfor %}</td>
                         <td>{{reservation.client.prenom}}</td>
                         <td>{{reservation.renderStatus}}</td>
-                        <td class="d-flex justify-content-center"><a class="btn btn-secondary" href="{{path('reservationCheckInForm',{'id':reservation.id} ) }}">Valider</a></td>
+                        <td class="d-flex justify-content-center"><a class="btn affchin" href="{{path('reservationCheckInForm',{'id':reservation.id} ) }}">Modifier</a></td>
 
                     </tr>
 
