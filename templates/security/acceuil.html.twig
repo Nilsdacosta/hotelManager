@@ -14,9 +14,9 @@
 
         {#   Logo + nom     #}
         <div class="row d-flex justify-content-center align-items-center">
-            <img class="img mr-3 " src="https://image.flaticon.com/icons/png/512/120/120159.png" alt=""><i class="fas fa-concierge-bell"></i>
+            {# <img class="img mr-3 " src="https://image.flaticon.com/icons/png/512/120/120159.png" alt=""><i class="fas fa-concierge-bell"></i> #}
 
-            <a class="navbar-brand " href="{{path('app_login')}}">HotelManager</a>
+            <h1 class="taille">HotelManager</h1>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,11 +34,7 @@
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
 
-                {% if app.user %}
-                    <div class="mb-3">
-                        Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-                    </div>
-                {% endif %}
+               
 
                 <div class="form-group">
                     <input class="accueil form-control mb-3" type="text" value="{{ last_username }}" name="username" id="inputUsername"  required autofocus placeholder="Nom Utilisateur">

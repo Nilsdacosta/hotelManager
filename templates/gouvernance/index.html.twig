@@ -20,15 +20,15 @@
                     {% if data.chambre.id == chambre.id %}
                     <td> {{chambre.nom}} </td>
                         {{ form_start(data.form, {'action': path('gouvernance_form_receive', { 'id' :  data.chambre.id })} ) }}
-                        <td>{{form_widget(data.form.employe)}}</td>
-                        <td>{{form_widget(data.form.optionService)}}</td>
-                        <td>{{form_widget(data.form.Valider)}}</td>
+                            <td>{{form_widget(data.form.employe)}}</td>
+                            <td>{{form_widget(data.form.optionService)}}</td>
+                            <td>{{form_widget(data.form.Valider)}}</td>
                         {{ form_end(data.form) }}
-                    {% endif %}
-                {% endfor %}
-            </tr>
-        {% endfor %}
-</tbody>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+    </tbody>
     
 </table>
 

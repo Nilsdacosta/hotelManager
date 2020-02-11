@@ -1,14 +1,39 @@
-
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bitter&display=swap');
 
 /******************************* AFFICHAGE TABLETTE ET MOBILE ************************************/
 
 
 body {
+<<<<<<< HEAD
     font-family: 'Heebo', sans-serif;
     background-color: #f5ebe3;
+=======
+    font-family: 'Bitter', serif;
+    background-color:#f5ebe3;
+
+>>>>>>> origin/develop
 
 }
 
+.titre{
+    font-family: 'Lobster', cursive;
+    color: black;
+  
+}
+
+.taille{
+    font-size: 60px;
+    font-family: 'Lobster', cursive;
+    color: black;
+    margin-top:150px
+}
+
+.onglet{
+    font-family: 'Lobster', cursive;
+    font-size: 20px;
+    margin-left:115px
+}
 
 /***********************************
 |     Page réservation/ index      |
@@ -80,6 +105,16 @@ body {
 
 .dashcard{
     background-color: none;
+   
+}
+
+.card{
+    border: none;
+}
+
+.hk{
+    width: 60px;
+    height: 60px;
 }
 
 .bandeau{
@@ -100,6 +135,15 @@ body {
 }
 .affchout:hover{
     background-color:#ff6961;
+}
+
+.nav-link{
+    margin-left: 120px;
+
+}
+
+.imgFront{
+    margin-right: 30px;
 }
 
 /************************************ AFFICHAGE DESKTOP ***************************************/

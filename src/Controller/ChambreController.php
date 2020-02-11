@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @Route("/admin/chambre")
  */
@@ -61,6 +61,7 @@ class ChambreController extends AbstractController
 
     /**
      * @Route("/new", name="chambre_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function new(Request $request): Response
     {
@@ -94,6 +95,7 @@ class ChambreController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="chambre_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function edit(Request $request, Chambre $chambre): Response
     {
@@ -114,6 +116,7 @@ class ChambreController extends AbstractController
 
     /**
      * @Route("/{id}", name="chambre_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function delete(Request $request, Chambre $chambre): Response
     {
@@ -130,6 +133,7 @@ class ChambreController extends AbstractController
     
     /**
      * @Route("/reservation/chambre", name="reservationChambre")
+     * 
      */
     public function findChambreForCalendar(ChambreRepository $chambreRepository)
     {

@@ -4,6 +4,7 @@
 
 {% block body %}
 
+<<<<<<< HEAD
     <div class="d-flex justify-content-center my-5">
         <h1>Liste des Chambres</h1>
     </div>
@@ -63,6 +64,10 @@
                     </td>
                 </tr>
             </form>
+=======
+    <table class="table table-hover">
+        <thead>
+>>>>>>> origin/develop
             <tr>
                 <th>Id</th>
                 <th>Capacite</th>
@@ -83,8 +88,10 @@
                 <td>{{ chambre.prix }}</td>
                 <td>{{ chambre.nom }}</td>
                 <td>
-                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}">Voir</a>
-                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}">Modifier</a>
+                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}"><i class="far fa-eye"></i></a>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}"><i class="far fa-edit"></i></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -94,6 +101,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('chambre_new') }}">Ajouter</a>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('chambre_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
+    {% endif %}
 {% endblock %}

@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('tva_index') }}">Retour a la liste</a>
+    <a href="{{ path('tva_index') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
 
-    <a href="{{ path('tva_edit', {'id': tva.id}) }}">Modifier</a>
+    <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit fa-3x"></i></a>
 
     {{ include('tva/_delete_form.html.twig') }}
 {% endblock %}
