@@ -3,8 +3,10 @@
 {% block title %}Modification des options{% endblock %}
 
 {% block body %}
-    <h1>Modification des options</h1>
-
+    <div class="d-flex justify-content-center my-5">
+        <h1>Modification de l'option "{{ option_service.nomOption }}"
+            <tr></h1>
+    </div>
     {{ include('option_service/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('option_service_index') }}">Retour</a>

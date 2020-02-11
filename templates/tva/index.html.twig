@@ -8,9 +8,8 @@
    
     </div>
 
-    <div class="container">
         <table class="table table-hover table-striped">
-            <thead class="thead-dark">
+            <thead class="theadBleu">
                 <tr>
                     <th>Id</th>
                     <th>Nom</th>
@@ -25,21 +24,21 @@
                     <td>{{ tva.nom }}</td>
                     <td>{{ tva.taux }} %</td>
                     <td>
-                        <a href="{{ path('tva_show', {'id': tva.id}) }}">Voir</a>
-                        <a href="{{ path('tva_edit', {'id': tva.id}) }}">Modifier</a>
+                        <a href="{{ path('tva_show', {'id': tva.id}) }}"><i class="far fa-eye"></i></a>
+                        <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit"></i></a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">no records found</td>
+                    <td colspan="4">Pas de résultat</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-        <a href="{{ path('tva_new') }}">Création TVA</a>
 
-    </div>
+        <a href="{{ path('tva_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
+
     
 
 {% endblock %}

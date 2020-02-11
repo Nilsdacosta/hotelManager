@@ -3,19 +3,21 @@
 {% block title %}Nouvelle assignation{% endblock %}
 
 {% block body %}
-    <h1>Nouvelle assignation</h1>
+    <div class='d-flex justify-content-center'>
+        <h1 class="my-5">Nouvelle assignation</h1>
+    </div>
 
 
-<table class="table table-hover">
-<thead>
-<th>Chambre</th>
-<th>Employé</th>
-<th>Option</th>
-<th>Validation</th>
-</thead>
-<tbody>
-    {% for chambre in chambres %}
-            <tr> 
+    <table class="table table-striped table-hover" >
+        <thead class="theadBleu" >
+        <th>Chambre</th>
+        <th>Employé</th>
+        <th>Option</th>
+        <th>Validation</th>
+        </thead>
+        <tbody>
+            {% for chambre in chambres %}
+            <tr > 
                 {% for data in formList %}
                     {% if data.chambre.id == chambre.id %}
                     <td> {{chambre.nom}} </td>
@@ -28,9 +30,9 @@
                     {% endfor %}
                 </tr>
             {% endfor %}
-    </tbody>
+        </tbody>
     
-</table>
+    </table>
 
     <a href="">back to list</a>
 {% endblock %}

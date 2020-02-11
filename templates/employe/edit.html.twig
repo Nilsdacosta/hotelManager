@@ -3,8 +3,9 @@
 {% block title %}Editer Employé{% endblock %}
 
 {% block body %}
-    <h1>Editer Employé</h1>
-
+    <div class='d-flex justify-content-center'>
+         <h1>Editer profil de : {{ employe.prenom }} {{ employe.nom }}</h1>
+    </div>
     {{ include('employe/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('employe_index') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>

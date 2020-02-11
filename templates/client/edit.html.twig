@@ -3,8 +3,9 @@
 {% block title %}Editer profil client{% endblock %}
 
 {% block body %}
-    <h1>Editer profil client</h1>
-
+    <div class='d-flex justify-content-center'>
+         <h1>Editer profil client :{{ client.prenom }} {{ client.nom }}</h1>
+    </div>
     {{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('client') }}">Retour à la liste</a>
