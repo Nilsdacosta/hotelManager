@@ -47,7 +47,7 @@ class GouvernanceController extends AbstractController
      */
     public function index(ChambreRepository $chambreRepository, AssignationMenageRepository $assignationRepository, EmployeRepository $employeRepository): Response
     {
-        $employes = $employeRepository->findBy(['poste' => 3]);
+        $employes = $employeRepository->findBy(['poste' => 4]);
         // dump($employes);
         $chambres = $chambreRepository->findAll();
         

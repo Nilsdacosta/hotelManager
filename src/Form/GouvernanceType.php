@@ -53,7 +53,7 @@ class GouvernanceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => AssignationMenage::class,
-            'poste' => 3
+            'poste' => 4
         ]);
     }
 }
