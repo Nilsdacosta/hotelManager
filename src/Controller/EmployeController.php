@@ -66,43 +66,34 @@ class EmployeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $random = random_int(1, 999);
            
-            $username =$form->get('nom')->getData() .$form->get('prenom')->getData() . $random ;
-            $prenom = (str_replace("é","e",$form->get('prenom')->getData()));
+            // Création d'un id unique pour chaque employé.
+            $usernameUnique =$form->get('nom')->getData() .$form->get('prenom')->getData() . $random ;
+            
+            // Je remplace les accents potentiels pour faciliter la connexion
+            $username = str_replace(array('é', 'ê', 'ë', 'è'), 'e', $usernameUnique);
 
-            $valachanger = array("é" => "e","è" => "e","ê" => "e","ë" => "e", " " =>"");
-              
-               
-
-            $employe->setPrenom($prenom);
-            dump($prenom);
             $formRole=$form->get('roles')->getData();
-           
-            if ($formRole== 1) {
-
+            if ($formRole == 1) {
                 $employe->setRoles( [Employe::ROLE_1]);
-            }elseif($formRole== 2){
+            }elseif($formRole == 2){
                 $employe->setRoles( [Employe::ROLE_2]);
             }else{
                 $employe->setRoles( [Employe::ROLE_3]);
             }
 
-            
-            
-            $employe->setUsername(strtr ( strtolower($username),$valachanger ) );
+            $employe->setUsername(strtolower($username));
           
-            // encode the plain password
+            // Récupération de l'id unique pour que son mot de passe soit le même et faciliter l'enregistrement des employés
             $employe->setPassword(
                 $passwordEncoder->encodePassword(
                     $employe,
-                  
-                   str_replace ( " ", "", strtolower($username) ) 
+                   str_replace (" ", "", strtolower($username) ) 
                 )
             );           
-            dump($employe);
-            $entityManager = $this->getDoctrine()->getManager();
 
+            // Enregistrement des données dans la BDD
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($employe);
-           
             $entityManager->flush();
 
             return $this->redirectToRoute('employe_index');
