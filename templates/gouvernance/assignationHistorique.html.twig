@@ -53,12 +53,12 @@
                     <th>Chambre concernée</th>
                     <th>État chambre</th>
                     <th>Option Service</th>
+                    <th>Supprimer</th>
                 </tr>
             </form>
         </thead>
         <tbody>
             {% for assignationMenage in assignationMenages %}
-                
                 <tr>
                     <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
                     <td>{{(assignationMenage.employe.username)}}</td>
@@ -69,11 +69,19 @@
                             {{option.nomOption}},
                         {% endfor %}
                     </td>
-                    
+                    <td>
+                        <form method="post" action="{{path('assignation_delete', {'id':assignationMenage.id} )}}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assignationMenage.id) }}">
+                            <button class='btn btn-danger'>Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <a href="{{path('gouvernance')}}">Ajout assignations</a>
 
     
 {% endblock %}

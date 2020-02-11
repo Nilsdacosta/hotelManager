@@ -10,38 +10,17 @@ use App\Repository\ChambreRepository;
 use App\Repository\EmployeRepository;
 
 use App\Repository\OptionServiceRepository;
-
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\AssignationMenageRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GouvernanceController extends AbstractController
 {
-    // /**
-    //  * @Route("/gouvernance", name="gouvernance")
-    //  */
-    // public function index(Request $request, ChambreRepository $chambreRepository): Response
-    // {
-    //     $assignation = new AssignationMenage;
-    //     $chambres = $chambreRepository->findAll();
-    //     foreach($chambres as $chambre)
-    //     {
-    //         $form = $this->createForm(GouvernanceType::class, $assignation);
-
-    //         $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
-            
-    //     }
-    //     return $this->render('gouvernance/index.html.twig', [
-    //         'formList' => $formView,
-    //         'chambres' => $chambres
-    //     ]);
-    // }
-
     /**
      * @Route("/gouvernance", name="gouvernance")
      */
@@ -62,6 +41,7 @@ class GouvernanceController extends AbstractController
 
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
+            // Symfony n'autorise pas l'affichage du même formulaire sur la même page donc je les enregistre dans un tableau
             $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
         }
         return $this->render('gouvernance/index.html.twig', [
@@ -71,6 +51,7 @@ class GouvernanceController extends AbstractController
         ]);
     }
 
+    // Dans cette fonction je termine l'action de la fonction Index avec l'enregistrement de mes données en BDD
     /**
      * @Route("/form/{id}", name="gouvernance_form_receive")
      */
@@ -122,8 +103,24 @@ class GouvernanceController extends AbstractController
             'assignationMenages' => $assignationMenages,
             'employes'=> $employes,
             'chambres'=> $chambres,
-            'optionResas'=>$optionResas,
+            'optionResas'=> $optionResas,
             'dateDuJour'=> $dateDuJour
         ]);
     }
+
+    /**
+     * @Route("gouvernance/delete/{id}", name="assignation_delete", methods={"DELETE"})
+     * //@IsGranted("ROLE_ADMIN")
+     */
+    public function delete(Request $request, AssignationMenage $assignationMenage): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$assignationMenage->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($assignationMenage);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('gouvernance_historique', [    
+        ]);
+    }
 }
+//
