@@ -91,7 +91,7 @@
                 <th>Date d'arrivée</th>
                 <th>Date de fin</th> 
                 <th>Options Service</th>
-                <th>Tarif</th>
+                <th>Facture</th>
                 {# <th>Action</th> #}
 
             </tr>
@@ -113,7 +113,12 @@
                 <td>
                     {% for option in reservation.optionService %} {{ option.nomOption }} - {% endfor %}
                 </td>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.prix }}€  <br> {% endfor %}   </td>
+                <td> 
+                {% if reservation.status == 4 %}
+                <a href="{{path('reservationRecapitulatif',{'id':reservation.id})}}">Voir la facture</a>  
+               
+                {% endif  %} 
+                </td>
                 
           
                  <td>

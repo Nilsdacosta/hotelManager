@@ -31,7 +31,7 @@
                             <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom">
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="telephone" id="telephone" placeholder="telephone">
+                            <input type="text" class="form-control" name="telephone" id="telephone" placeholder="Télephone">
                         </td>
                         <td>
                             <select class="form-control" name="poste" id="poste">
@@ -77,7 +77,7 @@
                     <td>{{ employe.prenom }}</td>
                     <td>{{ employe.telephone }}</td>
                     <td>{{ employe.renderPoste }}</td>
-                    <td>{% for role in employe.roles %}{% dump(role)%}{% endfor %}</td>
+                    <td>{% for role in employe.roles %}{% dump(role~ employe.id)%}{% endfor %}</td>
                     <td>
                         <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil </a>
                         <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
