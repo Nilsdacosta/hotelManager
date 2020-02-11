@@ -7,7 +7,6 @@
         <h1>Liste des Employés</h1>
     </div>
 
-<<<<<<< HEAD
     <div class="container">
         <table class="table table-hover table-striped">
             <thead class="thead-dark">
@@ -97,44 +96,4 @@
     
 
    
-=======
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom utilisateur</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Téléphone</th>
-                <th>Poste</th>
-                 <th>Rôle</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for employe in employes %}
-            <tr>
-                <td>{{ employe.id }}</td>
-                <td>{{ employe.username }}</td>
-              
-                <td>{{ employe.nom }}</td>
-                <td>{{ employe.prenom }}</td>
-                <td>{{ employe.telephone }}</td>
-                <td>{{ employe.poste }}</td>
-                <td>{% for role in employe.roles %}{{ role }}{% endfor %}</td>
-                <td>
-                    <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
-                    <a href="{{ path('employe_edit', {'id': employe.id}) }}"><i class="far fa-edit "></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">Pas de résultat</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('employe_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
->>>>>>> origin/develop
 {% endblock %}
