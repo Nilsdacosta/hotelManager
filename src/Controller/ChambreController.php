@@ -54,8 +54,6 @@ class ChambreController extends AbstractController
             'prixChambre'=> $prixChambre,
             'nomChambre'=> $nomChambre,
             'nomChambreRequest'=>$nomChambreRequest
-
-
         ]);
     }
 

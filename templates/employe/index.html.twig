@@ -12,8 +12,7 @@
             <thead class="thead-dark">
                 <tr>
                     <form  method="get">
-                        <td>    
-                        
+                        <td>
                             <select class="form-control" name="id" id="id">
                                 <option value=""disabled selected>ID Employé</option>
                                 {% for employe in idEmploye %}
@@ -72,12 +71,11 @@
                 <tr>
                     <td>{{ employe.id }}</td>
                     <td>{{ employe.username }}</td>
-                
                     <td>{{ employe.nom }}</td>
                     <td>{{ employe.prenom }}</td>
                     <td>{{ employe.telephone }}</td>
                     <td>{{ employe.renderPoste }}</td>
-                    <td>{% for role in employe.roles %}{% dump(role)%}{% endfor %}</td>
+                    <td>{% for role in employe.roles %}{% endfor %}</td>
                     <td>
                         <a href="{{ path('employe_show', {'id': employe.id}) }}">Voir profil </a>
                         <a href="{{ path('employe_edit', {'id': employe.id}) }}">Modifier</a>
