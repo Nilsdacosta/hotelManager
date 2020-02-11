@@ -9,9 +9,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Employe implements UserInterface
 {
-    const ROLE_1 = 'ROLE_USER';
+    const ROLE_1 = 'ROLE_SUPER_ADMIN';
     const ROLE_2 = 'ROLE_ADMIN';
-    const ROLE_3 = 'ROLE_SUPER_ADMIN';
+    const ROLE_3 = 'ROLE_USER';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -93,14 +93,14 @@ class Employe implements UserInterface
     }
     public function getRenderPoste(): ?string
     {
-        if ($this->poste == 1){
+        if ($this->poste == 2){
             return "Réceptionniste";
-        }elseif($this->poste == 2){
-            return "Gourvernante";
         }elseif($this->poste == 3){
+            return "Gourvernante";
+        }elseif($this->poste == 1){
             return "Directeur";
         }else{
-            return "Réceptionniste";
+            return "Femme de chambre";
         }
     }
     public function getPoste(): ?int
