@@ -57,14 +57,17 @@
         </thead>
         <tbody>
             {% for assignationMenage in assignationMenages %}
-                {% dump(assignationMenage.employe) %}
+                
                 <tr>
                     <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
                     <td>{{(assignationMenage.employe.username)}}</td>
                     <td>{{(assignationMenage.chambre.nom)}}</td>
-                    {% for option in assignationMenage.optionService %}
-                    <td>{{option.nomOption}}</td>
-                    {% endfor %}
+                    <td>
+                        {% for option in assignationMenage.optionService %}
+                            {{option.nomOption}},
+                        {% endfor %}
+                    </td>
+                    
                 </tr>
             {% endfor %}
         </tbody>
