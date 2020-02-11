@@ -36,12 +36,12 @@
                         <select class="form-control" name="prix" id="prix">
                             <option value=""disabled selected>prix</option>
                             {% for option in prixOption %}
-                            <option value="{{option.prixOption}}">{{option.prixOption}}</option>
+                            <option value="{{option.prixOption}}">{{option.prixOption}} </option> 
                             {% endfor %}
                         </select>
                     </td>
                     <td>
-                        <input class="form-control" type="submit" value="Filtrer">
+                        <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
                     </td>
                 </form>
                 
@@ -60,7 +60,7 @@
                 <td>{{ option_service.id }}</td>
                 <td>{{ option_service.nomOption }}</td>
                 <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d') : '' }}</td>
-                <td>{{ option_service.prixOption }}</td>
+                <td>{{ option_service.prixOption }} €</td>
                 <td>
                     <a href="{{ path('option_service_show', {'id': option_service.id}) }}"><i class="far fa-eye"></i></a>
                     <a href="{{ path('option_service_edit', {'id': option_service.id}) }}"><i class="far fa-edit"></i></a>
