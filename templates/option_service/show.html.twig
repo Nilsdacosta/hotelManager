@@ -3,9 +3,12 @@
 {% block title %}Option Services{% endblock %}
 
 {% block body %}
-    <h1>Option Services</h1>
 
-    <table class="table table-hover">
+    <div class="d-flex justify-content-center my-5">
+        <h1>Detail de l'option "{{ option_service.nomOption }}"</h1>
+    </div>
+
+    <table class="table table-striped table-hover" >
         <tbody>
             <tr>
                 <th>Créateur</th>
@@ -21,7 +24,7 @@
             </tr>
             <tr>
                 <th>Prix Option</th>
-                <td>{{ option_service.prixOption }}</td>
+                <td>{{ option_service.prixOption }} €</td>
             </tr>
         </tbody>
     </table>
