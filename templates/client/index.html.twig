@@ -10,7 +10,7 @@
     <table class="table table-striped table-hover" >
         <thead >
             <form  method="get">
-                <tr  >
+                <tr>
                     <td>
                         <input placeholder="Nom " class="form-control" type="text"  name="nom" id="nom">
                     </td>
@@ -36,9 +36,9 @@
                     <td>
                         <input  class="form-control" type="date" name="dateNaissance" id="dateNaissance">
                     </td>
-                    <td></td>
-                    <td>
-                     <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
+                    
+                    <td colspan="6">
+                        <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
                     </td>
                     
                 
@@ -78,6 +78,7 @@
                     <a href="{{ path('client_edit', {'id': client.id}) }}">Modifier</a>
                 </td> 
             </tr>
+            
         {% else %}
             <tr>
                 <td colspan="6">Pas de résultat</td>

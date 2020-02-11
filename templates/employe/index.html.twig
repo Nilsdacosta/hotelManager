@@ -6,7 +6,7 @@
     </div>
 
          <table class="table table-hover table-striped">
-            <thead class="theadBleu">
+            <thead>
 
                 <tr>
                     <form  method="get">
@@ -76,7 +76,7 @@
                     <td>{{ employe.telephone }}</td>
                     <td>{{ employe.renderPoste }}</td>
 
-                    <td>{% for role in employe.roles %}{% dump(role~ employe.id)%}{% endfor %}</td>
+                    <td>{% for role in employe.roles %}{{role}}{% endfor %}</td>
 
                     <td>
                         <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
