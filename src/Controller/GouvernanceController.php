@@ -8,11 +8,10 @@ use App\Form\GouvernanceType;
 use App\Entity\AssignationMenage;
 use App\Repository\ChambreRepository;
 use App\Repository\EmployeRepository;
-<<<<<<< HEAD
+
 use App\Repository\OptionServiceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-=======
->>>>>>> origin/develop
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\AssignationMenageRepository;
