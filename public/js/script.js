@@ -12,3 +12,4 @@ function checkResa(id,etat) {
     });  
 
 }
+

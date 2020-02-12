@@ -47,7 +47,6 @@ class ChambreType extends AbstractType
             ->add('tva', EntityType::class, [
                 'class'=> Tva::class ,
                 'choice_label' => ' nom',
-                'expanded' => true,
             ])
 
         ;
