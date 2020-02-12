@@ -35,7 +35,7 @@ class ReservationController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
      */
-    public function index(ReservationRepository $reservationRepository,Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository, $idResa=null)
+    public function index(ReservationRepository $reservationRepository, OptionServiceRepository $optionServiceRepository, Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository, $idResa=null)
     {
       ################################################################
       ##################### FORMULAIRE RESA  #########################
@@ -60,6 +60,13 @@ class ReservationController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 $reservation->setStatus(1);
                 $reservation->setDateCreation(new \DateTime);
+
+                # je check si au moins une option service a été coché, sinon je lui donne une valeur par défault
+                if(null !=($reservation->getOptionService())){
+                    $option = $optionServiceRepository->findOneBy(['id'=>1]);
+                    $reservation->addOptionService($option);
+                }
+
 
                 // je procède a l'enregistrement de mes données
                 $entityManager->persist($reservation);

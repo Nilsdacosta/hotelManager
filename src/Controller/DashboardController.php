@@ -115,14 +115,18 @@ class DashboardController extends AbstractController
 
         }
 
-       
+        # je récupère les réservations 'active' à la date du jour pour afficher un état des clients présents
+        $reservationEtatDuJour = $reservationRepository->findResaDashboard($date);
+ 
 
         return $this->render('dashboard/index.html.twig', [
             'reservationDuJour' => $reservationDuJour,
             'date' => $date,
             'nbResaJour' => $nbResaJour,
             'nbDepartJour'=>$nbDepartJour,
-            'departDuJour' => $departDuJour
+            'departDuJour' => $departDuJour,
+            'reservationEtatDuJour'=> $reservationEtatDuJour,
+
         ]);
     }
 }

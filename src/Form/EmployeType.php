@@ -9,8 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -19,10 +20,16 @@ class EmployeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add ('username')
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
+
+            ->add('nom', TextType::class,[
+                'required'=>true,
+            ])
+            ->add('prenom', TextType::class,[
+                'required'=>true,
+            ])
+            ->add('telephone', TextType::class,[
+                'required'=>true,
+            ])
             ->add('poste', ChoiceType::class, [
                 'choices'  => [
                     'Poste occupé' => 'Choose an option',
