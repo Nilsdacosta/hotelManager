@@ -1,6 +1,8 @@
 framework:
 
+
     #error_controller: App\Controller\PageErrorController::showAction
+
 
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true

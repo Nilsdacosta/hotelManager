@@ -29,9 +29,15 @@
         </tbody>
     </table>
 
-    <a href="{{ path('option_service_index') }}">Retour</a>
-
-    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}">Modifier</a>
+    <a href="{{ path('option_service_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <a href="{{ path('option_service_edit', {'id': option_service.id}) }}"><i class="far fa-edit fa-3x"></i></a>
 
     {{ include('option_service/_delete_form.html.twig') }}
+
+ {% endif  %}     
+
+  
+
+   
 {% endblock %}
