@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -43,6 +44,7 @@ class AssignationMenage
      * @ORM\ManyToMany(targetEntity="App\Entity\OptionService", inversedBy="assignationMenages")
      */
     private $optionService;
+
 
     public function __construct()
     {
@@ -116,4 +118,5 @@ class AssignationMenage
 
         return $this;
     }
+
 }

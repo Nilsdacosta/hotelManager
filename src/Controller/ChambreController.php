@@ -57,6 +57,7 @@ class ChambreController extends AbstractController
     public function new(Request $request): Response
     {
         $chambre = new Chambre();
+        $chambre->setStatutAssignationMenage(0);
         $form = $this->createForm(ChambreType::class, $chambre);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,6 +66,7 @@ class ChambreController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('chambre_index');
         }
+        
         return $this->render('chambre/new.html.twig', [
             'chambre' => $chambre,
             'form' => $form->createView(),

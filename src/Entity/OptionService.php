@@ -21,15 +21,11 @@ class OptionService
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *      message="La valeur ne peut être vide")
      */
     private $nomOption;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date
-     * @var string A "Y-m-d" formatted value
      */
     private $dateCreation;
 

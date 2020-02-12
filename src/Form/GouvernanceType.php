@@ -45,7 +45,7 @@ class GouvernanceType extends AbstractType
             //     'choice_label' => 'nom',
             //     'expanded' =>true
             // ])
-            ->add('Valider', SubmitType::class)
+            // ->add('Valider', SubmitType::class)
         ;
     }
 

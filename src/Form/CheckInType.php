@@ -20,7 +20,6 @@ class CheckInType extends AbstractType
                     'valider'=> 2,
                     'annuler'=>3
                 ],
-                'expanded'=> true,
            
             ])
             ->add('Valider', SubmitType::class)

@@ -9,8 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -19,12 +20,19 @@ class EmployeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            //->add ('username')
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
+
+            ->add('nom', TextType::class,[
+                'required'=>true,
+            ])
+            ->add('prenom', TextType::class,[
+                'required'=>true,
+            ])
+            ->add('telephone', TextType::class,[
+                'required'=>true,
+            ])
             ->add('poste', ChoiceType::class, [
                 'choices'  => [
+                    'Poste occupé' => 'Choose an option',
                     'Directeur' => 1,
                     'Receptionniste' => 2,
                     'Gouvernante' => 3,
@@ -32,12 +40,11 @@ class EmployeType extends AbstractType
                     'Stagiaire'=>5
                     
                 ],
-                'expanded' => true
             ])
             ->add('roles', ChoiceType::class, [
                  'choices'  => [
+                    'Role' => 'Choose an option',
                     'ROLE_USER' => 3,
-                   
                     'ROLE_ADMIN' => 2,
                     'ROLE_SUPER_ADMIN' => 1,
                    

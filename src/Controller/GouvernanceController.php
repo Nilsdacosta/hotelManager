@@ -29,11 +29,11 @@ class GouvernanceController extends AbstractController
         $employes = $employeRepository->findBy(['poste' => 4]);
         // dump($employes);
         $chambres = $chambreRepository->findAll();
-        
+        dump($chambres);
         foreach($chambres as $chambre)
         {
             // Je récupère la dernière assignation après validation ou j'instancie un nouvel objet assignation
-            $assignation = $assignationRepository->findLastAssignation($chambre->getId());  
+            $assignation = $assignationRepository->findLastAssignation($chambre->getId());
 
             if ($assignation === null) {
                 $assignation = new AssignationMenage;
@@ -42,12 +42,16 @@ class GouvernanceController extends AbstractController
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
             // Symfony n'autorise pas l'affichage du même formulaire sur la même page donc je les enregistre dans un tableau
-            $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
+            $formView[] = [
+                'form' => $form->createView(), 
+                'chambre' => $chambre
+            ];
+            
         }
         return $this->render('gouvernance/index.html.twig', [
             'formList' => $formView,
             'chambres' => $chambres,
-            'employes' => $employes
+            'employes' => $employes,
         ]);
     }
 
@@ -55,7 +59,7 @@ class GouvernanceController extends AbstractController
     /**
      * @Route("/form/{id}", name="gouvernance_form_receive")
      */
-    public function formReceive(ChambreRepository $chambreRepository, Request $request, $id): Response
+    public function formReceive(ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository, Request $request, $id): Response
     {
             $assignation = new AssignationMenage;
             $chambre = $chambreRepository->find($id);
@@ -65,12 +69,19 @@ class GouvernanceController extends AbstractController
 
             // enregistrement des datas dans la table assignation en fonction de l'id 
             if ($form->isSubmitted() && $form->isValid()) {
+                 # je check si au moins une option service a été coché, sinon je lui donne une valeur par défault
+                if(null !=($assignation->getOptionService())){
+                    $option = $optionServiceRepository->findOneBy(['id'=>1]);
+                    $assignation->addOptionService($option);
+                }
                 $assignation->setChambre($chambre);
+                $chambre->setStatutAssignationMenage(1);
                 $assignation->setdate(new \DateTime);
                 $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($chambre);
                 $entityManager->persist($assignation);
                 $entityManager->flush();
-    
+
                 return $this->redirectToRoute('gouvernance');
             }
     }

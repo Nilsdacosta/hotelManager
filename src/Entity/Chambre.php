@@ -21,7 +21,7 @@ class Chambre
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice({"Double", "Triple", "Simple"}, message="Choississez une capacité valide.")
+     * @Assert\Choice({"Double", "Single", "Twin", "Deluxe","Suite"}, message="Choississez une capacité valide.")
      */
     private $capacite;
 
@@ -68,6 +68,11 @@ class Chambre
      * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre")
      */
     private $assignationMenages;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $statutAssignationMenage;
 
     public function __construct()
     {
@@ -250,4 +255,16 @@ class Chambre
         return $chaine;
     }
 }
+
+    public function getStatutAssignationMenage(): ?int
+    {
+        return $this->statutAssignationMenage;
+    }
+
+    public function setStatutAssignationMenage(?int $statutAssignationMenage): self
+    {
+        $this->statutAssignationMenage = $statutAssignationMenage;
+
+        return $this;
+    }
 }
