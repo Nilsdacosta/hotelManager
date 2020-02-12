@@ -27,8 +27,6 @@ class ChambreType extends AbstractType
                     'Twin' => 'Twin',
                     'Deluxe' => 'Deluxe',
                     'Suite' => 'Suite',
-
-
                 ],
                 'expanded' => true
             ])
