@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Chambre;
 use App\Entity\Employe;
 use App\Entity\OptionService;
 use App\Form\GouvernanceType;
+use Doctrine\ORM\EntityManager;
 use App\Entity\AssignationMenage;
+
 use App\Repository\ChambreRepository;
 use App\Repository\EmployeRepository;
-
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OptionServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,13 +32,13 @@ class GouvernanceController extends AbstractController
         $employes = $employeRepository->findBy(['poste' => 4]);
         // dump($employes);
         $chambres = $chambreRepository->findAll();
-        dump($chambres);
+        // dump($chambres);
         foreach($chambres as $chambre)
         {
             // Je récupère la dernière assignation après validation ou j'instancie un nouvel objet assignation
             $assignation = $assignationRepository->findLastAssignation($chambre->getId());
 
-            if ($assignation === null) {
+            if ($assignation === null || $chambre->getStatutAssignationMenage() == 0) {
                 $assignation = new AssignationMenage;
             }
 
@@ -69,7 +72,7 @@ class GouvernanceController extends AbstractController
 
             // enregistrement des datas dans la table assignation en fonction de l'id 
             if ($form->isSubmitted() && $form->isValid()) {
-                 # je check si au moins une option service a été coché, sinon je lui donne une valeur par défault
+                # je check si au moins une option service a été coché, sinon je lui donne une valeur par défault
                 if(null !=($assignation->getOptionService())){
                     $option = $optionServiceRepository->findOneBy(['id'=>1]);
                     $assignation->addOptionService($option);
@@ -85,6 +88,47 @@ class GouvernanceController extends AbstractController
                 return $this->redirectToRoute('gouvernance');
             }
     }
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+    /**
+     * @Route("gouvernance/zerotage", name="gouvernance_zerotage")
+     */
+    public function zerotage(ChambreRepository $chambreRepository, EntityManagerInterface $entityManager)
+    {
+        
+        $assignations = $chambreRepository->findAll();
+        foreach($assignations as $assignation)
+        {
+            $assignation->setStatutAssignationMenage(0);
+            $entityManager->persist($assignation);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('gouvernance');
+    }
+    /**
+     * @Route("gouvernance/zerotage/{id}", name="gouvernance_zerotage_unique")
+     */
+    public function zerotageUnique(ChambreRepository $chambreRepository, EntityManagerInterface $entityManager, $id, AssignationMenageRepository $assignationMenageRepository)
+    {
+        $chambre = $chambreRepository->findOneBy(['id' => $id]);
+        dump($chambre);
+        $assignationMenage = $assignationMenageRepository->findOneBy(['chambre' => $chambre->getId()]);
+        dump($assignationMenage);
+        $chambre->setStatutAssignationMenage(0);
+        
+        $entityManager->remove($assignationMenage);
+        $entityManager->persist($chambre);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('gouvernance');
+    }
+
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
 
     /**
      * @Route("gouvernance/historique", name="gouvernance_historique")

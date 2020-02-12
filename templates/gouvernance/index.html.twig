@@ -7,6 +7,7 @@
         <h1 class="my-5">Nouvelle assignation</h1>
     </div>
 
+    <a class="btn btn-danger" href="{{ path('gouvernance_zerotage') }}" >Remettre à 0</a>
 
     <table class="table table-striped table-hover" >
         <thead class="theadBleu" >
@@ -31,22 +32,22 @@
                                 {% if data.chambre.statutAssignationMenage == 0 %}
                                     <td ><input class="btn theadBleu" type="submit" value="Envoyer"></td>
                                 {% else %}
-                                    <td class="badge badge-success">Validation ok</td>
+                                    <td>
+                                        <span class="btn btn-success">Validation ok</span> 
+                                        <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
+                                    </td>
                                 {% endif %}
 
                             {{ form_end(data.form) }}
-
-                                
-
-
                         {% endif %}
                     {% endfor %}
-                    
                 </tr>
             {% endfor %}
         </tbody>
     
     </table>
 
+
     <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
+
 {% endblock %}
