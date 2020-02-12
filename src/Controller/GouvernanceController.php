@@ -24,32 +24,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GouvernanceController extends AbstractController
 {
+    //*************//
+    // GOUVERNANCE //
+    //*************//
     /**
      * @Route("/gouvernance", name="gouvernance")
      */
     public function index(ChambreRepository $chambreRepository, AssignationMenageRepository $assignationRepository, EmployeRepository $employeRepository): Response
     {
+        // Je récupère le poste 4 => Femme de ménage : pour l'affichage 
         $employes = $employeRepository->findBy(['poste' => 4]);
-        // dump($employes);
+        
         $chambres = $chambreRepository->findAll();
-        // dump($chambres);
+        
+        // Aprés avoir récupéré toutes mes chambres, je veux créer un formulaire pour chacunes d'elles afin d'assigner un personnel de ménage
         foreach($chambres as $chambre)
         {
-            // Je récupère la dernière assignation après validation ou j'instancie un nouvel objet assignation
+            // Je gère l'affichage de mes formulaire ici : si j'ai déjà validé une assignation, je récupère ses infos (ça me fait un recap en live plutôt que de devoir vérifier mes assignations seulement sur l'historique)
             $assignation = $assignationRepository->findLastAssignation($chambre->getId());
-
+            // Si il n'y a pas d'assignation créée, alors j'en instancie une nouvelle. Pour éviter d'avoir une assignation déjà existente, j'ajoute dans la condition le statut de la chambre: 0 => cette chambre n'est pas encore assignée
             if ($assignation === null || $chambre->getStatutAssignationMenage() == 0) {
                 $assignation = new AssignationMenage;
             }
 
+            // Création du formulaire
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
-            // Symfony n'autorise pas l'affichage du même formulaire sur la même page donc je les enregistre dans un tableau
+            // Symfony n'autorise pas l'affichage du même formulaire sur la même page donc je les enregistre dans un tableau => Voir l'action du formulaire qui sera traité par gouvernance_form_receive
             $formView[] = [
                 'form' => $form->createView(), 
                 'chambre' => $chambre
             ];
-            
         }
         return $this->render('gouvernance/index.html.twig', [
             'formList' => $formView,
@@ -58,6 +63,9 @@ class GouvernanceController extends AbstractController
         ]);
     }
 
+    //**************************//
+    // GOUVERNANCE_FORM_RECEIVE //
+    //**************************//
     // Dans cette fonction je termine l'action de la fonction Index avec l'enregistrement de mes données en BDD
     /**
      * @Route("/form/{id}", name="gouvernance_form_receive")
@@ -88,10 +96,11 @@ class GouvernanceController extends AbstractController
                 return $this->redirectToRoute('gouvernance');
             }
     }
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
 
+    //**********************//
+    // GOUVERNANCE_ZEROTAGE //
+    //**********************//
+    // Pour repartir avec des formulaires remis à zero, je récupère l'ensemble des chambres que je passe au statut 0 => assignation à faire. A utiliser le matin au reveil
     /**
      * @Route("gouvernance/zerotage", name="gouvernance_zerotage")
      */
@@ -107,15 +116,17 @@ class GouvernanceController extends AbstractController
         }
         return $this->redirectToRoute('gouvernance');
     }
+    //*****************************//
+    // GOUVERNANCE_ZEROTAGE_UNIQUE //
+    //*****************************//
+    // Ici je remet à zéro qu'un formulaire unique mais je supprime également l'assignation en BDD puisqu'il s'agirait ici d'une erreur
     /**
      * @Route("gouvernance/zerotage/{id}", name="gouvernance_zerotage_unique")
      */
     public function zerotageUnique(ChambreRepository $chambreRepository, EntityManagerInterface $entityManager, $id, AssignationMenageRepository $assignationMenageRepository)
     {
         $chambre = $chambreRepository->findOneBy(['id' => $id]);
-        dump($chambre);
         $assignationMenage = $assignationMenageRepository->findOneBy(['chambre' => $chambre->getId()]);
-        dump($assignationMenage);
         $chambre->setStatutAssignationMenage(0);
         
         $entityManager->remove($assignationMenage);
@@ -125,11 +136,9 @@ class GouvernanceController extends AbstractController
         return $this->redirectToRoute('gouvernance');
     }
 
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-
-
+    //************************//
+    // GOUVERNANCE_HISTORIQUE //
+    //************************//
     /**
      * @Route("gouvernance/historique", name="gouvernance_historique")
      */
@@ -163,6 +172,9 @@ class GouvernanceController extends AbstractController
         ]);
     }
 
+    //********************//
+    // ASSIGNATION_DELETE //
+    //********************//
     /**
      * @Route("gouvernance/delete/{id}", name="assignation_delete", methods={"DELETE"})
      * //@IsGranted("ROLE_ADMIN")
