@@ -3,14 +3,19 @@
 {% block title %}Modification des options{% endblock %}
 
 {% block body %}
+
+    {# Page : modification #}
     <div class="d-flex justify-content-center my-5">
-        <h1>Modification de l'option "{{ option_service.nomOption }}"
-            <tr></h1>
+        <h1>Modification de l'option "{{ option_service.nomOption }}"</h1>
     </div>
+
+    {# Formualire de modification #}
     {{ include('option_service/_form.html.twig', {'button_label': 'Update'}) }}
 
+    {# Bouton : retour à la liste #}
     <a href="{{ path('option_service_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
+    {# Formulaire de suppression #}
     {{ include('option_service/_delete_form.html.twig') }}
 
     

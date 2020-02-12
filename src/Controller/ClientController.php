@@ -18,6 +18,12 @@ class ClientController extends AbstractController
      */
     public function index(ClientRepository $clientRepository)
     {
+
+        /* ************************
+        | AFFICHAGE DES CHAMBRES  |
+        **************************/
+
+
         # je récupère les données envoyées via le get
         $request = Request::createFromGlobals();
         $nomClient= $request->query->get('nom');
@@ -29,14 +35,15 @@ class ClientController extends AbstractController
         $mail= $request->query->get('mail');
         $dateNaissance= $request->query->get('dateNaissance');
 
-         # Affichage des données, je teste si le filtre a été envoyé ou non
+        # Affichage des données, je teste si le filtre a été envoyé ou non
         if(!empty($request)){
             $clients=$clientRepository->historiqueClientFiltre($nomClient,$prenomClient, $adresse,$codePostal,$ville,$telephone,$mail,$dateNaissance);
         }else{
+            # je cherche tous mes clients et je trie le résultat par nom par ordre croissant
             $clients=$clientRepository->findBy([],['nom'=>'ASC']);
         }
 
-       
+        // Je retourne mes informations au template
         return $this->render('client/index.html.twig', [
             'clients' => $clients,
 
@@ -50,15 +57,24 @@ class ClientController extends AbstractController
      */
     public function edit(Request $request, Client $client): Response
     {
+
+        /* ************************
+        |    EDIT DES CHAMBRES    |
+        **************************/
+
+        
+        # Je crée un formulaire
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
+        # si le formulaire est soumis et valid j'enregistre en BDD et je redirige vers la page client
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            
             return $this->redirectToRoute('client');
         }
 
+        // Je retourne mes informations au template
         return $this->render('client/edit.html.twig', [
             'client' => $client,
             'form' => $form->createView(),

@@ -3,12 +3,18 @@
 {% block title %}Editer Réservation{% endblock %}
 
 {% block body %}
+
+    {# Modification de la réservation #}
+
     <div class='d-flex justify-content-center'>
          <h1>Editer profil de : {{ reservation.prenom }} {{ reservation.nom }}</h1>
     </div>
+
+    {# Formulaire de modification/ajout #}
     {{ include('reservation/form.html.twig', {'button_label': 'Update'}) }}
 
+    {# Bouton : retour à la liste #}
     <a href="{{ path('reservation') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
 
-    {# {{ include('reservation/_delete_form.html.twig') }} #}
+
 {% endblock %}

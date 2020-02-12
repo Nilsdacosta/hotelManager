@@ -3,9 +3,11 @@
 {% block title %}Tva index{% endblock %}
 
 {% block body %}
+
+    {# Page affichage des TVA #}
+
     <div class="d-flex justify-content-center my-5">
         <h1>Tva index</h1>
-   
     </div>
 
         <table class="table table-hover table-striped">
@@ -17,26 +19,31 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody>
-            {% for tva in tvas %}
-                <tr>
-                    <td>{{ tva.id }}</td>
-                    <td>{{ tva.nom }}</td>
-                    <td>{{ tva.taux }} %</td>
-                    <td>
-                        <a href="{{ path('tva_show', {'id': tva.id}) }}"><i class="far fa-eye"></i></a>
-                        <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">Pas de résultat</td>
-                </tr>
-            {% endfor %}
+                {% for tva in tvas %}
+                    <tr>
+                        <td>{{ tva.id }}</td>
+                        <td>{{ tva.nom }}</td>
+                        <td>{{ tva.taux }} %</td>
+                        <td>
+                            {# Bouton : Voir la tva #}
+                            <a href="{{ path('tva_show', {'id': tva.id}) }}"><i class="far fa-eye"></i></a>
+
+                            {# Bouton : modifier #}
+                            <a href="{{ path('tva_edit', {'id': tva.id}) }}"><i class="far fa-edit"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        {# Si pas de résultat #}
+                        <td colspan="4">Pas de résultat</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-
+        {# Bouton : ajouter #}
         <a href="{{ path('tva_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
 
     

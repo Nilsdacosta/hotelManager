@@ -3,6 +3,8 @@
 {% block title %}Nouvelle assignation{% endblock %}
 
 {% block body %}
+
+    {# Page Nouvelle assignation #}
     <div class='d-flex justify-content-center'>
         <h1 class="my-5">Nouvelle assignation</h1>
     </div>
@@ -18,6 +20,7 @@
             <th>Validation</th>
             <th>Statut</th>
         </thead>
+
         <tbody>
             {% for chambre in chambres %}
                 <tr > 
@@ -47,6 +50,7 @@
                                 {% endif %}
 
                             {{ form_end(data.form) }}
+
                         {% endif %}
                     {% endfor %}
                 </tr>
@@ -55,6 +59,8 @@
     
     </table>
 
+
+    {# Bouton : retour à la liste #}
 
     <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
