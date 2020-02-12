@@ -30,7 +30,7 @@
                                 <td>{{form_widget(data.form.optionService)}}</td>
 
                                 {% if data.chambre.statutAssignationMenage == 0 %}
-                                    <td ><input class="btn btn-primary" type="submit" value="Envoyer"></td>
+                                    <td ><input class="btn theadBleu" type="submit" value="Envoyer"></td>
                                 {% else %}
                                     <td>
                                         <span class="btn btn-success">Validation ok</span> 
@@ -47,6 +47,7 @@
     
     </table>
 
-    <a class="btn btn-secondary" href="{{path('gouvernance_historique')}}">Voir assignations</a>
+
+    <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
 {% endblock %}
