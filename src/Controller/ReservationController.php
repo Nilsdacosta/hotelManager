@@ -300,6 +300,8 @@ class ReservationController extends AbstractController
         ]);
     }
 
+ 
+
 
     ################################################################
     ###################### CHECKIN / CHECKOUT ######################
@@ -419,7 +421,15 @@ class ReservationController extends AbstractController
 
 
 
-
+   /**
+     * @Route("/reservation/{id}", name="reservation_show", methods={"GET"})
+     */
+    public function show(Reservation $reservation): Response
+    {
+        return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 
 
 
@@ -452,7 +462,7 @@ class ReservationController extends AbstractController
                 $entityManager->flush();
 
 
-                //je redirige vers la page de des checkin checkout
+                //je redirige vers la page des checkin checkout
                 return $this->redirectToRoute('reservationCheck');
                    
             }

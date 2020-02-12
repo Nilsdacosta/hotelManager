@@ -92,7 +92,7 @@
                 <th>Date de fin</th> 
                 <th>Options Service</th>
                 <th>Facture</th>
-                {# <th>Action</th> #}
+                <th>Action</th> 
 
             </tr>
         </thead>
@@ -107,7 +107,7 @@
                 <td>{% for chambres in reservation.chambre %}{{ chambres.nom }} <br>  {% endfor %}   </td>
                 <td>{{ reservation.client.nom }} </td> 
                 <td>{{ reservation.client.prenom }} </td> 
-                <td>{{ reservation.renderStatus }}</td>
+                <td>{{ reservation.renderStatus }} <a href="{{ path('reservationCheckInForm', {'id': reservation.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
                 <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
                 <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>
                 <td>
@@ -120,11 +120,10 @@
                 {% endif  %} 
                 </td>
                 
-          
-                 <td>
-                     
-                    {# <a href="{{ path('editReservation', {'id': reservation.id}) }}">Modifier</a>  #}
-                </td> 
+                <td>
+                    <a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}"><i class="far fa-eye"></i></a>
+                    {# <a href="{{ path('editReservation', {'id': reservation.id}) }}"><i class="fas fa-trash"></i></a> #}
+                </td>
             </tr>
         {% else %}
             <tr>
