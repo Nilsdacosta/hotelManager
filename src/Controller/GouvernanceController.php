@@ -59,7 +59,7 @@ class GouvernanceController extends AbstractController
     /**
      * @Route("/form/{id}", name="gouvernance_form_receive")
      */
-    public function formReceive(ChambreRepository $chambreRepository, Request $request, $id): Response
+    public function formReceive(ChambreRepository $chambreRepository, OptionServiceRepository $optionServiceRepository, Request $request, $id): Response
     {
             $assignation = new AssignationMenage;
             $chambre = $chambreRepository->find($id);
@@ -69,6 +69,11 @@ class GouvernanceController extends AbstractController
 
             // enregistrement des datas dans la table assignation en fonction de l'id 
             if ($form->isSubmitted() && $form->isValid()) {
+                 # je check si au moins une option service a été coché, sinon je lui donne une valeur par défault
+                if(null !=($assignation->getOptionService())){
+                    $option = $optionServiceRepository->findOneBy(['id'=>1]);
+                    $assignation->addOptionService($option);
+                }
                 $assignation->setChambre($chambre);
                 $chambre->setStatutAssignationMenage(1);
                 $assignation->setdate(new \DateTime);

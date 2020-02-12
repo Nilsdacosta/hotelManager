@@ -41,7 +41,8 @@ class ClientType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker',
                 
-                ]
+                ],
+                'required'=>false
             ])
             ->add('commentaire', TextType::class,[
                 'required'=>false,

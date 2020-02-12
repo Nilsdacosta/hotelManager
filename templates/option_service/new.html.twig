@@ -3,9 +3,11 @@
 {% block title %}Ajout d'une Option{% endblock %}
 
 {% block body %}
-    <h1>Ajout d'une Option</h1>
+    <div class="d-flex justify-content-center my-5">
+        <h1>Ajout d'une Option</h1>
+    </div>
 
-    {{ include('option_service/_form.html.twig') }}
+    {{ include('option_service/_form.html.twig' , {'button_label': 'Update'}) }}
 
-    <a href="{{ path('option_service_index') }}">Retour a la liste</a>
+    <a href="{{ path('option_service_index') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
 {% endblock %}
