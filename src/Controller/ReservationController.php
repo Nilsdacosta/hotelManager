@@ -187,8 +187,6 @@ class ReservationController extends AbstractController
         ]);
      }
 
-    
-
 
     /**
      * @Route("/reservation/timeline", name="reservationTimeline")

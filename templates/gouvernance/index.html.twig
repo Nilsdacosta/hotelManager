@@ -9,6 +9,7 @@
         <h1 class="my-5">Nouvelle assignation</h1>
     </div>
 
+    <a class="btn btn-danger" href="{{ path('gouvernance_zerotage') }}" >Remettre à 0</a>
 
     <table class="table table-striped table-hover" >
         <thead class="theadBleu" >
@@ -17,6 +18,7 @@
             <th>Employé</th>
             <th>Option</th>
             <th>Validation</th>
+            <th>Statut</th>
         </thead>
 
         <tbody>
@@ -32,22 +34,34 @@
                                 <td>{{form_widget(data.form.optionService)}}</td>
 
                                 {% if data.chambre.statutAssignationMenage == 0 %}
-                                    <td ><input class="btn theadBleu" type="submit" value="Envoyer"></td>
+                                    <td ><input class="btn  affchin" type="submit" value="Envoyer"></td>
+
+                                    <td>
+                                        <i class="far fa-times-circle fa-3x text-danger"></i>
+                                    </td>
+
                                 {% else %}
-                                    <td class="badge badge-success">Validation ok</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
+                                    </td>
+                                    <td>
+                                        <i class="far fa-check-circle fa-3x" style="color:#6bbaa7"></i>
+                                    </td>
                                 {% endif %}
 
                             {{ form_end(data.form) }}
 
                         {% endif %}
                     {% endfor %}
-                    
                 </tr>
             {% endfor %}
         </tbody>
     
     </table>
 
+
     {# Bouton : retour à la liste #}
+
     <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
+
 {% endblock %}

@@ -19,7 +19,7 @@
     <div class="container p-5">
         <div class="row justify-content-end">
             <form >
-                <input id="impression" class="impression btn btn-warning" name="impression" type="button" onclick="imprimer_page()" value="imprimer">
+                <input id="impression" class="impression btn affchin" name="impression" type="button" onclick="imprimer_page()" value="imprimer">
             </form>
         </div>
     </div>
@@ -29,7 +29,9 @@
     <div class="container p-3 border py-0 ">
 
         {# EN TETE DE RECAP / info hotel #}
-        <div class="row bg-info couleurFond px-5 py-1 mb-5">
+
+        <div class="row couleurFond rounded mb-5 px-5 py-1">
+
             <div class="col-6 p-3">
                 <h3>Nom hôtel</h3>
                 <p>Adresse 1</p>
@@ -189,21 +191,24 @@
 
     {# Si le document est un récapitulatif j'affiche le bouton pour modifier #}
     {% if document == 'Récapitulatif' %}
+
         {# bouton de modification, réservation et client #}
         <div class="container p-5"> 
             <div class="row justify-content-end">
                 <a class="impression btn btn-warning mr-5" href="{{path('editReservation',{'id': reservation.id})}}"  >Modifier la réservation</a>
                 <a class="impression btn btn-warning" href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}"  >Modifier le client</a>
             </div>
-        </div>
+
 
     {# SI c'est une facture, la réservation ne doit pas être modifiée #}
     {% elseif document == 'Facture' %}
         <div class="container p-5"> 
-            <div class="row justify-content-end">
-                <a class="impression btn btn-warning mr-5" href="{{path('reservationCheck')}}"  >Retour aux CheckIn/CheckOut</a>
-            </div>
-         </div>
+
+        <div class="row justify-content-end">
+            <a class="impression btn affchin mr-5" href="{{path('reservationCheck')}}"  >Retour aux CheckIn/CheckOut</a>
+        </div>
+    </div>
+
     {% endif %}
 
    

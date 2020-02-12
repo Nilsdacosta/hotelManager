@@ -56,11 +56,17 @@
 
                 {{ form_row(formResa.chambre, {"id": "idChambre"})  }}
 
+
                 {{ form_row(formResa.optionService) }}
 
-                {{ form_row(formResa.enregistrer) }}
+
             
-                {{ form_end(formResa) }}
+
+
+              {{ form_row(formResa.enregistrer, { 'attr': {'class': 'btn couleurFond'} }) }}
+        
+              {{ form_end(formResa) }}
+
 
             </div>
         </div>
@@ -89,7 +95,7 @@
 
                 {{ form_row(formClient.commentaire) }}
 
-                {{ form_row(formClient.enregistrer) }}
+                {{ form_row(formClient.enregistrer, { 'attr': {'class': 'btn couleurFond'} }) }}
 
                 {{ form_end(formClient) }}
             </div>

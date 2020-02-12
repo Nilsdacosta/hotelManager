@@ -86,7 +86,7 @@
                         <form method="post" action="{{path('assignation_delete', {'id':assignationMenage.id} )}}">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assignationMenage.id) }}">
-                            <button class='btn btn-danger'>Supprimer</button>
+                            <button class='btn affchSuppr'>Supprimer</button>
                         </form>
                     </td>
                 </tr>
@@ -94,7 +94,9 @@
         </tbody>
     </table>
 
+
     <a href="{{path('gouvernance')}}"><i class="far fa-plus-square fa-3x"></i></a>
+
 
     
 {% endblock %}
