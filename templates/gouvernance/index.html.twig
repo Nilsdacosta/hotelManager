@@ -16,6 +16,7 @@
             <th>Employé</th>
             <th>Option</th>
             <th>Validation</th>
+            <th>Statut</th>
         </thead>
         <tbody>
             {% for chambre in chambres %}
@@ -30,15 +31,16 @@
                                 <td>{{form_widget(data.form.optionService)}}</td>
 
                                 {% if data.chambre.statutAssignationMenage == 0 %}
-<<<<<<< HEAD
-                                    <td ><input class="btn theadBleu" type="submit" value="Envoyer"></td>
-=======
                                     <td ><input class="btn  affchin" type="submit" value="Envoyer"></td>
->>>>>>> develop
+                                    <td>
+                                        <i class="far fa-times-circle fa-3x text-danger"></i>
+                                    </td>
                                 {% else %}
                                     <td>
-                                        <span class="btn btn-success">Validation ok</span> 
                                         <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
+                                    </td>
+                                    <td>
+                                        <i class="far fa-check-circle fa-3x" style="color:#6bbaa7"></i>
                                     </td>
                                 {% endif %}
 
