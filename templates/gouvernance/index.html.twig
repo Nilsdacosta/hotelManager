@@ -27,8 +27,18 @@
                             {{ form_start(data.form, {'action': path('gouvernance_form_receive', { 'id' :  data.chambre.id })} ) }}
                                 <td>{{form_widget(data.form.employe)}}</td>
                                 <td>{{form_widget(data.form.optionService)}}</td>
-                                <td>{{form_widget(data.form.Valider)}}</td>
+
+                                {% if data.chambre.statutAssignationMenage == 0 %}
+                                    <td ><input class="btn btn-primary" type="submit" value="Envoyer"></td>
+                                {% else %}
+                                    <td class="badge badge-success">Validation ok</td>
+                                {% endif %}
+
                             {{ form_end(data.form) }}
+
+                                
+
+
                         {% endif %}
                     {% endfor %}
                     

@@ -69,6 +69,11 @@ class Chambre
      */
     private $assignationMenages;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $statutAssignationMenage;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -250,4 +255,16 @@ class Chambre
         return $chaine;
     }
 }
+
+    public function getStatutAssignationMenage(): ?int
+    {
+        return $this->statutAssignationMenage;
+    }
+
+    public function setStatutAssignationMenage(?int $statutAssignationMenage): self
+    {
+        $this->statutAssignationMenage = $statutAssignationMenage;
+
+        return $this;
+    }
 }

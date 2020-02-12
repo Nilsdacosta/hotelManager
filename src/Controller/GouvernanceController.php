@@ -29,11 +29,11 @@ class GouvernanceController extends AbstractController
         $employes = $employeRepository->findBy(['poste' => 4]);
         // dump($employes);
         $chambres = $chambreRepository->findAll();
-        
+        dump($chambres);
         foreach($chambres as $chambre)
         {
             // Je récupère la dernière assignation après validation ou j'instancie un nouvel objet assignation
-            $assignation = $assignationRepository->findLastAssignation($chambre->getId());  
+            $assignation = $assignationRepository->findLastAssignation($chambre->getId());
 
             if ($assignation === null) {
                 $assignation = new AssignationMenage;
@@ -42,12 +42,16 @@ class GouvernanceController extends AbstractController
             $form = $this->createForm(GouvernanceType::class, $assignation);
 
             // Symfony n'autorise pas l'affichage du même formulaire sur la même page donc je les enregistre dans un tableau
-            $formView[] = ['form' => $form->createView(), 'chambre' => $chambre];
+            $formView[] = [
+                'form' => $form->createView(), 
+                'chambre' => $chambre
+            ];
+            
         }
         return $this->render('gouvernance/index.html.twig', [
             'formList' => $formView,
             'chambres' => $chambres,
-            'employes' => $employes
+            'employes' => $employes,
         ]);
     }
 
@@ -71,11 +75,13 @@ class GouvernanceController extends AbstractController
                     $assignation->addOptionService($option);
                 }
                 $assignation->setChambre($chambre);
+                $chambre->setStatutAssignationMenage(1);
                 $assignation->setdate(new \DateTime);
                 $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($chambre);
                 $entityManager->persist($assignation);
                 $entityManager->flush();
-    
+
                 return $this->redirectToRoute('gouvernance');
             }
     }
