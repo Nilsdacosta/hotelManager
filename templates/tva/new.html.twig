@@ -3,9 +3,11 @@
 {% block title %}Nouvelle Tva{% endblock %}
 
 {% block body %}
-    <h1>Ajout d'une Tva</h1>
+    <div class="d-flex justify-content-center my-5">
+        <h1>Ajout d'une Tva</h1>
+    </div>
 
     {{ include('tva/_form.html.twig') }}
 
-    <a href="{{ path('tva_index') }}">Retour a la liste</a>
+    <a href="{{ path('tva_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 {% endblock %}

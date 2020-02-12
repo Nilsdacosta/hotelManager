@@ -6,15 +6,19 @@
 
 body {
     font-family: 'Bitter', serif;
-    background-color:#f5ebe3;
+    background-color:#fff5ee;
 
+}
 
+.navbar, .theadBleu, .couleurFond, .affchin:hover, .affchout:hover, .dropdown-item, .dropdown-menu
+{
+    background-color:#6bbaa7;
+    opacity: 0.9;
 }
 
 .titre{
     font-family: 'Lobster', cursive;
     color: black;
-  
 }
 
 .taille{
@@ -83,19 +87,10 @@ body {
 
 }
 
-.navbar, .theadBleu, .couleurFond{
-    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);}
 
 .deconect{
-    background-color:#daad86;
     margin-left: 300px;
 }
-
-.deconect:hover
-{
-    background-color:#fb2020;
-}
-
 
 .dashcard{
     background-color: none;
@@ -119,10 +114,8 @@ body {
     background-color:#daad86;
     transition: all .2s ease-in-out;
 
-
 }
 .affchin:hover{
-    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
     transform: scale(1.1);
 }
 
@@ -132,9 +125,18 @@ body {
 
 }
 .affchout:hover{
-    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
     transform: scale(1.1);
 }
+
+.affchSuppr{
+    background-color:#daad86;
+    transition: all .2s ease-in-out;
+}
+
+.affchSuppr:hover{
+    transform: scale(1.1);
+}
+
 
 .nav-link{
     margin-left: 120px;
@@ -180,9 +182,4 @@ body {
 /*************************************
 |                                    |
 *************************************/
-.dropdown-item, .dropdown-menu{
-    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
-
-
-}
 
