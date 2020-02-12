@@ -3,7 +3,7 @@
 {% block title %}Editer Employé{% endblock %}
 
 {% block body %}
-    <div class='d-flex justify-content-center'>
+    <div class='d-flex justify-content-center  my-5'>
          <h1>Editer profil de : {{ employe.prenom }} {{ employe.nom }}</h1>
     </div>
     {{ include('employe/_form.html.twig', {'button_label': 'Update'}) }}

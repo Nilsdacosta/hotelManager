@@ -25,6 +25,7 @@ class EmployeType extends AbstractType
             ->add('telephone')
             ->add('poste', ChoiceType::class, [
                 'choices'  => [
+                    'Poste occupé' => 'Choose an option',
                     'Directeur' => 1,
                     'Receptionniste' => 2,
                     'Gouvernante' => 3,
@@ -32,12 +33,11 @@ class EmployeType extends AbstractType
                     'Stagiaire'=>5
                     
                 ],
-                'expanded' => true
             ])
             ->add('roles', ChoiceType::class, [
                  'choices'  => [
+                    'Role' => 'Choose an option',
                     'ROLE_USER' => 3,
-                   
                     'ROLE_ADMIN' => 2,
                     'ROLE_SUPER_ADMIN' => 1,
                    

@@ -11,6 +11,9 @@
     <div class="container-fluid my-5">
 
     <div class="row">
+
+        {# Début des check-in #}
+
         <div class="col-6 border-right p-5">
 
             <div class="d-flex justify-content-center m-5">
@@ -26,6 +29,7 @@
                         <th>N°/Nom de chambre</th>
                         <th>État de la réservation</th>
                         <th>Modifier  statut </th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +39,18 @@
                         <td> {{reservation.client.nom}}</td>
                         <td>{{reservation.client.prenom}}</td>
                         <td> {% for chambre in reservation.chambre %} {{chambre.nom}} {% endfor %}</td>
-                        <td>{{reservation.renderStatus}}</td>
-                        <td class="d-flex justify-content-center"><a class="btn affchin" href="{{path('reservationCheckInForm',{'id':reservation.id} ) }}">Modifier</a></td>
+                        <td class="etatChambre" id="etat_{{reservation.id}}">{{reservation.renderStatus}}</td>
+
+                        <td>
+                            <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn theadBleu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modifier</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 2)" href="#">Valider</a>
+                                  <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 3)" href="#">Annuler</a>
+                                </div>
+                              </div>
+                            </div>
+                        </td>
 
                     </tr>
 
@@ -46,8 +60,10 @@
                 </tbody>
             </table>
         </div>
+        {# Fin des check-in #}
 
 
+        {# Début des check-out #}
         <div class="col-6 p-5">
 
             <div class="d-flex justify-content-center m-5">
@@ -72,8 +88,18 @@
                         <td> {{depart.client.nom}}</td>
                         <td>{{depart.client.prenom}}</td>
                         <td> {% for chambre in depart.chambre %} {{chambre.nom}} {% endfor %}</td>
-                        <td>{{depart.renderStatus}}</td>
-                        <td class="d-flex justify-content-center"><a class="btn btn-secondary" href="{{path('reservationCheckOutForm',{'id':depart.id} ) }}">Valider</a></td>
+                        <td class="etatChambre" id="etat_{{depart.id}}">{{depart.renderStatus}}</td>
+
+                        <td>
+                            <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn theadBleu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modifier</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" onclick="checkResa({{depart.id}}, 4)" href="#">Facturer</a>
+                                  <a class="dropdown-item" onclick="checkResa({{depart.id}}, 3)" href="#">Annuler</a>
+                                </div>
+                              </div>
+                            </div>
+                        </td>
 
                     </tr>
                     {% else %}
@@ -82,6 +108,8 @@
                 </tbody>
             </table>
         </div>
+        {# Fin des check-out #}
+
     </div>
       
   </div>
