@@ -129,4 +129,35 @@ class DashboardController extends AbstractController
 
         ]);
     }
+
+
+    public function calculGain($id, ReservationRepository $reservationRepository)
+     {
+         # Je récupère ma réservation via l'id
+        $reservation = $reservationRepository->findAll();
+
+        # je calcule le nombre de jour entre la date de Sortie et la date de début
+        $nombreJours = $reservation->getDateEntree()->diff($reservation->getDateSortie());
+
+        # je déclare 3 variables à 0 pour les calculs fais sur la page récapitulatif
+        $total = 0;
+        $totalOption = 0;
+        $tva = 0;
+        $tvaOption = 0;
+        $ttc = 0;
+
+
+        
+        return $this->render('reservation/recapitulatif.html.twig', [
+            'reservation'=> $reservation,
+            'nombreJours'=> $nombreJours,
+            'total'=> $total,
+            'totalOption'=>$totalOption,
+            'tvaOption'=>$tvaOption,
+            'tva'=> $tva,
+            'ttc'=>$ttc,
+            
+        ]);
+     }
+
 }
