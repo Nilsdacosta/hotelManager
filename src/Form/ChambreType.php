@@ -51,8 +51,7 @@ class ChambreType extends AbstractType
                 'choice_label' => ' nom',
                 'expanded' => true,
             ])
-           // ->add('reservations')
-           // ->add('assignationMenage')
+
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

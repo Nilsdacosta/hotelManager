@@ -41,7 +41,6 @@ class ReservationClientType extends AbstractType
             ])
 
             ->add('client', EntityType::class,
-
                 ['class' => Client::class,
                 'label'=> 'Client',
                 'choice_label' => function ($client) {

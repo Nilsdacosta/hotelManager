@@ -21,7 +21,7 @@ class Chambre
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Choice({"Double", "Triple", "Simple"}, message="Choississez une capacité valide.")
+     * @Assert\Choice({"Double", "Single", "Twin", "Deluxe","Suite"}, message="Choississez une capacité valide.")
      */
     private $capacite;
 
