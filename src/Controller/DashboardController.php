@@ -13,39 +13,55 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    
-        ################################################################
-    ###################### CHECKIN / CHECKOUT ######################
-    ################################################################
-
-
     public function checkInOut( ReservationRepository $reservationRepository,  EntityManagerInterface $entityManager, ChambreRepository $chambreRepository)
     {
-         // $reservationDuJour = $reservationRepository->findBy(['dateEntree' => $date],['dateEntree' => 'ASC'],5,0);
 
+        /* ************************
+        |AFFICHAGE des CHECKIn/Out|
+        **************************/
+
+        # J'instance un nouvel objet date
         $date = new \DateTime;
+
+        # je récupère les réservations dont la date d'arrivé est égale a la date du jour
         $reservationDuJour = $reservationRepository->findCheckin();
+
+        # je récupère les réservations dont la date de départ est égale a la date du jour
         $departDuJour = $reservationRepository->findCheckOut();
+
+        # je compte le nombre d'arrivé à la date du jour
         $nbResaJour = $reservationRepository->countin();
+
+        # je compte le nombre de départ à la date du jour
         $nbDepartJour = $reservationRepository->countout();
 
 
-        ################################################################
-        ################## UPDATE ETAT CHAMBRE #########################
-        ################################################################
+        /* ************************
+        |     EDIT DATE CHAMBRE   |
+        **************************/
 
+        /* REGLE :
+            Si la réservation est validée (status = 2), l'état de la chambre change et passe en recouche (etat = 3)
+            Si la réservation est facturé (status = 4), l'état' de la chambre change et passe en sale (etat = 1)
+            Si al réservation est annulée (status = 3)
+                -> au check in : l'état' de la chambre change et repasse en prête (etat = 3)
+                -> au check out : l'état de la chambre change et repasse en sale (etat = 1)
+        */
+
+        # je teste les statuts de la réservation pour modifier l'état de la chambre en fonction de la date d'arrivée
         foreach ($reservationDuJour as $reservation) {
-            // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
             if ($reservation->getStatus() == 2) {
-                $etat = 4;
-                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $etat = 3;
+
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre à jour leur statut
                 $chambres = $reservation->getChambre();
+
                 foreach ($chambres as $chambre) {
                     $idChambre = $chambre->getId();
                     $findChambre = $chambreRepository->find($idChambre);
                     $findChambre->setEtat($etat);
 
-                    // je procede a l'enregistrement de mes données
+                    // je procède à l'enregistrement de mes données
                     $entityManager->persist($findChambre);
 
                     // j'enregistre les données en BDD
@@ -53,9 +69,8 @@ class DashboardController extends AbstractController
                 }
 
 
-                // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
-            } elseif ($reservation->getStatus() == 4) {
-                $etat = 1;
+            } elseif ($reservation->getStatus() == 3) {
+                $etat = 3;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
                 foreach ($chambres as $chambre) {
@@ -63,7 +78,7 @@ class DashboardController extends AbstractController
                     $findChambre = $chambreRepository->find($idChambre);
                     $findChambre->setEtat($etat);
 
-                    // je procede a l'enregistrement de mes données
+                    // je procède à l'enregistrement de mes données
                     $entityManager->persist($findChambre);
 
                     // j'enregistre les données en BDD
@@ -74,28 +89,10 @@ class DashboardController extends AbstractController
 
 
         }
-
+        # je teste les statuts de la réservation pour modifier l'état de la chambre en fonction de la date de départ
         foreach ($departDuJour as $reservation) {
-            // si le status de la réservation est  validée (2) j'update l'état de la chambre en sale (4)
-            if ($reservation->getStatus() == 2) {
-                $etat = 4;
-                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
-                $chambres = $reservation->getChambre();
-                foreach ($chambres as $chambre) {
-                    $idChambre = $chambre->getId();
-                    $findChambre = $chambreRepository->find($idChambre);
-                    $findChambre->setEtat($etat);
 
-                    // je procede a l'enregistrement de mes données
-                    $entityManager->persist($findChambre);
-
-                    // j'enregistre les données en BDD
-                    $entityManager->flush();
-                }
-
-
-                // si le statut de la réservation est  facturée (4) j'update l'état de la chambre en sale (1)
-            } elseif ($reservation->getStatus() == 4) {
+            if ($reservation->getStatus() == 3) {
                 $etat = 1;
                 # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
                 $chambres = $reservation->getChambre();
@@ -111,14 +108,29 @@ class DashboardController extends AbstractController
                     $entityManager->flush();
                 }
 
+
+            } elseif ($reservation->getStatus() == 4) {
+                $etat = 1;
+                # Pour chaque réservation, je récupère l'id des chambres afin de mettre a jour leur statut
+                $chambres = $reservation->getChambre();
+                foreach ($chambres as $chambre) {
+                    $idChambre = $chambre->getId();
+                    $findChambre = $chambreRepository->find($idChambre);
+                    $findChambre->setEtat($etat);
+
+                    // je procede a l'enregistrement de mes données
+                    $entityManager->persist($findChambre);
+
+                    // j'enregistre les données en BDD
+                    $entityManager->flush();
+                }
             }
-
-
         }
 
-        # je récupère les réservations 'active' à la date du jour pour afficher un état des clients présents
+        # je récupère les réservations 'actives' à la date du jour pour afficher un état des clients présents
         $reservationEtatDuJour = $reservationRepository->findResaDashboard($date);
       
+        // Je retourne mes informations au template
         return $this->render('dashboard/index.html.twig', [
             'reservationDuJour' => $reservationDuJour,
             'date' => $date,

@@ -3,12 +3,17 @@
 {% block title %}Editer Employé{% endblock %}
 
 {% block body %}
+
     <div class='d-flex justify-content-center  my-5'>
          <h1>Editer profil de : {{ employe.prenom }} {{ employe.nom }}</h1>
     </div>
+
+    {# formulaire de modification #}
     {{ include('employe/_form.html.twig', {'button_label': 'Update'}) }}
 
+    {# Bouton de retour en arrière #}
     <a href="{{ path('employe_index') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
 
+    {# suppression #}
     {{ include('employe/_delete_form.html.twig') }}
 {% endblock %}

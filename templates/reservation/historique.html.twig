@@ -3,82 +3,111 @@
 {% block title %}Historique Reservations {% endblock %}
 
 {% block body %}
+
+
+    {# Page d'affichage des réservations #}
+
+    
     <div class='d-flex justify-content-center'>
         <h1 class="my-5">Historique des réservations</h1>
     </div>
     
 
     <table class="table table-striped table-hover" >
-        <thead  >
+        <thead>
+
+            {# Filtres #}
             <form  method="get">
-                <tr >
+                <tr>
                     <td>
+                        {# Id réservation #}
                         <select class="form-control" name="idResa" id="idResa">
                             <option value="" disabled selected> ID Resa</option>
+
                             {% for reservation in reservations %}
-                            <option value="{{reservation.id}}"> {{reservation.id}}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" name="capacite" id="capacite">
-                            <option value="" disabled selected> Capacité</option>
-                            {% for capacite in capaciteChambre %}
-                            <option value="{{capacite.capacite}}"> {{capacite.capacite}}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td>
-                        <input class="form-control" type="date" name="dateCreation" id="dateCreation">
-                    </td>
-                    <td>
-                        <select class="form-control" name="nomChambre" id="nomChambre">
-                            <option value="" disabled selected> Nom Chambre</option>
-                            {% for chambre in nomChambre %}
-                            
-                            <option value="{{chambre.nom}}"> {{chambre.nom}}
-                            </option>
+                                <option value="{{reservation.id}}"> {{reservation.id}}</option>
                             {% endfor %}
                         </select>
                     </td>
 
                     <td>
-                        <input class="form-control" type="text" name="nomClient" id="nomClient" placeholder="Nom du client">
-                    </td>
-                    <td>
-                        <input class="form-control" type="text" name="prenomClient" id="prenomClient" placeholder="Prénom du client">
-                    </td>
-                    <td>
-                        <select class="form-control" name="statusChambre" id="statusChambre">
-                            <option value="" disabled selected> Statut réservation</option>
-                            {% for reservation in statusResa %}
-                            <option value="{{reservation.renderStatus}}"> {{reservation.renderStatus}}
-                            </option>
+                        {# Capacité chambre #}
+                        <select class="form-control" name="capacite" id="capacite">
+                            <option value="" disabled selected> Capacité</option>
+
+                            {% for capacite in capaciteChambre %}
+                                <option value="{{capacite.capacite}}"> {{capacite.capacite}}</option>
                             {% endfor %}
                         </select>
                     </td>
+
                     <td>
+                        {# Date création réservation #}
+                        <input class="form-control" type="date" name="dateCreation" id="dateCreation">
+                    </td>
+
+                    <td>
+                        {# Nom de la chambre #}
+                        <select class="form-control" name="nomChambre" id="nomChambre">
+                            <option value="" disabled selected> Nom Chambre</option>
+
+                            {% for chambre in nomChambre %}
+                                <option value="{{chambre.nom}}"> {{chambre.nom}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        {# Nom du client #}
+                        <input class="form-control" type="text" name="nomClient" id="nomClient" placeholder="Nom du client">
+                    </td>
+
+                    <td>
+                        {# Prénom du client #}
+                        <input class="form-control" type="text" name="prenomClient" id="prenomClient" placeholder="Prénom du client">
+                    </td>
+
+                    <td>
+                        {# Statut de la chambre #}
+                        <select class="form-control" name="statusChambre" id="statusChambre">
+                            <option value="" disabled selected> Statut réservation</option>
+
+                            {% for reservation in statusResa %}
+                                <option value="{{reservation.renderStatus}}"> {{reservation.renderStatus}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        {# Date d'arrivée #}
                         <input class="form-control" type="date" name="dateEntree" id="dateEntree">
                     </td>
+
                     <td>
+                        {# Date de départ #}
                         <input class="form-control" type="date" name="dateSortie" id="dateSortie">
                     </td>
+
                     <td>
+                        {# Option service #}
                         <select class="form-control" name="optionService" id="optionService">
                             <option value="" disabled selected> Option</option>
                             {% for option in optionResa %}
-                            <option value="{{option.nomOption}}"> {{option.nomOption}}
-                            </option>
+                                <option value="{{option.nomOption}}"> {{option.nomOption}}</option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td><button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button></td>
+
+                    <td>
+                        {# Bouton: envoyer formulaire de filtre #}
+                        <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
+                    </td>
                 
                 </tr>
             </form>
-           
+            
+           {# Affichage #}
+
             <tr class="theadBleu">
             
                 <th>Num Résa</th>
@@ -96,57 +125,55 @@
 
             </tr>
         </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            
-            <tr >
-             
-                <td><a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}">{{ reservation.id }}</td></a>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }} <br>  {% endfor %}   </td>
-                <td>{{ reservation.dateCreation|date("d/m/Y") }}</td>
-                <td>{% for chambres in reservation.chambre %}{{ chambres.nom }} <br>  {% endfor %}   </td>
-                <td>{{ reservation.client.nom }} </td> 
-                <td>{{ reservation.client.prenom }} </td> 
-                <td class="etatChambre" id="etat_{{reservation.id}}">{{reservation.renderStatus}}</td>
 
-                           <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
-                <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>
-                <td>
-                    {% for option in reservation.optionService %} {{ option.nomOption }} - {% endfor %}
-                </td>
+        <tbody>
+            {% for reservation in reservations %}
                 
-                <td> 
-                {% if reservation.status == 4 %}
-                <a href="{{path('reservationRecapitulatif',{'id':reservation.id})}}">Voir la facture</a> 
-                 
-               
-                {% endif  %} 
-                </td>
-                
-                <td>
-                    <a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}"><i class="far fa-eye"></i></a>
-                     
-                    <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn theadBleu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">status</button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 2)" href="#">Valider</a>
-                            <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 3)" href="#">Annuler</a>
-                            <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 4)" href="#">Facturé</a>
+                <tr >
+                    {# renvoi au récapitulatif de réservation #}
+                    <td><a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}">{{ reservation.id }}</a></td>
+                    <td>{% for chambres in reservation.chambre %}{{ chambres.capacite }} <br>  {% endfor %}   </td>
+                    <td>{{ reservation.dateCreation|date("d/m/Y") }}</td>
+                    <td>{% for chambres in reservation.chambre %}{{ chambres.nom }} <br>  {% endfor %}   </td>
+                    <td>{{ reservation.client.nom }} </td> 
+                    <td>{{ reservation.client.prenom }} </td> 
+                    <td class="etatChambre" id="etat_{{reservation.id}}">{{reservation.renderStatus}}</td>
+                    <td>{{ reservation.dateEntree|date("d/m/Y") }}</td>
+                    <td>{{ reservation.dateSortie|date("d/m/Y") }}</td>
+                    <td>
+                        {% for option in reservation.optionService %} {{ option.nomOption }} - {% endfor %}
+                    </td>
+                    
+                    <td> 
+                        {% if reservation.status == 4 %}
+                            {# renvoi à la facture de réservation si elle existe #}
+                            <a href="{{path('reservationRecapitulatif',{'id':reservation.id})}}">Voir la facture</a> 
+                        {% endif  %} 
+                    </td>
+                    
+                    <td>
+                        {# Bouton : voir le récapitulatif #}
+                        <a href="{{ path('reservationRecapitulatif', {'id': reservation.id}) }}"><i class="far fa-eye"></i></a>
+                        
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn theadBleu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">status</button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 2)" href="#">Valider</a>
+                                <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 3)" href="#">Annuler</a>
+                                <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 4)" href="#">Facturé</a>
+                            </div>
                         </div>
-                      </div>
-                    </div>
-               
-                    {# <a href="{{ path('editReservation', {'id': reservation.id}) }}"><i class="fas fa-trash"></i></a> #}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">Pas de résultat</td>
-            </tr>
-        
-        {% endfor %}
+                
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    {#  si aucun résultat à afficher #}
+                    <td colspan="6">Pas de résultat</td>
+                </tr>
+            
+            {% endfor %}
         </tbody>
     </table>
 
-    {# <a href="{{ path('employe_new') }}">Ajouter nouveau client</a> #}
 {% endblock %}

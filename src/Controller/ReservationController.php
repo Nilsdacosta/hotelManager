@@ -37,10 +37,11 @@ class ReservationController extends AbstractController
      */
     public function index(ReservationRepository $reservationRepository, OptionServiceRepository $optionServiceRepository, Request $request, EntityManagerInterface $entityManager, $id=null, ClientRepository $clientRepository, $idResa=null)
     {
-      ################################################################
-      ##################### FORMULAIRE RESA  #########################
-      ################################################################
+        /* ************************
+        | FORMULAIRE RESERVATION  |
+        **************************/
 
+        # je test s'il s'agit d'une nouvelle réservation ou d'ume modification
         if ($id != null ) {
             $reservation = $reservationRepository->find($id);
         }else {
@@ -48,9 +49,10 @@ class ReservationController extends AbstractController
         }
 
 
-        // je génère le formulaire Réservation
+        // je génère le formulaire Réservation, je peux modifier le formulaire uniquement s'il n'est pas facturé
         if($reservation->getStatus() != 4)
         {
+            # je crée un formulaire
             $form = $this->createForm(ReservationClientType::class, $reservation);
 
             // je recupère les données du formulaire
@@ -68,7 +70,7 @@ class ReservationController extends AbstractController
                 }
 
 
-                // je procède a l'enregistrement de mes données
+                // je procède à l'enregistrement de mes données
                 $entityManager->persist($reservation);
 
                 // j'enregistre les données en BDD
@@ -84,13 +86,11 @@ class ReservationController extends AbstractController
         }
         
 
-        
-        
+        /* ************************
+        |    FORMULAIRE CLIENT     |
+        **************************/
 
-        ################################################################
-        ##################### FORMULAIRE CLIENT  #######################
-        ################################################################
-
+        # je teste s'il s'agit d'un nouveau client ou d'ume modification
         if ($id !== null ) {
             $Client = $clientRepository->find($id);
         }else {
@@ -119,6 +119,7 @@ class ReservationController extends AbstractController
                 'Le client a bien été ajoutée'
             );
 
+            # s'il s'agit d'une modification je redirige vers la page récapitulatif
             if($id !=null){
                 return $this->redirectToRoute('reservationRecapitulatif', [
                     'id' => $idResa
@@ -127,6 +128,7 @@ class ReservationController extends AbstractController
             }
         }
 
+        // Je retourne mes informations au template
         return $this->render('reservation/index.html.twig', [
             'formClient' => $formClient->createView(),
             'formResa' => $form->createView()
@@ -143,6 +145,12 @@ class ReservationController extends AbstractController
 
      public function showRecapitulatif($id, ReservationRepository $reservationRepository)
      {
+
+        /* *************************
+        | RECAPITULATIF RESERVATION |
+        ****************************/
+
+
          # Je récupère ma réservation via l'id
         $reservation = $reservationRepository->find($id);
 
@@ -164,6 +172,8 @@ class ReservationController extends AbstractController
             $document = "Récapitulatif";
             $date = $reservation->getDateCreation();
         }
+
+        // Je retourne mes informations au template
         return $this->render('reservation/recapitulatif.html.twig', [
             'reservation'=> $reservation,
             'nombreJours'=> $nombreJours,
@@ -180,31 +190,22 @@ class ReservationController extends AbstractController
     
 
 
-
-
-    
-
-
-
     /**
      * @Route("/reservation/timeline", name="reservationTimeline")
      */
     public function showCalendar(ReservationRepository $reservationRepository)
     {
         
-      ################################################################
-      ################## AFFICHAGE FULLCALENDAR ######################
-      ################################################################
-
-
+        /* ************************
+        |  AFFICHAGE FULLCALENDAR  |
+        **************************/
 
       # je crée la requête pour récupérer les infos de la table réservation
         // j'ai créée une requête spéciale dans Réservation repository. La valeur sélectionnée est celle exclue de la requete
         $findReservations = $reservationRepository->findReservation(3);
 
-           
+        # je crée un tableau d'évènement qui sera envoyé via json pour le fullcalendar   
         $tabEvents = array();
-        // sleep(1);
         
         foreach ($findReservations as $findReservation) {
             //debug($findReservations);
@@ -217,21 +218,11 @@ class ReservationController extends AbstractController
                 $event->backgroundColor='#FE1919';
                 $event->idChambre = $chambre->getId();
                 $event->idReservation=$findReservation->getId();
-                
+                array_push($tabEvents, $event);
             }
-    
-      
-            
-            array_push($tabEvents, $event);
         }
 
         return  new JsonResponse($tabEvents);
-
-        // return $this->render('reservation/index.html.twig', [
-        //     'controller_name' => 'ReservationController',
-        // ]);
-        //echo json_encode($tabEvents);
-
 
     }
 
@@ -441,12 +432,18 @@ class ReservationController extends AbstractController
 
 
 
+/********************************************** */
+                 /*A SUPPRIMER*/
+/********************************************** */
+
+
+
 
 
     /** 
      * @Route("/reservation/{id}/checkin/form", name="reservationCheckInForm")
      */
-    public function formCheckIn(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
+    /*public function formCheckIn(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
     {
         if($id!=null){
 
@@ -481,14 +478,13 @@ class ReservationController extends AbstractController
                 
             ]);
         }
-    }
-
+    }*/
 
 
      /** 
      * @Route("/reservation/{id}/checkout/form", name="reservationCheckOutForm")
      */
-    public function formCheckOut(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
+    /*public function formCheckOut(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
     {
         if($id!=null){
 
@@ -530,7 +526,7 @@ class ReservationController extends AbstractController
             ]);
         }
     }
-
+*/
 
 
 
