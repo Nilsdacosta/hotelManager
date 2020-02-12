@@ -32,9 +32,11 @@
 
                                 {% if data.chambre.statutAssignationMenage == 0 %}
                                     <td ><input class="btn  affchin" type="submit" value="Envoyer"></td>
+
                                     <td>
                                         <i class="far fa-times-circle fa-3x text-danger"></i>
                                     </td>
+
                                 {% else %}
                                     <td>
                                         <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
