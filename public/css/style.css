@@ -83,7 +83,7 @@ body {
 
 }
 
-.navbar, .theadBleu{
+.navbar, .theadBleu, .couleurFond{
     background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);}
 
 .deconect{
@@ -117,18 +117,23 @@ body {
 
 .affchin{
     background-color:#daad86;
+    transition: all .2s ease-in-out;
+
 
 }
 .affchin:hover{
-    background-color:#98bf64;
+    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
+    transform: scale(1.1);
 }
 
 .affchout{
     background-color:#daad86;
+    transition: all .2s ease-in-out;
 
 }
 .affchout:hover{
-    background-color:#ff6961;
+    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
+    transform: scale(1.1);
 }
 
 .nav-link{
@@ -154,6 +159,30 @@ body {
 }
 
 /*************************************
-|       Modif couleur des thead        |
+|     Modif couleur des Fas/Far      |
 *************************************/
+
+
+.fas { transition: all .2s ease-in-out; 
+    color:black;
+
+}
+
+.fas:hover { transform: scale(1.2); 
+}
+
+.far { transition: all .2s ease-in-out; 
+    color:black;
+
+}
+
+
+/*************************************
+|                                    |
+*************************************/
+.dropdown-item, .dropdown-menu{
+    background-image: linear-gradient(to right top, #afc8da, #9dbfde, #90b4e2, #89a8e5, #8a9ae5);
+
+
+}
 

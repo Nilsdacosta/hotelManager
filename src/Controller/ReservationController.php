@@ -513,5 +513,31 @@ class ReservationController extends AbstractController
             ]);
         }
     }
+
+
+
+
+     /** 
+     * @Route("/reservation/checkin", name="reservationCheckIn")
+     */
+    public function reservationCheckIn(ReservationRepository $reservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
+    {
+        
+        $id=$request->get('id');
+        $etat=$request->get('etat');
+
+        $reservation= $reservationRepository->findOneBy(['id'=> $id]);
+
+        $reservation->setStatus($etat);
+         // je procède à l'enregistrement de mes données
+         $entityManager->persist($reservation);
+
+         // j'enregistre les données en BDD
+         $entityManager->flush();
+
+            # je renvoie a la page formCheckIn le formulaire de checkout
+            return new Response($reservation->getRenderStatus());
+
+    }
     
 }
