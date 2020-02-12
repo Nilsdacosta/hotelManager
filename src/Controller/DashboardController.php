@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\ChambreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,7 +19,7 @@ class DashboardController extends AbstractController
     ################################################################
 
 
-    public function checkInOut( ReservationRepository $reservationRepository, Request $request, EntityManagerInterface $entityManager, ChambreRepository $chambreRepository)
+    public function checkInOut( ReservationRepository $reservationRepository,  EntityManagerInterface $entityManager, ChambreRepository $chambreRepository)
     {
          // $reservationDuJour = $reservationRepository->findBy(['dateEntree' => $date],['dateEntree' => 'ASC'],5,0);
 
@@ -29,6 +28,8 @@ class DashboardController extends AbstractController
         $departDuJour = $reservationRepository->findCheckOut();
         $nbResaJour = $reservationRepository->countin();
         $nbDepartJour = $reservationRepository->countout();
+
+
         ################################################################
         ################## UPDATE ETAT CHAMBRE #########################
         ################################################################
@@ -117,8 +118,7 @@ class DashboardController extends AbstractController
 
         # je récupère les réservations 'active' à la date du jour pour afficher un état des clients présents
         $reservationEtatDuJour = $reservationRepository->findResaDashboard($date);
- 
-
+      
         return $this->render('dashboard/index.html.twig', [
             'reservationDuJour' => $reservationDuJour,
             'date' => $date,
@@ -126,6 +126,7 @@ class DashboardController extends AbstractController
             'nbDepartJour'=>$nbDepartJour,
             'departDuJour' => $departDuJour,
             'reservationEtatDuJour'=> $reservationEtatDuJour,
+  
 
         ]);
     }
