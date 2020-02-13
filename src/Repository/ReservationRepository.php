@@ -120,7 +120,7 @@ class ReservationRepository extends ServiceEntityRepository
      * @return Reservation[] id, capacite,dateCreation, nomChambre, nomClient, prenomClient,dateEntree, dateSortie, OptionService
      */
     # Requete pour afficher l'historique des réservations après les filtres
-    public function historiqueResaFiltre($id,$capacite,$dateCreation,$nomChambre,$nomClient,$prenomClient, $etatChambre,$dateEntree, $dateSortie, $optionService)
+    public function historiqueResaFiltre($id,$capacite,$dateCreation,$nomChambre,$nomClient,$prenomClient,$status,$dateEntree, $dateSortie, $optionService)
     {
         $query = $this->createQueryBuilder('r')
             ->innerJoin('r.chambre', 'c') 
@@ -165,17 +165,18 @@ class ReservationRepository extends ServiceEntityRepository
             # Je vérifie si le prénom est renseigné
             if(!empty($prenomClient)) {
                 $query = $query
-                ->andWhere('cl.prenom = :val6')
+                ->andWhere('cl.prenom LIKE :val6')
                 ->setParameter('val6', '%'.$prenomClient.'%');
             }
 
-            # Je vérifie si l'état est renseigné
-            if(!empty($etatChambre)) {
+            # Je vérifie si le stat utest renseigné
+            if(!empty($status)) {
                 $query = $query
-                ->andWhere('c.etat= :val7')
-                ->setParameter('val7', $etatChambre);
+                ->andWhere('r.status = :val6')
+                ->setParameter('val6', $status);
             }
 
+            
             # Je vérifie si la date d'entrée est renseignée
             if(!empty($dateEntree)) {
                 $query = $query

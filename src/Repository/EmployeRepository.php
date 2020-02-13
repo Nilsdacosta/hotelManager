@@ -83,7 +83,7 @@ class EmployeRepository extends ServiceEntityRepository
        # je vérifie si le poste est renseigné
         if(!empty( $poste)) {
             $query = $query
-            ->andWhere('e.renderPoste = :val6')
+            ->andWhere('e.poste LIKE :val6')
             ->setParameter('val6', $poste);
         }
 

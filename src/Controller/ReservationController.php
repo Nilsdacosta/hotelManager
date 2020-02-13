@@ -270,8 +270,18 @@ class ReservationController extends AbstractController
         $dateCreationRequest = $request->query->get('dateCreation');
         $nomChambreRequest = $request->query->get('nomChambre');
         $nomClientRequest = $request->query->get('nomClient');
-        $prenomClientRequest = $request->query->get('PrenomClient');
-        $statusResaRequest = $request->query->get('statusResa');
+        $prenomClientRequest = $request->query->get('prenomClient');
+
+        if($request->query->get('statusResa') == "Réservée"){
+            $statusResaRequest= 1;
+         }elseif($request->query->get('statusResa')=="Validée"){
+            $statusResaRequest= 2;
+         }elseif($request->query->get('statusResa')=="Annulée"){
+            $statusResaRequest= 3;
+         }elseif($request->query->get('statusResa')=="Facturée"){
+            $statusResaRequest= 4;
+         }
+
         $dateEntreeRequest = $request->query->get('dateEntree');
         $dateSortieRequest = $request->query->get('dateSortie');
         $optionServiceRequest = $request->query->get('optionService');
@@ -279,7 +289,7 @@ class ReservationController extends AbstractController
 
         # Affichage des données, je teste si le filtre a été envoyé ou non
         if(!empty($request)){
-            $reservations=$reservationRepository->historiqueResaFiltre($idResaRequest,$capaciteRequest, $dateCreationRequest,$nomChambreRequest,$nomClientRequest,$prenomClientRequest,$statusResaRequest,$dateEntreeRequest, $dateSortieRequest,$optionServiceRequest);
+            $reservations=$reservationRepository->historiqueResaFiltre($idResaRequest, $capaciteRequest, $dateCreationRequest,$nomChambreRequest,$nomClientRequest,$prenomClientRequest,$statusResaRequest,$dateEntreeRequest, $dateSortieRequest,$optionServiceRequest);
 
         }else{
             $reservations=$reservationRepository->findBy([],['dateCreation'=>'DESC']);
@@ -434,102 +444,6 @@ class ReservationController extends AbstractController
 
 
 
-
-/********************************************** */
-                 /*A SUPPRIMER*/
-/********************************************** */
-
-
-
-
-
-    /** 
-     * @Route("/reservation/{id}/checkin/form", name="reservationCheckInForm")
-     */
-    /*public function formCheckIn(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
-    {
-        if($id!=null){
-
-            # je récupère ma réservation
-            $reservation = $ReservationRepository->find($id);
-
-            // je genère le formulaire Réservation checkIn qui va updater le statut de la réservation : reservée->validée
-            $formCheckIn = $this->createForm(CheckInType::class, $reservation);
-
-            // je recupère les données du form
-            $formCheckIn->handleRequest($request);
-
-            // si les données sont valides
-            if ($formCheckIn->isSubmitted() && $formCheckIn->isValid()) {
-
-                // je procède à l'enregistrement de mes données
-                $entityManager->persist($reservation);
-
-                // j'enregistre les données en BDD
-                $entityManager->flush();
-
-
-                //je redirige vers la page des checkin checkout
-                return $this->redirectToRoute('reservationCheck');
-                   
-            }
-
-             # je renvoie a la page formCheckIn le formulaire de checkin
-            return $this->render('reservation/formCheckIn.html.twig', [
-                'reservation' => $formCheckIn->createView(),
-         
-                
-            ]);
-        }
-    }*/
-
-
-     /** 
-     * @Route("/reservation/{id}/checkout/form", name="reservationCheckOutForm")
-     */
-    /*public function formCheckOut(ReservationRepository $ReservationRepository, Request $request, EntityManagerInterface $entityManager,ChambreRepository $chambreRepository,$id=null)
-    {
-        if($id!=null){
-
-            # je récupère ma réservation
-            $reservation = $ReservationRepository->find($id);
-
-            // je genère le formulaire Réservation checkIn qui va updater le statut de la réservation : reservée->validée
-            $formCheckOut = $this->createForm(CheckOutType::class, $reservation);
-
-            // je recupère les données du form
-            $formCheckOut->handleRequest($request);
-
-            // si les données sont valides
-            if ($formCheckOut->isSubmitted() && $formCheckOut->isValid()) {
-
-                // je procède à l'enregistrement de mes données
-                $entityManager->persist($reservation);
-
-                // j'enregistre les données en BDD
-                $entityManager->flush();
-
-              
-
-                // // je redirige vers la page de facture
-                return $this->redirectToRoute('reservationRecapitulatif',[
-                    'id'=>$reservation->getId(),
-                ]);
-
-                    
-                
-                   
-            }
-
-            # je renvoie a la page formCheckIn le formulaire de checkout
-            return $this->render('reservation/formCheckIn.html.twig', [
-                'reservation' => $formCheckOut->createView(),
-         
-                
-            ]);
-        }
-    }
-*/
 
 
 

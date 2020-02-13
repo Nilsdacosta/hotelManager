@@ -148,6 +148,8 @@ class GouvernanceController extends AbstractController
         $employes=$employeRepository->findAllGroupeBy('username');
         $chambres = $chambreRepository->findAllGroupeBy('nom');
         $optionResas = $optionServiceRepository->findAllGroupeBy('nomOption');
+
+        
         $dateDuJour = new \Datetime;
 
         # je récupère les données envoyées via le get

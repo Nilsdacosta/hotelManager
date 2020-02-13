@@ -69,7 +69,7 @@
 
                     <td>
                         {# Statut de la chambre #}
-                        <select class="form-control" name="statusChambre" id="statusChambre">
+                        <select class="form-control" name="statusResa" id="statusResa">
                             <option value="" disabled selected> Statut réservation</option>
 
                             {% for reservation in statusResa %}
@@ -170,7 +170,7 @@
             {% else %}
                 <tr>
                     {#  si aucun résultat à afficher #}
-                    <td colspan="6">Pas de résultat</td>
+                    <td colspan="12">Pas de résultat</td>
                 </tr>
             
             {% endfor %}
