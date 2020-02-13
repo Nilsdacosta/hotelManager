@@ -32,7 +32,7 @@ class GouvernanceType extends AbstractType
                         ;
                 },
                 'choice_label' => 'username',
-
+                'placeholder' => 'Employé de menage'
             ])
             ->add('optionService', EntityType::class, [
                 'class' => OptionService::class,
