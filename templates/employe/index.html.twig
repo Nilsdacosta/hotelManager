@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block title %}Liste des Employés {% endblock %}
 {% block body %}
+
+    {# Liste des employés sous forme de tableau #}
+    
     <div class="d-flex justify-content-center my-5">
         <h1>Liste des Employés</h1>
     </div>
@@ -8,6 +11,7 @@
          <table class="table table-hover table-striped">
             <thead>
 
+                {# Filtres #}
                 <tr>
                     <form  method="get">
 
@@ -55,6 +59,8 @@
                         </td>
                     </form>
                 </tr>
+
+                {# Affichages #}
                 <tr class="theadBleu">
                     <th>Id</th>
                     <th>Nom utilisateur</th>
@@ -66,32 +72,38 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+
+
             <tbody>
-            {% for employe in employes %}
-                <tr>
-                    <td>{{ employe.id }}</td>
-                    <td>{{ employe.username }}</td>
-                    <td>{{ employe.nom }}</td>
-                    <td>{{ employe.prenom }}</td>
-                    <td>{{ employe.telephone }}</td>
-                    <td>{{ employe.renderPoste }}</td>
+                {% for employe in employes %}
+                    <tr>
+                        <td>{{ employe.id }}</td>
+                        <td>{{ employe.username }}</td>
+                        <td>{{ employe.nom }}</td>
+                        <td>{{ employe.prenom }}</td>
+                        <td>{{ employe.telephone }}</td>
+                        <td>{{ employe.renderPoste }}</td>
 
-                    <td>{% for role in employe.roles %}{{role}}{% endfor %}</td>
+                        <td>{% for role in employe.roles %}{{role}}{% endfor %}</td>
 
-                    <td>
-                        <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
-                        <a href="{{ path('employe_edit', {'id': employe.id}) }}"><i class="far fa-edit"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">Pas de résultat</td>
-                </tr>
-            {% endfor %}
+                        <td>
+                            {# Bouton : visualiser l'employé #}
+                            <a href="{{ path('employe_show', {'id': employe.id}) }}"><i class="far fa-eye"></i></a>
+
+                            {# Bouton: modifier l'employé #}
+                            <a href="{{ path('employe_edit', {'id': employe.id}) }}"><i class="far fa-edit"></i></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        {# S'il n'y a pas de résultat #}
+                        <td colspan="7">Pas de résultat</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 
-
+        {# Bouton Ajouter  #}
         <a href="{{ path('employe_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
     
 

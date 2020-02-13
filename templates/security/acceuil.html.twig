@@ -34,12 +34,11 @@
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
 
-               
-
                 <div class="form-group">
                     <input class="accueil form-control mb-3" type="text" value="{{ last_username }}" name="username" id="inputUsername"  required autofocus placeholder="Nom Utilisateur">
 
                     <input class="accueil form-control " type="password" name="password" id="inputPassword"  required placeholder="Mot de Passe">
+                    
                     <br>
                 </div>
 

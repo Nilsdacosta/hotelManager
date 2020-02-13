@@ -21,8 +21,13 @@ class EmployeController extends AbstractController
      */
     public function index(EmployeRepository $employeRepository): Response
     {
-        # je défini les requetes pour l'affichage du formulaire de filtre
 
+        /* ************************
+        |    AFFICHAGE EMPLOYES   |
+        **************************/
+
+
+        # je défini les requetes pour l'affichage du formulaire de filtre
         $idEmploye = $employeRepository->findAllGroupeBy('id');
         $posteEmploye = $employeRepository->findAllGroupeBy('poste');
         $roleEmploye = $employeRepository->findRoleGroupeBy('roles');
@@ -37,6 +42,7 @@ class EmployeController extends AbstractController
          $posteEmployeRequest= $request->query->get('poste');
          $roleEmployeRequest= $request->query->get('role');
 
+         # je test si le formulaire filtre renvoie des données, sinon j'affiche tout
          if(!empty($request)){
             $employes = $employeRepository->employeFiltre($idEmployeRequest,$usernameEmployeRequest,$nomEmployeRequest,$prenomEmployeRequest ,$telephoneEmployeRequest,$posteEmployeRequest ,$roleEmployeRequest);
         }else{
@@ -44,7 +50,7 @@ class EmployeController extends AbstractController
 
         }
 
-
+        // Je retourne mes informations au template
         return $this->render('employe/index.html.twig', [
             'employes' => $employes,
             'idEmploye'=>$idEmploye,
@@ -58,12 +64,21 @@ class EmployeController extends AbstractController
      */
     public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
+        /* ************************
+        |       AJOUT EMPLOYES    |
+        **************************/
+
+        # J'instance un nouvel objet de la classe employé
         $employe = new Employe();
+
+        # je crée le formulaire
         $form = $this->createForm(EmployeType::class, $employe);
         $form->handleRequest($request);
         
-
+        # Je vérifie sur le formulaire est soumis et s'il est valid
         if ($form->isSubmitted() && $form->isValid()) {
+
             $random = random_int(1, 999);
            
             // Création d'un id unique pour chaque employé.
@@ -72,6 +87,7 @@ class EmployeController extends AbstractController
             // Je remplace les accents potentiels pour faciliter la connexion
             $username = str_replace(" ", "", str_replace(array('é', 'ê', 'ë', 'è'), 'e', $usernameUnique));
             
+            # je défini le role de l'employé
             $formRole=$form->get('roles')->getData();
             if ($formRole == 1) {
                 $employe->setRoles( [Employe::ROLE_1]);
@@ -81,6 +97,7 @@ class EmployeController extends AbstractController
                 $employe->setRoles( [Employe::ROLE_3]);
             }
 
+            # je défini le user pour mon objet
             $employe->setUsername(strtolower($username));
           
             // Récupération de l'id unique pour que son mot de passe soit le même et faciliter l'enregistrement des employés
@@ -96,20 +113,31 @@ class EmployeController extends AbstractController
             $entityManager->persist($employe);
             $entityManager->flush();
 
+            # je redirige vers la page historique employé
             return $this->redirectToRoute('employe_index');
         }
 
+        // Je retourne mes informations au template
         return $this->render('employe/new.html.twig', [
             'employe' => $employe,
             'form' => $form->createView(),
         ]);
     }
 
+
+
     /**
      * @Route("/{id}", name="employe_show", methods={"GET"})
      */
     public function show(Employe $employe): Response
     {
+
+        /* *************************
+        |  AFFICHAGE D'UN EMPLOYE  |
+        ***************************/
+
+
+        // Je retourne mes informations au template
         return $this->render('employe/show.html.twig', [
             'employe' => $employe,
         ]);
@@ -120,15 +148,27 @@ class EmployeController extends AbstractController
      */
     public function edit(Request $request, Employe $employe): Response
     {
+
+        /* ************************
+        |       EDIT EMPLOYES      |
+        **************************/
+
+        # je crée un formulaire
         $form = $this->createForm(EmployeType::class, $employe);
         $form->handleRequest($request);
 
+        # si le formulaire est soumis et valid
         if ($form->isSubmitted() && $form->isValid()) {
+
+            #j'enregistre en BDD
             $this->getDoctrine()->getManager()->flush();
 
+            # je redirige vers l'historique employé
             return $this->redirectToRoute('employe_index');
         }
 
+
+        // Je retourne mes informations au template
         return $this->render('employe/edit.html.twig', [
             'employe' => $employe,
             'form' => $form->createView(),
@@ -140,12 +180,20 @@ class EmployeController extends AbstractController
      */
     public function delete(Request $request, Employe $employe): Response
     {
+
+        /* ************************
+        |   SUPPRESSION EMPLOYES  |
+        **************************/
+
+        # je supprime en BDD via csrfToken
         if ($this->isCsrfTokenValid('delete'.$employe->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($employe);
             $entityManager->flush();
         }
 
+
+        // Je retourne mes informations au template
         return $this->redirectToRoute('employe_index');
     }
 }
