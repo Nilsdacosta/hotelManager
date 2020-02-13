@@ -32,7 +32,7 @@ class ChambreType extends AbstractType
             ])
             ->add('etat' , ChoiceType::class, [
                 'choices'  => [
-                    'Etat de la chambre' => 'Choose an option',
+                    'État de la chambre' => 'Choose an option',
                     'Sale' => 1,
                     'Recouche' => 2,
                     'Prête' => 3,
@@ -47,6 +47,7 @@ class ChambreType extends AbstractType
             ->add('tva', EntityType::class, [
                 'class'=> Tva::class ,
                 'choice_label' => ' nom',
+                'placeholder' => 'TVA',
             ])
 
         ;
