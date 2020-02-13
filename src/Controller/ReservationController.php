@@ -127,7 +127,7 @@ class ReservationController extends AbstractController
             # s'il s'agit d'une modification je redirige vers la page récapitulatif
             if($id !=null){
                 return $this->redirectToRoute('reservationRecapitulatif', [
-                    'id' => $idResa
+                    'id' => $reservation->getId() 
                 ]);
 
             }
