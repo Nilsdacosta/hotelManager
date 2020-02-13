@@ -24,8 +24,8 @@ class ReservationController extends AbstractController
 {
     /**
      * @Route("/reservation", name="reservation")
-     * @Route("/reservation/edit/{id}", name="editReservation")
-     * @Route("/reservation/edit/{idResa}/client/{id}", name="editClient")
+     * @Route("/reservation/edit/resa/{id}", name="editReservation")
+     * @Route("/reservation/edit/client/{id}", name="editClient")
      * @param ReservationRepository $reservationRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -42,8 +42,10 @@ class ReservationController extends AbstractController
         **************************/
 
         # je test s'il s'agit d'une nouvelle réservation ou d'ume modification
-        if ($id != null ) {
-            $reservation = $reservationRepository->find($id);
+        if($request->query->get('idResa')){
+            $reservation = $reservationRepository->find($request->query->get('idResa'));
+        }elseif ($id != null ) {
+                $reservation = $reservationRepository->find($id);
         }else {
             $reservation = new Reservation();
         }
@@ -91,7 +93,10 @@ class ReservationController extends AbstractController
         **************************/
 
         # je teste s'il s'agit d'un nouveau client ou d'ume modification
-        if ($id !== null ) {
+        
+        if($request->query->get('idClient')){
+            $Client = $clientRepository->find($request->query->get('idClient'));
+        }elseif ($id !== null ) {
             $Client = $clientRepository->find($id);
         }else {
             $Client = new Client();
