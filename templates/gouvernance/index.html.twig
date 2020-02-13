@@ -7,7 +7,7 @@
         <h1 class="my-5">Nouvelle assignation</h1>
     </div>
 
-    <a class="btn btn-danger" href="{{ path('gouvernance_zerotage') }}" >Remettre à 0</a>
+    <a class="btn btn-danger my-5" href="{{ path('gouvernance_zerotage') }}" >Remettre à 0</a>
 
     <table class="table table-striped table-hover" >
         <thead class="theadBleu" >
@@ -36,7 +36,6 @@
                                     <td>
                                         <i class="far fa-times-circle fa-3x text-danger"></i>
                                     </td>
-
                                 {% else %}
                                     <td>
                                         <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
@@ -45,17 +44,13 @@
                                         <i class="far fa-check-circle fa-3x" style="color:#6bbaa7"></i>
                                     </td>
                                 {% endif %}
-
                             {{ form_end(data.form) }}
                         {% endif %}
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
-    
     </table>
-
-
     <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
 {% endblock %}
