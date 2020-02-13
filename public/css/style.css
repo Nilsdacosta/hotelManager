@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bitter&display=swap');
+
+/******************************* AFFICHAGE TABLETTE ET MOBILE ************************************/
+
+
+body {
+    font-family: 'Bitter', serif;
+    background-color:#fff5ee;
+
+}
+
+.navbar, .theadBleu, .couleurFond, .affchin:hover, .affchout:hover, .dropdown-item, .dropdown-menu
+{
+    background-color:#6bbaa7;
+    opacity: 0.9;
+}
+
+.titre{
+    font-family: 'Lobster', cursive;
+    color: black;
+}
+
+.taille{
+    font-size: 60px;
+    font-family: 'Lobster', cursive;
+    color: black;
+    margin-top:150px
+}
+
+.onglet{
+    font-family: 'Lobster', cursive;
+    font-size: 20px;
+    margin-left:115px
+}
+
+/***********************************
+|     Page réservation/ index      |
+************************************/
+
+#calendar {
+    max-width: 90vw;
+    max-height:10vh;
+    margin:  auto;
+
+}
+
+
+/*************************************
+|       Page Sécurité/Accueil        |
+*************************************/
+.img{
+    height:80px;
+    width: 80px;
+}
+
+.nav-link{
+    font-size: 1.3em;
+}
+
+.navbar-brand{
+    font-size: 2em;
+}
+
+.accueilBkg{
+
+    background-image:url("https://lodginginteractive.com/wp-content/uploads/Hotel-Reputation-Management.jpeg") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:100vh;
+    width: 100%;
+
+}
+
+.acc{
+    color: none;
+}
+
+
+.accueil{
+    width:40vw;
+}
+
+.hauteurBoxConnexion{
+    position:relative;
+    top:20vh;
+
+}
+
+
+.deconect{
+    margin-left: 300px;
+}
+
+.dashcard{
+    background-color: none;
+   
+}
+
+.card{
+    border: none;
+}
+
+.hk{
+    width: 60px;
+    height: 60px;
+}
+
+.bandeau{
+    padding-bottom: 60px;
+}
+
+.affchin{
+    background-color:#daad86;
+    transition: all .2s ease-in-out;
+
+}
+.affchin:hover{
+    transform: scale(1.1);
+}
+
+.affchout{
+    background-color:#daad86;
+    transition: all .2s ease-in-out;
+
+}
+.affchout:hover{
+    transform: scale(1.1);
+}
+
+.affchSuppr{
+    background-color:#daad86;
+    transition: all .2s ease-in-out;
+}
+
+.affchSuppr:hover{
+    transform: scale(1.1);
+}
+
+
+.nav-link{
+    margin-left: 120px;
+
+}
+
+.imgFront{
+    margin-right: 30px;
+}
+
+/************************************ AFFICHAGE DESKTOP ***************************************/
+@media screen and (min-width: 1000px) {
+
+    
+/*************************************
+|       Page Sécurité/Accueil        |
+*************************************/
+    .accueil{
+        width:20vw;
+    }
+  
+}
+
+/*************************************
+|     Modif couleur des Fas/Far      |
+*************************************/
+
+
+.fas { transition: all .2s ease-in-out; 
+    color:black;
+
+}
+
+.fas:hover { transform: scale(1.2); 
+}
+
+.far { transition: all .2s ease-in-out; 
+    color:black;
+
+}
+
+
+/*************************************
+|                                    |
+*************************************/
+

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
@@ -19,22 +20,23 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateEntree;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateSortie;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Choice({1, 2, 3, 4}, message="Choississez un statut valide.")
      */
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $carteBancaire;
 
@@ -54,6 +56,11 @@ class Reservation
      */
     private $optionService;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $dateCreation;
+
     public function __construct()
     {
         $this->chambre = new ArrayCollection();
@@ -63,6 +70,11 @@ class Reservation
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDateEntreepourCalendrier(): ?\DateTime
+    {
+        return $this->dateEntree;
     }
 
     public function getDateEntree(): ?\DateTimeInterface
@@ -77,6 +89,12 @@ class Reservation
         return $this;
     }
 
+
+    public function getDateSortiePourCalendrier(): ?\DateTime
+    {
+        return $this->dateSortie;
+    }
+
     public function getDateSortie(): ?\DateTimeInterface
     {
         return $this->dateSortie;
@@ -87,6 +105,19 @@ class Reservation
         $this->dateSortie = $dateSortie;
 
         return $this;
+    }
+
+      public function getRenderStatus(): ?string
+    {
+        if ($this->status == 1){
+            return "Réservée";
+        }elseif($this->status == 2){
+            return "Validée";
+        }elseif($this->status == 3){
+            return "Annulée";
+        }else{
+            return "Facturée";
+        }
     }
 
     public function getStatus(): ?int
@@ -100,6 +131,8 @@ class Reservation
 
         return $this;
     }
+
+
 
     public function getCarteBancaire(): ?string
     {
@@ -173,6 +206,18 @@ class Reservation
         if ($this->optionService->contains($optionService)) {
             $this->optionService->removeElement($optionService);
         }
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    {
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

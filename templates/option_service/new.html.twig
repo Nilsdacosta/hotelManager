@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'une Option{% endblock %}
+
+{% block body %}
+
+    {# Page Ajouter une option #}
+
+    <div class="d-flex justify-content-center my-5">
+        <h1>Ajout d'une Option</h1>
+    </div>
+
+    {# formualaire d'ajout #}
+    {{ include('option_service/_form.html.twig' , {'button_label': 'Update'}) }}
+
+    {# Bouton : retour à la liste des options #}
+    <a href="{{ path('option_service_index') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    {#  Page d'assignation  #}
+    <div class="d-flex justify-content-center my-5">
+        <h1>Historique des assignations</h1>
+    </div>
+
+    <table class="table table-striped table-hover" >
+        <thead >
+
+            {# Filtres #}
+            <form action="" method="get">
+                <tr>
+                    <td>
+                        {# Date d'assignation #}
+                        <input class="form-control" type="date" name="date" id="date" value="{{dateDuJour|date('Y-m-d')}}">
+                    </td>
+
+                    <td>
+                        {# Username #}
+                        <select class="form-control" name="employe" id="employe"> 
+                            <option value="" disabled selected>Employé</option>
+                            {% for employe in employes %}
+                                <option value="{{employe.username}}">{{employe.username}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        {# Nom de la chambre #}
+                        <select class="form-control" name="chambre" id="chambre"> 
+                            <option value="" disabled selected>Chambre</option>
+                            {% for chambre in chambres %}
+                                <option value="{{chambre.nom}}">{{chambre.nom}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        {# Option service #}
+                        <select class="form-control" name="optionService" id="optionService">
+                            <option value="" disabled selected>Options Service</option>
+
+                            {% for option in optionResas %}
+                                <option value="{{option.nomOption}}">{{option.nomOption}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </td>
+                    
+                    <td>
+                        {# Bouton envoie formulaire filtre #}
+                        <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
+                    </td>
+                </tr>    
+            </form>
+                
+            <tr class="theadBleu">
+                <th>Date assignation</th>
+                <th>Employé assigné</th>
+                <th>Chambre concernée</th>
+                <th>État chambre</th>
+                <th>Option Service</th>
+                <th>Supprimer</th>
+            </tr>
+            
+        </thead>
+        
+        <tbody>
+            {% for assignationMenage in assignationMenages %}
+                <tr>
+                    <td>{{(assignationMenage.date|date("d/m/Y"))}}</td>
+                    <td>{{(assignationMenage.employe.username)}}</td>
+                    <td>{{(assignationMenage.chambre.nom)}}</td>
+                    <td>{{(assignationMenage.chambre.renderEtat)}}</td>
+                    <td>
+                        {% for option in assignationMenage.optionService %}
+                            {{option.nomOption}},
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{path('assignation_delete', {'id':assignationMenage.id} )}}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assignationMenage.id) }}">
+                            <button class='btn affchSuppr'>Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{path('gouvernance')}}"><i class="far fa-plus-square fa-3x"></i></a>
+
+
+    
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OptionServiceRepository")
@@ -24,12 +25,16 @@ class OptionService
     private $nomOption;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $dateCreation;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="La valeur {{ value }} doit être de type {{ type }}"
+     * )
      */
     private $prixOption;
 
@@ -41,7 +46,7 @@ class OptionService
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tva", inversedBy="optionServices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $tva;
 
@@ -51,7 +56,7 @@ class OptionService
     private $reservations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="optionService")
+     * @ORM\ManyToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="optionService")
      */
     private $assignationMenages;
 
@@ -166,7 +171,7 @@ class OptionService
     {
         if (!$this->assignationMenages->contains($assignationMenage)) {
             $this->assignationMenages[] = $assignationMenage;
-            $assignationMenage->setOptionService($this);
+            $assignationMenage->addOptionService($this);
         }
 
         return $this;
@@ -176,12 +181,11 @@ class OptionService
     {
         if ($this->assignationMenages->contains($assignationMenage)) {
             $this->assignationMenages->removeElement($assignationMenage);
-            // set the owning side to null (unless already changed)
-            if ($assignationMenage->getOptionService() === $this) {
-                $assignationMenage->setOptionService(null);
-            }
+            $assignationMenage->removeOptionService($this);
         }
 
         return $this;
     }
+
+    
 }

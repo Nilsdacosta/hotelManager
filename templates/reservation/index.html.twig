@@ -1,0 +1,208 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation{% endblock %}
+
+
+{% block body %}
+
+<script>
+    {# afficahge du datepiscker pour les formulaires/date #}
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+
+
+</script>
+
+
+
+    {# Message ajout reservation #}
+    <div class=" d-flex justify-content-center">
+        {% for message in app.flashes('ajoutResa') %}
+            <div class="flash-notice alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {# Message ajout client #}
+    <div class=" d-flex justify-content-center">
+        {% for message in app.flashes('ajoutClient') %}
+            <div class="flash-notice alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="row p-5 justify-content-around">
+
+        {# Formulaire d'ajout/modification de réservation #}
+        <div class="col-6 border-right p-5 d-flex justify-content-center">
+            <div>
+                <h1 class="mb-5">Ajouter une réservation</h1>
+                {{ form_start(formResa) }}
+            
+                {{ form_row(formResa.dateEntree, {"id": "dateEntree"}) }}
+
+                {{ form_row(formResa.dateSortie , {"id": "dateSortie"}) }}
+
+                {{ form_row(formResa.carteBancaire) }}
+
+                {{ form_row(formResa.client) }}
+
+                {{ form_row(formResa.chambre, {"id": "idChambre"})  }}
+
+
+                {{ form_row(formResa.optionService) }}
+
+
+            
+
+
+              {{ form_row(formResa.enregistrer, { 'attr': {'class': 'btn affchin'} }) }}
+        
+              {{ form_end(formResa) }}
+
+
+            </div>
+        </div>
+
+        {# Formulaire d'ajout/modification de client #}
+        <div class="col-6 p-5 d-flex justify-content-center">
+            <div>
+                <h1 class="mb-5">Ajouter un nouveau client</h1>
+                {{ form_start(formClient) }}
+
+                {{ form_row(formClient.nom) }}
+
+                {{ form_row(formClient.prenom) }}
+
+                {{ form_row(formClient.adresse) }}
+
+                {{ form_row(formClient.codePostal) }}
+
+                {{ form_row(formClient.ville) }}
+
+                {{ form_row(formClient.telephone) }}
+
+                {{ form_row(formClient.mail) }}
+
+                {{ form_row(formClient.dateDeNaissance) }}
+
+                {{ form_row(formClient.commentaire) }}
+
+                {{ form_row(formClient.enregistrer, { 'attr': {'class': 'btn affchin'} }) }}
+
+                {{ form_end(formClient) }}
+            </div>
+        </div>
+
+    </div>
+
+
+    {# Si le user est connecté #}
+    {% if is_granted('ROLE_USER') %}
+        {# j'affiche le calendrier #}
+        <div class="container-fluid" id='calendar'></div>
+    {% endif %}
+
+    {# Script du fullcalendar #}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [ 'interaction', 'resourceTimeline'],
+
+                /*Renvoie le calendrier è la date du jour*/
+                now: new Date,
+                selectable: true,
+                height:600,
+                selectHelper: true,
+                editable: true,
+                aspectRatio: 1.8,
+                header: {
+                    left: ' prev',
+                    center: 'title',
+                    right: 'next'
+                },
+
+                defaultView: 'resourceTimelineMonth',
+                resourceAreaWidth: '14%',
+                resourceLabelText: 'Rooms',
+
+                /* Je récupère les chambres enregistrées en BDD*/
+                resourceGroupField: 'building',
+                resources: function(info, successCallback, failureCallback) {
+                    //ajax
+                    $.get("{{path('reservationChambre')}}", function(data){
+                        //console.log(data)
+                        var length = data.length;
+                        var NomRooms= new Array();
+
+                        for(var i=0; i<length; i++){
+                            //console.log(i);
+                            NomRooms.push({
+                                id:data[i].idChambre,
+                                building:data[i].building,
+                                title:data[i].title,
+
+                            },);
+                        }
+
+                        successCallback(
+                            NomRooms
+                        );
+                    });
+                },
+
+                /* Je récupère les réservations enregistrées en BDD*/
+                events: function(info, successCallback, failureCallback) {
+                    //ajax
+                    $.get("{{path('reservationTimeline')}}", function(data){
+                        //console.log(data)
+                        var length = data.length;
+                        var newTab= new Array();
+
+                        for(var i=0; i<length; i++){
+                            //console.log(i);
+                            newTab.push({
+                                resourceId:data[i].idChambre,
+                                start:data[i].start,
+                                end:data[i].end,
+                                rendering:data[i].rendering,
+                                backgroundColor:data[i].backgroundColor,
+                            },) ;
+                        }
+                        successCallback(
+                        newTab
+                        );
+                    });
+
+
+                },
+            
+                /* Sélection des plages dates sur le calendrier */
+                select: function(arg) {
+                    arg.startStr,
+                    arg.endStr,
+                    arg.resource ? arg.resource.id : '(no resource)';
+
+                    /* Renvoi des données selectionnées du calendrier dans le formulaire de réservation*/
+                    var dateEntree = document.getElementById("dateEntree");
+                    var dateSortie = document.getElementById("dateSortie");
+                    var idChmabre = document.getElementById("idChambre");
+                    dateEntree.value = arg.startStr;
+                    dateSortie.value = arg.endStr;
+                    idChambre.value = arg.resource.id
+
+                },
+            });
+            
+            calendar.render();
+        });
+    </script>
+{% endblock %}

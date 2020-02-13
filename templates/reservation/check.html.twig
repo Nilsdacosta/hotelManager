@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+
+{% block body %}
+
+    {# Bandeau déroulant affichant la date du jour et le nombre de checkIn attendus #}
+    <marquee class="bandeau" direction="left" behavior="scroll" scrollamount="6" style=" margin-right: 200px; height:40px;width:80vw;background-color:#none;font-family:sans-serif;font-size:22pt;color:#000000; " >  Le {{date|date('d-M-Y')}} , {% for checkin in nbResaJour %}{{checkin}}{% endfor %} Check-in de prévu</marquee>
+
+
+    <div class="container-fluid my-5">
+
+        <div class="row">
+
+            {# Début des check-in #}
+
+            <div class="col-12 col-xl-6 border-right p-5">
+
+                <div class="d-flex justify-content-center m-5">
+                    <h2>CHECK IN</h2>
+                </div>
+
+                <table class="table table-hover table-striped">
+                    <thead class="theadBleu">
+                        <tr>
+                            <th>N° ID</th>
+                            <th>Nom du client</th>
+                            <th>Prénom du client</th>
+                            <th>N°/Nom de chambre</th>
+                            <th>État de la réservation</th>
+                            <th>Modifier  statut </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for reservation in reservationDuJour %}
+                            <tr>
+                                <td>{{reservation.id}}</td>
+                                <td> {{reservation.client.nom}}</td>
+                                <td>{{reservation.client.prenom}}</td>
+                                <td> {% for chambre in reservation.chambre %} {{chambre.nom}} {% endfor %}</td>
+                                <td class="etatChambre" id="etat_{{reservation.id}}">{{reservation.renderStatus}}</td>
+
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn affchin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modifier</button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 2)" href="#">Valider</a>
+                                        <a class="dropdown-item" onclick="checkResa({{reservation.id}}, 3)" href="#">Annuler</a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        {% else %}
+
+                            {# Si aucun résultat à retourner #}
+                            <tr>
+                                <td colspan="6"> Pas de check in prévu ce jour</td>
+                            </tr>
+                        
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {# Fin des check-in #}
+
+
+            {# Début des check-out #}
+            <div class="col-12 col-xl-6 p-5">
+
+                <div class="d-flex justify-content-center m-5">
+                    <h2>CHECK OUT</h2>
+                </div>
+                
+                <table class="table table-hover table-striped">
+                    <thead class="theadBleu">
+                        <tr>
+                            <th>N° ID</th>
+                            <th>Nom du client</th>
+                            <th>Prénom du client</th>
+                            <th>N°/Nom de chambre</th>
+                            <th>État de la réservation</th>
+                            <th>Modifier  statut </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for depart in departDuJour %}
+                            <tr>
+                                <td>{{depart.id}}</td>
+                                <td> {{depart.client.nom}}</td>
+                                <td>{{depart.client.prenom}}</td>
+                                <td> {% for chambre in depart.chambre %} {{chambre.nom}} {% endfor %}</td>
+                                <td class="etatChambre" id="etat_{{depart.id}}">{{depart.renderStatus}}</td>
+
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn affchin" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modifier</button>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" onclick="checkResa({{depart.id}}, 4)" href="#">Facturer</a>
+                                        <a class="dropdown-item" onclick="checkResa({{depart.id}}, 3)" href="#">Annuler</a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        {% else %}
+                           {# Si aucun résultat à retourner #}
+                            <tr>
+                                <td colspan="6"> Pas de check in prévu ce jour</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {# Fin des check-out #}
+
+        </div>
+
+        {# Bouton pour raffraichir la page et actualiser les donnée en BDD suite modification ajax #}
+        <div class='d-flex justify-content-center mt-3'>
+            <input type="button" class="btn affchin" onclick='window.location.reload(false)' value="Valider les modifications"/>
+
+        </div>	
+        
+        
+    </div>
+
+
+        
+      
+  
+
+{% endblock %}

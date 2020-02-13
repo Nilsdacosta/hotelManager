@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Option Services{% endblock %}
+
+{% block body %}
+
+    {#  Page d'affichage des options #}
+    <div class="d-flex justify-content-center my-5">
+        <h1>Option Services</h1>
+    </div>
+
+    <table class="table table-hover table-striped">
+        <thead >
+
+            {# Filtres #}
+            <tr>
+                <form action="" method="get">
+                    <td>
+                        <select class="form-control" name="id" id="id">
+                            <option value=""disabled selected>ID Option</option>
+                            {% for option in idOption %}
+                            <option value="{{option.id}}">{{option.id}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" name="nom" id="nom">
+                            <option value=""disabled selected>Nom</option>
+                            {% for option in nomOption %}
+                            <option value="{{option.nomOption}}">{{option.nomOption}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="date" name="date" id="date">
+                    </td>
+                    <td>
+                        <select class="form-control" name="prix" id="prix">
+                            <option value=""disabled selected>prix</option>
+                            {% for option in prixOption %}
+                            <option value="{{option.prixOption}}">{{option.prixOption}} </option> 
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
+                    </td>
+                </form>
+                
+            </tr>
+
+            {# Affichages #}
+            <tr class="theadBleu">
+                <th>Id</th>
+                <th>Nom Option</th>
+                <th>Date Création</th>
+                <th>Prix Option</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for option_service in option_services %}
+                <tr>
+                    <td>{{ option_service.id }}</td>
+                    <td>{{ option_service.nomOption }}</td>
+                    <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d') : '' }}</td>
+                    <td>{{ option_service.prixOption }} €</td>
+                    <td>
+                        {# Bouton : voir l'option #}
+                        <a href="{{ path('option_service_show', {'id': option_service.id}) }}"><i class="far fa-eye"></i></a>
+
+                        {# Bouton: modifier #}
+                        <a href="{{ path('option_service_edit', {'id': option_service.id}) }}"><i class="far fa-edit"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    {# si aucune donnée à afficher #}
+                    <td colspan="5">Pas de données</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {# Bouton : ajouter #}
+    <a href="{{ path('option_service_new') }}"><i class="far fa-plus-square fa-3x"></i> </a>
+    
+
+    
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,11 +21,13 @@ class Chambre
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice({"Double", "Single", "Twin", "Deluxe","Suite"}, message="Choississez une capacité valide.")
      */
     private $capacite;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Choice({1, 2, 3, 4}, message="Choississez un état valide.")
      */
     private $etat;
 
@@ -35,11 +38,17 @@ class Chambre
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(
+     *     type="float",
+     *     message="La valeur {{ value }} doit être de type {{ type }}"
+     * )
      */
     private $prix;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="La valeur ne peut être vide")
      */
     private $nom;
 
@@ -54,14 +63,21 @@ class Chambre
      */
     private $reservations;
 
+
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\AssignationMenage", mappedBy="chambre")
      */
-    private $assignationMenage;
+    private $assignationMenages;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $statutAssignationMenage;
 
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->assignationMenages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,8 +97,26 @@ class Chambre
         return $this;
     }
 
+    public function getRenderEtat(): ?string
+    {
+        if ($this->etat == 1){
+            return "Sale";
+        }elseif($this->etat == 2){
+            return "Recouche";
+        }elseif($this->etat == 3){
+            return "Prête";
+        }elseif($this->etat == 4){
+            return "HS";
+        }else{
+            return "Prête";
+        }
+    }
+
+
     public function getEtat(): ?int
     {
+        $etat = $this->etat;
+        $etat=1;
         return $this->etat;
     }
 
@@ -103,6 +137,12 @@ class Chambre
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getResume(): ?string
+    {
+       return $this->tronqueChaine($this->description,30);
+       
     }
 
     public function getPrix(): ?float
@@ -169,20 +209,61 @@ class Chambre
         return $this;
     }
 
-    public function getAssignationMenage(): ?AssignationMenage
+    /**
+     * @return Collection|AssignationMenage[]
+     */
+    public function getAssignationMenages(): Collection
     {
-        return $this->assignationMenage;
+        return $this->assignationMenages;
     }
 
-    public function setAssignationMenage(?AssignationMenage $assignationMenage): self
+    public function addAssignationMenage(AssignationMenage $assignationMenage): self
     {
-        $this->assignationMenage = $assignationMenage;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newChambre = null === $assignationMenage ? null : $this;
-        if ($assignationMenage->getChambre() !== $newChambre) {
-            $assignationMenage->setChambre($newChambre);
+        if (!$this->assignationMenages->contains($assignationMenage)) {
+            $this->assignationMenages[] = $assignationMenage;
+            $assignationMenage->setChambre($this);
         }
+
+        return $this;
+    }
+
+    public function removeAssignationMenage(AssignationMenage $assignationMenage): self
+    {
+        if ($this->assignationMenages->contains($assignationMenage)) {
+            $this->assignationMenages->removeElement($assignationMenage);
+            // set the owning side to null (unless already changed)
+            if ($assignationMenage->getChambre() === $this) {
+                $assignationMenage->setChambre(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+    public function tronqueChaine($chaine, $lg_max) 
+{
+    if (strlen($chaine) > $lg_max)
+    {
+        $chaine = substr($chaine, 0, $lg_max);
+        $last_space = strrpos($chaine, " ");
+        $chaine = substr($chaine, 0, $last_space)."...";
+        
+        return $chaine;
+    }else{
+        return $chaine;
+    }
+}
+
+    public function getStatutAssignationMenage(): ?int
+    {
+        return $this->statutAssignationMenage;
+    }
+
+    public function setStatutAssignationMenage(?int $statutAssignationMenage): self
+    {
+        $this->statutAssignationMenage = $statutAssignationMenage;
 
         return $this;
     }

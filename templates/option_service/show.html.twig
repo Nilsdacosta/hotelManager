@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Option Services{% endblock %}
+
+{% block body %}
+
+    {#  Page : affichage de l'option, individuelle #}
+
+    <div class="d-flex justify-content-center my-5">
+        <h1>Detail de l'option "{{ option_service.nomOption }}"</h1>
+    </div>
+
+    <table class="table table-striped table-hover" >
+        <tbody>
+            <tr>
+                <th>Créateur</th>
+                <td>{{ option_service.employe.nom }}</td>
+            </tr>
+            <tr>
+                <th>Nom Option</th>
+                <td>{{ option_service.nomOption }}</td>
+            </tr>
+            <tr>
+                <th>Date Création</th>
+                <td>{{ option_service.dateCreation ? option_service.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prix Option</th>
+                <td>{{ option_service.prixOption }} €</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# Bouton : retour à la liste #}
+    <a href="{{ path('option_service_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
+
+    {# Si l'utilisateur est un super admin #}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+        {# Boutton modifier #}
+        <a href="{{ path('option_service_edit', {'id': option_service.id}) }}"><i class="far fa-edit fa-3x"></i></a>
+
+        {# Formulaire suppression #}
+        {{ include('option_service/_delete_form.html.twig') }}
+
+    {% endif  %}     
+
+  
+
+   
+{% endblock %}

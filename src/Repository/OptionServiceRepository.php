@@ -19,6 +19,57 @@ class OptionServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, OptionService::class);
     }
 
+
+    # Requete findAll + groupeBy
+    public function findAllGroupeBy($value)
+    {
+        return $this->createQueryBuilder('o')
+            ->groupBy('o.'.$value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    # Requete pour filtrer l'historique des réservations
+    public function optionFiltre($id,$nom,$dateCreation,$prix)
+    {
+        $query = $this->createQueryBuilder('o');
+
+       # je vérifie si l'id est renseigné        
+        if(!empty( $id)) {
+            $query = $query
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $id);
+        }
+
+       # je vérifie le nom est renseigné
+        if(!empty( $nom)) {
+            $query = $query
+            ->andWhere('o.nomOption = :val2')
+            ->setParameter('val2', $nom);
+        }
+
+       # je vérifie si la date de création est renseignée
+        if(!empty( $dateCreation)) {
+            $query = $query
+            ->andWhere('o.dateCreation = :val3')
+            ->setParameter('val3', $dateCreation);
+        }
+
+       # je vérifie si le prix est renseigné
+        if(!empty( $prix)) {
+            $query = $query
+            ->andWhere('o.prixOption = :val')
+            ->setParameter('val', $prix);
+        }
+
+        $query = $query
+        ->getQuery()
+        ->getResult();
+
+        return $query;
+    }
+
     // /**
     //  * @return OptionService[] Returns an array of OptionService objects
     //  */

@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+{% block body %}
+
+    {# Fontion imprimer #}
+    <script type="text/javascript">
+        function imprimer_page(){
+            window.print();
+        }
+    </script>
+
+
+
+
+    {# Bouton d'impression #}
+    <div class="container p-5">
+        <div class="row justify-content-end">
+            <form >
+                <input id="impression" class="impression btn affchin" name="impression" type="button" onclick="imprimer_page()" value="imprimer">
+            </form>
+        </div>
+    </div>
+
+
+    
+    <div class="container p-3 border py-0 ">
+
+        {# EN TETE DE RECAP / info hotel #}
+
+        <div class="row couleurFond rounded mb-5 px-5 py-1">
+
+            <div class="col-6 p-3">
+                <h3>Nom hôtel</h3>
+                <p>Adresse 1</p>
+                <p>Adresse 2</p>
+                <p>CP VILLE</p>
+                <p>Tel</p>
+                <p>mail</p>
+            </div>
+        </div>
+
+        {# info client #}
+        <div class="row">
+            <div class="offset-8 col-4 ">
+                <h3>{{reservation.client.nom}} {{reservation.client.prenom}}</h3>
+                <p>{{reservation.client.adresse}}</p>
+                <p>{{reservation.client.codePostal}}</p>
+                <p>{{reservation.client.ville}}</p>
+            </div>
+        </div>
+
+
+        {# info recap N° et date #}
+        <div class="row mb-5">
+            <div class="col-6">
+                <p> <b> {{document}} N° {{reservation.id}} </b></p>
+                <p>Date : {{date|date('d/m/Y')}}</p>
+            </div>
+        </div>
+
+        {# corps/détail du recap #}
+        <table class="table table-striped table-hover" >
+            <thead  class="couleurFond">
+                <tr>
+                    <th class="text-center">Chambre</th>
+                    <th class="text-center">Nombre de chambre</th>
+                    <th class="text-center">Date d'arrivée</th>
+                    <th class="text-center">Date de départ</th>
+                    <th class="text-center">Nombre de jours</th>
+                    <th class="text-center">Prix unitaire</th>
+                    <th class="text-center">Prix total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chambre in reservation.chambre %}
+                    <tr>
+                        <td class="text-center">{{chambre.nom}}</td>
+                        <td class="text-center">{{ chambre|length }}</td>
+                        <td class="text-center">{{reservation.dateEntree|date('d/m/Y')}}</td>
+                        <td class="text-center">{{reservation.dateSortie|date('d/m/Y')}}</td>
+                        <td class="text-center"> {{nombreJours.days}}</td>
+                        <td class="text-center">{{ chambre.prix }}</td>
+                        {# prix  HT = nombre de jour * prix de la chambre #}
+                        <td class="text-center"> {{ nombreJours.days*chambre.prix }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                {% for option in reservation.optionService %}
+                    <tr>
+                        <td class="text-center">{{option.nomOption}}</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"> </td>
+                        <td class="text-center">{{ option.prixOption }}</td>
+                        {# prix  HT = nombre de jour * prix de la chambre #}
+                        <td class="text-center"> {{option.prixOption }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        {# total HT TVA et TTC #}
+        <div class="row align-items-end">
+            <div class="col-3">
+                <p>Paiement comptant</p>
+            </div>
+
+            <div class="offset-6 col-3">
+                <table class='table'>
+                    <tr>
+                        {# calcul et affichage du total HT #}
+                        <td>
+                            <p>TOTAL HT </p>
+                        </td>
+
+                        <td> 
+                            {% for option in reservation.optionService %}
+                               {% set totalOption = totalOption + option.prixOption %} 
+                            {% endfor %}
+
+                            {% for chambre in reservation.chambre %}
+                                {# total ht = total des prix HT de toutes les chambres réservées #}
+                                {% set total = total + nombreJours.days*chambre.prix %} 
+                            {% endfor %}
+
+                            {% set total = totalOption + total %}
+                            {{total}} €
+                        </td>
+                    </tr>
+
+                    <tr>
+                        {# calcul et affichage de la TVA #}
+                        <td>
+                            <small>Dont TVA</small> 
+                        </td>
+
+                        <td> 
+                            <small>
+                                {% for option in reservation.optionService %}
+                                    {% set tvaOption = tvaOption + option.prixOption* (option.tva.taux/100) %}
+                                {% endfor %}
+
+                                {% for chambre in reservation.chambre %}
+                                    {#  calcul de la TVA = prix ht * le taux de tva pour  toutes les chambres réservées #}
+                                    {% set tva = tva + (nombreJours.days*chambre.prix)*(chambre.tva.taux/100) %}
+                                {% endfor %}
+
+                                {% set tva = tvaOption + tva %}
+                                {{tva}}€
+                            </small> 
+                        </td>
+                    </tr>
+
+
+                     <tr>
+                        {# calcul et affichage du total TTC #}
+                        <td>
+                            <small>TOTAL TTC</small> 
+                        </td>
+                        <td> 
+                            <small>
+                                {% for chambre in reservation.chambre %}
+                                    {# ttc = prix total ht  +  tva #}
+                                    {% set ttc = tva + total %} 
+                                {% endfor %}
+                                
+                                {{ttc}}€
+                            </small> 
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        {# Pieds du récap #}
+        <div class="row couleurFond mt-5 px-5 py-2">
+            <p>Mentions obligatoires : Siret </p>
+        </div>
+
+
+
+
+        
+    </div>
+
+    {# Si le document est un récapitulatif j'affiche le bouton pour modifier #}
+    {% if document == 'Récapitulatif' %}
+
+        {# bouton de modification, réservation et client #}
+        <div class="container p-5"> 
+            <div class="row justify-content-end">
+
+                <a class="impression btn btn-warning mr-5" href="{{path('editReservation',{'id': reservation.id,'idClient':reservation.client.id})}}"  >Modifier la réservation</a>
+                <a class="impression btn btn-warning" href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}"  >Modifier le client</a>
+
+            </div>
+
+
+    {# SI c'est une facture, la réservation ne doit pas être modifiée #}
+    {% elseif document == 'Facture' %}
+        <div class="container p-5"> 
+
+        <div class="row justify-content-end">
+            <a class="impression btn affchin mr-5" href="{{path('reservationCheck')}}"  >Retour aux CheckIn/CheckOut</a>
+        </div>
+    </div>
+
+    {% endif %}
+
+   
+    {# Bouton : retour à la liste des réservations #}
+    <a href="{{ path('historique_resa') }}"><i class="fas fa-arrow-left fa-3x " style="color:black;"></i></a>
+
+{% endblock %}
