@@ -52,7 +52,7 @@ class Employe implements UserInterface
     private $password;
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\Choice({1, 2, 3, 4}, message="Choississez un poste valide.")
+     * @Assert\Choice({1, 2, 3, 4, 5}, message="Choississez un poste valide.")
      */
     private $poste;
     /**
