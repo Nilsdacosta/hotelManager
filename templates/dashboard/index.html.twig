@@ -76,9 +76,6 @@
       </div>
     </div>
 
-  
-  
-
     <div class="col-sm-12 col-lg-12 mt-5">
       <div class="card bg-transparent" >
         <div class="card-header">
@@ -91,6 +88,7 @@
             <thead class="theadBleu">
               <tr>
                 <th>Nom chambre</th>
+                <th>Statut</th>
                 <th>Nom du client</th>
                 <th>Date arrivée</th>
                 <th>Date départ</th>
@@ -105,6 +103,7 @@
                       {{chambre.nom}}
                     {% endfor %} 
                   </td>
+                  <td>{{resaDuJour.renderStatus}}</td>
                   <td> {{resaDuJour.client.nom}}</td>
                   <td>{{resaDuJour.dateEntree|date('d/m/Y')}}</td>
                   <td>{{resaDuJour.dateSortie|date('d/m/Y')}}</td>
