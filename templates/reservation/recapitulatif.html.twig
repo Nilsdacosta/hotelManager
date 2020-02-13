@@ -195,8 +195,10 @@
         {# bouton de modification, réservation et client #}
         <div class="container p-5"> 
             <div class="row justify-content-end">
+
                 <a class="impression btn btn-warning mr-5" href="{{path('editReservation',{'id': reservation.id,'idClient':reservation.client.id})}}"  >Modifier la réservation</a>
                 <a class="impression btn btn-warning" href="{{path('editClient',{'id': reservation.client.id ,'idResa':reservation.id})}}"  >Modifier le client</a>
+
             </div>
 
 
