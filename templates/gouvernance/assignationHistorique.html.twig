@@ -34,8 +34,8 @@
                         {# Nom de la chambre #}
                         <select class="form-control" name="chambre" id="chambre"> 
                             <option value="" disabled selected>Chambre</option>
-                            {% for assignationMenage in assignationMenages %}
-                                <option value="{{assignationMenage.chambre.nom}}">{{assignationMenage.chambre.nom}}</option>
+                            {% for chambre in chambres %}
+                                <option value="{{chambre.nom}}">{{chambre.nom}}</option>
                             {% endfor %}
                         </select>
                     </td>

@@ -39,7 +39,20 @@ class EmployeController extends AbstractController
          $nomEmployeRequest= $request->query->get('nom');
          $prenomEmployeRequest= $request->query->get('prenom');
          $telephoneEmployeRequest= $request->query->get('telephone');
-         $posteEmployeRequest= $request->query->get('poste');
+
+
+         if($request->query->get('poste') == "Directeur"){
+            $posteEmployeRequest= 1;
+         }elseif($request->query->get('poste')=="Réceptionniste"){
+            $posteEmployeRequest= 2;
+         }elseif($request->query->get('poste')=="Gouvernante"){
+            $posteEmployeRequest= 3;
+         }elseif($request->query->get('poste')=="Femme de chambre"){
+            $posteEmployeRequest= 4;
+         }else{
+            $posteEmployeRequest= 5;
+         }
+
          $roleEmployeRequest= $request->query->get('role');
 
          # je test si le formulaire filtre renvoie des données, sinon j'affiche tout
