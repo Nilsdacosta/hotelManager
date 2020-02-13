@@ -108,8 +108,10 @@
 
                             </tr>
                         {% else %}
-                            {# Si aucun résultat à retourner #}
-                            Pas de check out prévu ce jour
+                           {# Si aucun résultat à retourner #}
+                            <tr>
+                                <td colspan="6"> Pas de check in prévu ce jour</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -117,8 +119,17 @@
             {# Fin des check-out #}
 
         </div>
+
+        {# Bouton pour raffraichir la page et actualiser les donnée en BDD suite modification ajax #}
+        <div class='d-flex justify-content-center mt-3'>
+            <input type="button" class="btn couleurFond" onclick='window.location.reload(false)' value="Valider les modifications"/>
+
+        </div>	
+        
         
     </div>
+
+
         
       
   
