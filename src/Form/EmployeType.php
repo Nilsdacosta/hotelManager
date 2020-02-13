@@ -26,6 +26,7 @@ class EmployeType extends AbstractType
             ])
             ->add('prenom', TextType::class,[
                 'required'=>true,
+                
             ])
             ->add('telephone', TextType::class,[
                 'required'=>true,
@@ -43,7 +44,7 @@ class EmployeType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, [
                  'choices'  => [
-                    'Role' => 'Choose an option',
+                    'Rôle' => 'Choose an option',
                     'ROLE_USER' => 3,
                     'ROLE_ADMIN' => 2,
                     'ROLE_SUPER_ADMIN' => 1,
