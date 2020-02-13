@@ -4,35 +4,42 @@
 
 {% block body %}
 
+    {# Page affichage des chambres #}
+
+
     <div class="d-flex justify-content-center my-5">
         <h1>Liste des Chambres</h1>
     </div>
 
     <table class="table table-striped table-hover" >
         <thead  >
+
+            {# Filtres #}
             <form method="get">
                 <tr>
                     <td>
                         <select class="form-control" name="id" id="id">
                             <option value="" disabled selected>ID chambre</option>
                             {% for chambre in idChambre %}
-                            <option value="{{chambre.id}}">{{chambre.id}}</option>
+                                <option value="{{chambre.id}}">{{chambre.id}}</option>
                             {% endfor %}
                         </select>
                     </td>
+
                     <td>
                         <select class="form-control" name="capacite" id="capacite">
                            <option value="" disabled selected>Capacité</option>
                             {% for chambre in capaciteChambre %}
-                            <option value="{{chambre.capacite}}">{{chambre.capacite}}</option>
+                                <option value="{{chambre.capacite}}">{{chambre.capacite}}</option>
                             {% endfor %}
                         </select>
                     </td>
+
                     <td>
                         <select class="form-control" name="etat" id="etat">
                            <option value="" disabled selected>État</option>
                             {% for chambre in etatChambre %}
-                            <option value="{{chambre.renderEtat}}">{{chambre.renderEtat}}</option>
+                                <option value="{{chambre.renderEtat}}">{{chambre.renderEtat}}</option>
                             {% endfor %}
                         </select>
                     </td>
@@ -40,30 +47,33 @@
                     <td>
                         <input class="form-control" type="text" name="description" id="description">
                     </td>
+
                     <td>
                         <select class="form-control" name="prix" id="prix">
                            <option value="" disabled selected>Prix</option>
                             {% for chambre in prixChambre %}
-                            <option value="{{chambre.prix}}">{{chambre.prix}}</option>
+                                <option value="{{chambre.prix}}">{{chambre.prix}}</option>
                             {% endfor %}
                         </select>
                     </td>
+
                      <td>
                         <select class="form-control" name="nom" id="nom">
                            <option value="" disabled selected>Nom</option>
                             {% for chambre in nomChambre %}
-                            <option value="{{chambre.nom}}">{{chambre.nom}}</option>
+                                <option value="{{chambre.nom}}">{{chambre.nom}}</option>
                             {% endfor %}
                         </select>
                     </td>
 
                     <td>
-                     
-                       
+                        {# Bouton : envoie du formulaire filtre #}
                         <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
                     </td>
                 </tr>
             </form>
+
+            {# Affichage #}
             <tr class="theadBleu">
                 <th>Id</th>
                 <th>Capacite</th>
@@ -74,30 +84,37 @@
                 <th>actions</th>
             </tr>
         </thead>
+
         <tbody>
-        {% for chambre in chambres %}
-            <tr>
-                <td>{{ chambre.id }}</td>
-                <td>{{ chambre.capacite }}</td>
-                <td>{{ chambre.renderEtat }}</td>
-                <td>{{chambre.resume}}</td>
-                <td>{{ chambre.prix }}</td>
-                <td>{{ chambre.nom }}</td>
-                <td>
-                    <a href="{{ path('chambre_show', {'id': chambre.id}) }}"><i class="far fa-eye"></i></a>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <a href="{{ path('chambre_edit', {'id': chambre.id}) }}"><i class="far fa-edit"></i></a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Pas de résultats</td>
-            </tr>
-        {% endfor %}
+            {% for chambre in chambres %}
+                <tr>
+                    <td>{{ chambre.id }}</td>
+                    <td>{{ chambre.capacite }}</td>
+                    <td>{{ chambre.renderEtat }}</td>
+                    <td>{{chambre.resume}}</td>
+                    <td>{{ chambre.prix }}</td>
+                    <td>{{ chambre.nom }}</td>
+                    <td>
+                        <a href="{{ path('chambre_show', {'id': chambre.id}) }}"><i class="far fa-eye"></i></a>
+
+                        {# Si l'utilisateur est un super admin, il peut modifier la chambre #}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <a href="{{ path('chambre_edit', {'id': chambre.id}) }}"><i class="far fa-edit"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    {# Si pas de résultat #}
+                    <td colspan="7">Pas de résultats</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
+
+    {# Si l'utilisateur est un super admin, il peut ajouter une chambre  #}
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         <a href="{{ path('chambre_new') }}"><i class="far fa-plus-square fa-3x"></i></a>
     {% endif %}
+    
 {% endblock %}

@@ -3,11 +3,17 @@
 {% block title %}Création d'une Chambre{% endblock %}
 
 {% block body %}
+
+
+    {# Page ajout d'une chambre #}
+
     <div class="d-flex justify-content-center my-5">
         <h1>Création d'une Chambre</h1>
     </div>
 
+    {# Formulaire d'ajout #}
     {{ include('chambre/_form.html.twig') }}
 
+    {# Bouton: retour à la liste #}
     <a href="{{ path('chambre_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 {% endblock %}

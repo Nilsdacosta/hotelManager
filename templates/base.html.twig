@@ -4,84 +4,105 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
+            {# Lien fontawesome #}
+            <script src="https://kit.fontawesome.com/7cb52107fe.js" crossorigin="anonymous"></script>
 
-        <script src="https://kit.fontawesome.com/7cb52107fe.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/print.css') }}" text="text/css" media="print">
-        <link href='{{ asset('fullcalendar_timeline/packages/core/main.css') }}' rel='stylesheet' />
-        <link href='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.css') }}' rel='stylesheet' />
-        <link href='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.css') }}' rel='stylesheet' />
-        <script src='{{ asset('fullcalendar_timeline/packages/core/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages/interaction/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-common/main.js') }}'></script>
-        <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.js') }}'></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            {# Liens bootstrap #}
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            {# Liens css #}
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/print.css') }}" text="text/css" media="print">
+
+            {# Liens fullcalendar #}
+            <link href='{{ asset('fullcalendar_timeline/packages/core/main.css') }}' rel='stylesheet' />
+            <link href='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.css') }}' rel='stylesheet' />
+            <link href='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.css') }}' rel='stylesheet' />
+            <script src='{{ asset('fullcalendar_timeline/packages/core/main.js') }}'></script>
+            <script src='{{ asset('fullcalendar_timeline/packages/interaction/main.js') }}'></script>
+            <script src='{{ asset('fullcalendar_timeline/packages-premium/timeline/main.js') }}'></script>
+            <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-common/main.js') }}'></script>
+            <script src='{{ asset('fullcalendar_timeline/packages-premium/resource-timeline/main.js') }}'></script>
+            
         {% endblock %}
     </head>
+
     <body>
         {% block navBar %}
-        <nav class="navbar navbar-expand-lg navbar-light blue-gradient d-flex justify-content-between ">
-            <img class="img imgFront" src="https://image.flaticon.com/icons/png/512/120/120159.png" alt="">
-            <a class="navbar-brand mr-5 titre" >HotelManager</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <nav class="navbar navbar-expand-lg navbar-light blue-gradient d-flex justify-content-between ">
 
-            <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto ">
-                    <li class="nav-item active">
-                        <a class="nav-link " href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt fa-3x"></i></a>
-                        <p class="onglet">Tableau de bord</p>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('reservation') }}"><i class="fas fa-bed fa-3x"></i></a>
-                          <p class="onglet ">Réservation</p>
-                    </li>
+                <img class="img imgFront" src="https://image.flaticon.com/icons/png/512/120/120159.png" alt="">
+                
+                <a class="navbar-brand mr-5 titre" >HotelManager</a>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-history fa-3x"></i> </a>
-                          <p class="onglet">Historique</p>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('client') }}">Clients</a>
-                            <a class="dropdown-item" href="{{ path('historique_resa') }}">Réservations</a>
-                        </div>
-                    </li>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
- {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="hk fas" src="https://cdn.onlinewebfonts.com/svg/img_425609.png" alt=""> </a>
-                          <p class="onglet">Gouvernance</p>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('gouvernance') }}">Assignation chambres</a>
-                            <a class="dropdown-item" href="{{ path('gouvernance_historique') }}">Historique assignations</a>
-                        </div>
-                    </li>
-  {% endif %}
-  {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog fa-3x"></i></a>
-                          <p class="onglet">Administration</p>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('chambre_index') }}">Chambre</a>
-                            <a class="dropdown-item" href="{{ path('option_service_index') }}">Option</a>
-                            <a class="dropdown-item" href="{{ path('employe_index') }}">Employés</a>
-                            <a class="dropdown-item" href="{{ path('tva_index') }}">Taux tva</a>
-                        </div>
-                    </li>
-  {% endif %}
-                    <li class="nav-item  ">
-                        <a class="nav-link  " href="{{ path('app_logout') }}">
-                        <i class="fas fa-power-off fa-3x"></i></a>
-                          <p class="onglet">Déconnexion</p>
-                    </li>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto ">
 
-                </ul>
+                        {# Tableau de bord #}
+                        <li class="nav-item active">
+                            <a class="nav-link " href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt fa-3x"></i></a>
+                            <p class="onglet">Tableau de bord</p>
+                        </li>
 
-            </div>
-            
-        </nav>
+                        {# Ajouter une réservation #}
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{ path('reservation') }}"><i class="fas fa-bed fa-3x"></i></a>
+                            <p class="onglet ">Réservation</p>
+                        </li>
+
+                        {# Historique des clients et réservation #}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-history fa-3x"></i> </a>
+                            <p class="onglet">Historique</p>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('client') }}">Clients</a>
+                                <a class="dropdown-item" href="{{ path('historique_resa') }}">Réservations</a>
+                            </div>
+                        </li>
+
+                        {# si l'utilisateur connecté est un admin #}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {# Gouvernance #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="hk fas" src="https://cdn.onlinewebfonts.com/svg/img_425609.png" alt=""> </a>
+                                <p class="onglet">Gouvernance</p>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ path('gouvernance') }}">Assignation chambres</a>
+                                    <a class="dropdown-item" href="{{ path('gouvernance_historique') }}">Historique assignations</a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {# si l'utilisateur connecté est un super admin #}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            {# Administration #}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-cog fa-3x"></i></a>
+                                <p class="onglet">Administration</p>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ path('chambre_index') }}">Chambre</a>
+                                    <a class="dropdown-item" href="{{ path('option_service_index') }}">Option</a>
+                                    <a class="dropdown-item" href="{{ path('employe_index') }}">Employés</a>
+                                    <a class="dropdown-item" href="{{ path('tva_index') }}">Taux tva</a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {# Déconnexion #}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">
+                            <i class="fas fa-power-off fa-3x"></i></a>
+                            <p class="onglet">Déconnexion</p>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
 
         {% endblock %}
 
@@ -89,14 +110,15 @@
         {% block body %}
 
         {% endblock %}
+
+    </div>
         {% block javascripts %}
 
-         </div>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
             <script src="/js/script.js"></script>
         {% endblock %}
     </body>

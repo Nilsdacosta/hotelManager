@@ -3,6 +3,8 @@
 {% block title %}Nouvelle assignation{% endblock %}
 
 {% block body %}
+
+    {# Page Nouvelle assignation #}
     <div class='d-flex justify-content-center'>
         <h1 class="my-5">Nouvelle assignation</h1>
     </div>
@@ -18,6 +20,7 @@
             <th>Validation</th>
             <th>Statut</th>
         </thead>
+
         <tbody>
             {% for chambre in chambres %}
                 <tr > 
@@ -31,11 +34,19 @@
                                 <td>{{form_widget(data.form.optionService)}}</td>
 
                                 {% if data.chambre.statutAssignationMenage == 0 %}
+
+
+                                   
+
+                                  
+
+
                                     <td ><input class="btn  affchin" type="submit" value="Envoyer"></td>
 
                                     <td>
                                         <i class="far fa-times-circle fa-3x text-danger"></i>
                                     </td>
+
                                 {% else %}
                                     <td>
                                         <a class="btn btn-danger" href="{{ path('gouvernance_zerotage_unique', {'id' : data.chambre.id} ) }}" >Annuler</a>
@@ -45,12 +56,19 @@
                                     </td>
                                 {% endif %}
                             {{ form_end(data.form) }}
+
                         {% endif %}
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+
+
+    {# Bouton : retour à la liste #}
+
+
     <a href="{{path('gouvernance_historique')}}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
 {% endblock %}

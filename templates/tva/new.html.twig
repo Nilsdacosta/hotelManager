@@ -3,11 +3,20 @@
 {% block title %}Nouvelle Tva{% endblock %}
 
 {% block body %}
+
+    {# Page ajout TVA #}
+
     <div class="d-flex justify-content-center my-5">
         <h1>Ajout d'une Tva</h1>
     </div>
 
+
+    {# Formulaire ajour/modification #}
     {{ include('tva/_form.html.twig') }}
 
+
+    {# Bouton : retour à la liste #}
+
     <a href="{{ path('tva_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
+
 {% endblock %}

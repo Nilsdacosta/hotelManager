@@ -3,23 +3,30 @@
 {% block title %}Historique clients {% endblock %}
 
 {% block body %}
+
+    {# Page affichage clients #}
     <div class='d-flex justify-content-center'>
         <h1 class="my-5">Historique clients</h1>
     </div>
 
     <table class="table table-striped table-hover" >
         <thead >
+
+            {# Filtres #}
             <form  method="get">
                 <tr>
                     <td>
                         <input placeholder="Nom " class="form-control" type="text"  name="nom" id="nom">
                     </td>
+
                     <td>
                         <input placeholder="Prénom" class="form-control" type="text" name="prenom" id="prenom">
                     </td>
+
                     <td>
                         <input placeholder="Adresse" class="form-control" type="text" name="adresse" id="adresse">
                     </td>
+
                     <td>
                         <input placeholder="Code Postal" class="form-control" type="text" name="codePostal" id="codePostal">
                     </td>
@@ -27,23 +34,26 @@
                     <td>
                         <input placeholder="Ville" class="form-control" type="text" name="ville" id="ville">
                     </td>
+
                     <td>
                         <input placeholder="Téléphone" class="form-control" type="text" name="telephone" id="telephone">
                     </td>
+
                     <td>
                         <input placeholder="Mail" class="form-control" type="text" name="mail" id="mail">
                     </td>
+
                     <td>
                         <input  class="form-control" type="date" name="dateNaissance" id="dateNaissance">
                     </td>
                     
-                    <td colspan="6">
+                    <td colspan="10">
                         <button class="form-control" type="submit" value="Filtrer"><i class="fas fa-filter"></i></button>
                     </td>
-                    
-                
                 </tr>
             </form>
+
+            {# Affichage #}
             <tr  class="theadBleu">
 
                 <th>Nom</th>
@@ -59,33 +69,32 @@
 
             </tr>
         </thead>
+
         <tbody>
-        {% for client in clients %}
-            <tr>
-            
-               <td>{{ client.nom }}</td>
-                <td>{{ client.prenom }}</td>
-                <td>{{ client.adresse }}</td>
-                <td>{{ client.codePostal }}</td>
-                <td>{{ client.ville }}</td>
-                <td>{{ client.telephone }}</td>
-                <td>{{ client.mail}}</td>
-                <td>{{ client.dateDeNaissance|date("d/m/Y") }}</td> 
-                <td>{{ client.commentaire }}</td>
-          
-                 <td>
-                    {# <a href="{{ path('client_show', {'id': client.id}) }}">Voir profil</a> #}
-                    <a href="{{ path('client_edit', {'id': client.id}) }}"><i class="far fa-edit"></i></a>
-                </td> 
-            </tr>
-            
-        {% else %}
-            <tr>
-                <td colspan="8">Pas de résultat</td>
-            </tr>
-        {% endfor %}
+            {% for client in clients %}
+                <tr>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.prenom }}</td>
+                    <td>{{ client.adresse }}</td>
+                    <td>{{ client.codePostal }}</td>
+                    <td>{{ client.ville }}</td>
+                    <td>{{ client.telephone }}</td>
+                    <td>{{ client.mail}}</td>
+                    <td>{{ client.dateDeNaissance|date("d/m/Y") }}</td> 
+                    <td>{{ client.commentaire }}</td>
+                    <td>
+                        {# Bouton : modifier #}
+                        <a href="{{ path('client_edit', {'id': client.id}) }}"><i class="far fa-edit"></i></a>
+                    </td> 
+                </tr>
+                
+            {% else %}
+                <tr>
+                    {#  Si pas de résultat #}
+                    <td colspan="8">Pas de résultat</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    {# <a href="{{ path('employe_new') }}">Ajouter nouveau client</a> #}
 {% endblock %}

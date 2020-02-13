@@ -3,11 +3,18 @@
 {% block title %}Nouvel Employé{% endblock %}
 
 {% block body %}
- <div class='d-flex justify-content-center'>
+
+    {# Page de formulaire d'ajout/modification d'employé #}
+    <div class='d-flex justify-content-center'>
          <h1>Créer un nouvel Employé </h1>
     </div>
+    
     <br>
+
+    {# formualaire de création d'employé #}
     {{ include('employe/_form.html.twig') }}
 
+    {# Bouton : retour à la liste des employé #}
     <a href="{{ path('employe_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
+
 {% endblock %}

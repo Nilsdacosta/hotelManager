@@ -3,16 +3,23 @@
 {% block title %}Modifier une  Chambre{% endblock %}
 
 {% block body %}
+
+    {# Page de modification #}
+
+
     <div class='d-flex justify-content-center  my-5'>
-         <h1>Modifier chambre {{ chambre.id }} </h1>
+        <h1>Modifier chambre {{ chambre.id }} </h1>
     </div>
+
     <br>
 
+    {# Formulaire de modification #}
+    {{ include('chambre/_form.html.twig', {'button_label': 'Update'}) }}
 
-  {{ include('chambre/_form.html.twig', {'button_label': 'Update'}) }}
-
+    {# Retour à la liste #}
     <a href="{{ path('chambre_index') }}"><i class="fas fa-arrow-left fa-3x"></i></a>
 
+    {#  Formulaire de suppression #}
     {{ include('chambre/_delete_form.html.twig') }}
 
 
