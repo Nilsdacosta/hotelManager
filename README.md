@@ -1,5 +1,21 @@
 # hotelManager
 
+Projet réalisé par Audrey Thirard, Virginie Hangora, Valentin Proton et Nils Da Costa :)
+
+Fin de projet après trois mois de formation à WebForce3.
+
+Les technologies utilisés sont :
+- Symfony: POO, CRUD
+- Librairie FullCalendar
+- Librairie Ajax/jquery
+- Git
+
+Développé sur VSC
+
+Ce projet développé sur 7 jours vient conclure 3 mois de formation.
+
+Il répond à la problématique de la gestion hotelière.
+
 
 *********************************************************
 |                           |
@@ -196,7 +212,7 @@ Page 10 Dashboard
         R: que mettre dedant
 *********************************************************
 |                           |
-|               GENERAL      |
+|               GENERAL     |
 |                           |
 *********************************************************
 Page 11 Connexion
