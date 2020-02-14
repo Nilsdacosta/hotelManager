@@ -280,7 +280,9 @@ class ReservationController extends AbstractController
             $statusResaRequest= 3;
          }elseif($request->query->get('statusResa')=="Facturée"){
             $statusResaRequest= 4;
-         }
+         }else{
+             $statusResaRequest= '';
+        }
 
         $dateEntreeRequest = $request->query->get('dateEntree');
         $dateSortieRequest = $request->query->get('dateSortie');
