@@ -42,7 +42,7 @@ class Employe implements UserInterface
      */
     private $telephone;
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="simple_array")
      */
     private $roles = [];
     /**
