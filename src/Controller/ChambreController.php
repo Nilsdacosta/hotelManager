@@ -37,7 +37,20 @@ class ChambreController extends AbstractController
         $request = Request::createFromGlobals();
         $idChambreRequest= $request->query->get('id');
         $capaciteChambreRequest= $request->query->get('capacite');
-        $etatChambreRequest= $request->query->get('etat');
+
+
+        if($request->query->get('etat') == "Sale"){
+             $etatChambreRequest= 1;
+         }elseif($request->query->get('etat')=="Recouche"){
+             $etatChambreRequest= 2;
+         }elseif($request->query->get('etat')=="Prête"){
+             $etatChambreRequest= 3;
+         }elseif($request->query->get('etat')=="HS"){
+             $etatChambreRequest= 4;
+         }else{
+            $etatChambreRequest= "";
+        }
+        //$etatChambreRequest= $request->query->get('etat');
         $descriptionChambreRequest= $request->query->get('description');
         $prixChambreRequest= $request->query->get('prix');
         $nomChambreRequest= $request->query->get('nom');

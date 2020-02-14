@@ -59,7 +59,7 @@ class OptionServiceRepository extends ServiceEntityRepository
        # je vérifie si le prix est renseigné
         if(!empty( $prix)) {
             $query = $query
-            ->andWhere('o.prixOption = :val')
+            ->andWhere('o.prixOption LIKE :val')
             ->setParameter('val', $prix);
         }
 
