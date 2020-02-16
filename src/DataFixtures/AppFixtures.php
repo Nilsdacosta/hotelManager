@@ -18,7 +18,8 @@ class AppFixtures extends Fixture
             ->setPrenom('Nils')
             ->setUsername('dacostanils123')
             ->setPassword('dacostanils123')
-            ->setPoste('directeur')
+            ->setPoste(1)
+            ->setRoles(['ROLE_SUPER_ADMIN'])
             ->setTelephone('0606060606');
         $manager->persist($employe);
 
