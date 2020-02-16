@@ -60,7 +60,6 @@ class EmployeController extends AbstractController
 
         # je test si le formulaire filtre renvoie des données, sinon j'affiche tout
         if(!empty($request->query)){
-            dump($request);
             $employes = $employeRepository->employeFiltre($idEmployeRequest,$usernameEmployeRequest,$nomEmployeRequest,$prenomEmployeRequest ,$telephoneEmployeRequest,$posteEmployeRequest ,$roleEmployeRequest);
         }else{
             $employes = $employeRepository->findAll();

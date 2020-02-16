@@ -43,8 +43,7 @@ class ChambreController extends AbstractController
         $nomChambreRequest= $request->query->get('nom');
 
         #Si j'ai un retour en Get , j'utilise la requete de filtre, sinon j'affiche tout
-        if(!empty($request)){
-            dump($request);
+        if(!empty($request)){ dump($request);
             $chambres =$chambreRepository->chambreFiltre($idChambreRequest,$capaciteChambreRequest,$etatChambreRequest,$descriptionChambreRequest,$prixChambreRequest,$nomChambreRequest);
         }else{
             $chambres =$chambreRepository->findAll();
