@@ -30,37 +30,40 @@ class EmployeController extends AbstractController
         # je défini les requetes pour l'affichage du formulaire de filtre
         $idEmploye = $employeRepository->findAllGroupeBy('id');
         $posteEmploye = $employeRepository->findAllGroupeBy('poste');
-        $roleEmploye = $employeRepository->findRoleGroupeBy('roles');
+        $roleEmploye = $employeRepository->findAllGroupeBy('roles');
+        $usernameEmploye = $employeRepository->findAllGroupeBy('username');
+        $nomEmploye = $employeRepository->findAllGroupeBy('nom');
+        $prenomEmploye = $employeRepository->findAllGroupeBy('prenom');
+        $telephoneEmploye = $employeRepository->findAllGroupeBy('telephone');
 
-         # je récupère les données envoyées via le get
-         $request = Request::createFromGlobals();
-         $idEmployeRequest= $request->query->get('id');
-         $usernameEmployeRequest= $request->query->get('username');
-         $nomEmployeRequest= $request->query->get('nom');
-         $prenomEmployeRequest= $request->query->get('prenom');
-         $telephoneEmployeRequest= $request->query->get('telephone');
+        # je récupère les données envoyées via le get
+        $request = Request::createFromGlobals();
+        $idEmployeRequest= $request->query->get('id');
+        $usernameEmployeRequest= $request->query->get('username');
+        $nomEmployeRequest= $request->query->get('nom');
+        $prenomEmployeRequest= $request->query->get('prenom');
+        $telephoneEmployeRequest= $request->query->get('telephone');
+        $roleEmployeRequest= $request->query->get('role');
 
+        if($request->query->get('poste') == "Directeur"){
+           $posteEmployeRequest= 1;
+        }elseif($request->query->get('poste')=="Réceptionniste"){
+           $posteEmployeRequest= 2;
+        }elseif($request->query->get('poste')=="Gouvernante"){
+           $posteEmployeRequest= 3;
+        }elseif($request->query->get('poste')=="Femme de chambre"){
+           $posteEmployeRequest= 4;
+        }else{
+           $posteEmployeRequest= 5;
+        }
+        
 
-         if($request->query->get('poste') == "Directeur"){
-            $posteEmployeRequest= 1;
-         }elseif($request->query->get('poste')=="Réceptionniste"){
-            $posteEmployeRequest= 2;
-         }elseif($request->query->get('poste')=="Gouvernante"){
-            $posteEmployeRequest= 3;
-         }elseif($request->query->get('poste')=="Femme de chambre"){
-            $posteEmployeRequest= 4;
-         }else{
-            $posteEmployeRequest= 5;
-         }
-
-         $roleEmployeRequest= $request->query->get('role');
-
-         # je test si le formulaire filtre renvoie des données, sinon j'affiche tout
-         if(!empty($request)){
+        # je test si le formulaire filtre renvoie des données, sinon j'affiche tout
+        if(!empty($request->query)){
+            dump($request);
             $employes = $employeRepository->employeFiltre($idEmployeRequest,$usernameEmployeRequest,$nomEmployeRequest,$prenomEmployeRequest ,$telephoneEmployeRequest,$posteEmployeRequest ,$roleEmployeRequest);
         }else{
             $employes = $employeRepository->findAll();
-
         }
 
         // Je retourne mes informations au template
@@ -68,7 +71,11 @@ class EmployeController extends AbstractController
             'employes' => $employes,
             'idEmploye'=>$idEmploye,
             'posteEmploye'=>$posteEmploye,
-            'roleEmploye'=>$roleEmploye
+            'roleEmploye'=>$roleEmploye,
+            'nomEmploye' => $nomEmploye,
+            'prenomEmploye' => $prenomEmploye,
+            'usernameEmploye' => $usernameEmploye,
+            'telephoneEmploye' => $telephoneEmploye
         ]);
     }
 

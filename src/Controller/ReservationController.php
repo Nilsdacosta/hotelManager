@@ -82,12 +82,9 @@ class ReservationController extends AbstractController
                 return $this->redirectToRoute('reservationRecapitulatif', [
                     'id' => $reservation->getId()
                 ]);
-
             }
-
         }
         
-
         /* ************************
         |    FORMULAIRE CLIENT     |
         **************************/
